@@ -1,14 +1,9 @@
-﻿// This file is subject to the MIT License as seen in the root of this folder structure (LICENSE)
-
-// Thanks to @VizzzU for contributing this.
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Crest
 {
     /// <summary>
-    /// Applies simple approximation of buoyancy force - force based on submerged depth and torque based on alignment
-    /// to water normal.
+    /// Applies simple approximation of buoyancy force - force based on submerged depth and torque based on alignment to water normal.
     /// </summary>
     public class SimpleFloatingObject : FloatingObjectBase
     {
@@ -33,8 +28,6 @@ namespace Crest
         [SerializeField] float _dragInWaterForward = 1f;
         [SerializeField] float _dragInWaterRotational = 0.2f;
 
-        [Header("Debug")]
-        [SerializeField] bool _debugDraw = false;
 
         bool _inWater;
         public override bool InWater { get { return _inWater; } }
@@ -80,8 +73,6 @@ namespace Crest
             var undispPos = transform.position - _displacementToObject;
             undispPos.y = OceanRenderer.Instance.SeaLevel;
 
-            if (_debugDraw) VisualiseCollisionArea.DebugDrawCross(undispPos, 1f, Color.red);
-
             {
                 _sampleFlowHelper.Init(transform.position, ObjectWidth);
 
@@ -90,16 +81,9 @@ namespace Crest
                 waterSurfaceVel += new Vector3(surfaceFlow.x, 0, surfaceFlow.y);
             }
 
-            if (_debugDraw)
-            {
-                Debug.DrawLine(transform.position + 5f * Vector3.up, transform.position + 5f * Vector3.up + waterSurfaceVel,
-                    new Color(1, 1, 1, 0.6f));
-            }
-
             var velocityRelativeToWater = _rb.velocity - waterSurfaceVel;
 
             var dispPos = undispPos + _displacementToObject;
-            if (_debugDraw) VisualiseCollisionArea.DebugDrawCross(dispPos, 4f, Color.white);
 
             float height = dispPos.y;
 
@@ -134,8 +118,6 @@ namespace Crest
         void FixedUpdateOrientation(Vector3 normal)
         {
             Vector3 normalLongitudinal = Vector3.up;
-
-            if (_debugDraw) Debug.DrawLine(transform.position, transform.position + 5f * normal, Color.green);
 
             var torqueWidth = Vector3.Cross(transform.up, normal);
             _rb.AddTorque(torqueWidth * _boyancyTorque, ForceMode.Acceleration);

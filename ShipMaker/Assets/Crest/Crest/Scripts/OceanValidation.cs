@@ -47,7 +47,7 @@ namespace Crest
             {
                 case MessageType.Error: Debug.LogError(message, @object); break;
                 case MessageType.Warning: Debug.LogWarning(message, @object); break;
-                default: Debug.Log(message, @object); break;
+                default: /*Debug.Log(message, @object);*/ break;
             }
         }
 

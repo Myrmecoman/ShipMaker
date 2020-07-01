@@ -29,7 +29,7 @@ namespace Crest
         public bool Validate(OceanRenderer ocean, ValidatedHelper.ShowMessage showMessage)
         {
             var isValid = true;
-
+            /* custom change
             if (ocean._simSettingsAnimatedWaves != null && ocean._simSettingsAnimatedWaves.CollisionSource == SimSettingsAnimatedWaves.CollisionSources.None)
             {
                 showMessage
@@ -39,7 +39,7 @@ namespace Crest
                 );
 
                 isValid = false;
-            }
+            }*/
 
             var rbs = GetComponentsInChildren<Rigidbody>();
             if (rbs.Length != 1)

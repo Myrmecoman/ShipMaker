@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7806039246031838258}
   - component: {fileID: 6866200415020111017}
   - component: {fileID: 5463534677256059861}
+  - component: {fileID: 2042590749515372918}
   m_Layer: 0
   m_Name: Hull
   m_TagString: Untagged
@@ -132,3 +133,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2042590749515372918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874000608970964033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caecfdd94781596418a0ed838e543ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 1

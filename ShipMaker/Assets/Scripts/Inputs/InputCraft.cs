@@ -34,5 +34,11 @@ public class InputCraft : MonoBehaviour
         controls.CraftCam.Look.canceled += _ => cam.WantMouse = Vector2.zero;
         // click on a single frame
         controls.CraftCam.ClickFrame.performed += _ => cam.PressClick();
+        // right click hold
+        controls.CraftCam.RightClickHold.performed += _ => cam.RightClickHold = true;
+        controls.CraftCam.RightClickHold.canceled += _ => cam.RightClickHold = false;
+        // scroll
+        controls.CraftCam.Scroll.performed += _ => cam.WantScroll = _.ReadValue<Vector2>();
+        controls.CraftCam.Scroll.canceled += _ => cam.WantScroll = Vector2.zero;
     }
 }

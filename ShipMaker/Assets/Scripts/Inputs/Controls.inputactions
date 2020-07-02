@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "RightClickHold",
+                    "type": "Button",
+                    "id": "4cbe5ca9-d15c-4b3f-a5eb-cc07e11ae40d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
                 }
             ],
             "bindings": [
@@ -124,7 +132,7 @@
                 {
                     "name": "left",
                     "id": "bfd97733-2bf6-46a2-91fd-cd6f93d1baf8",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -217,6 +225,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2ecbd40-1d4a-43a9-9a7c-fe4013aa779a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "RightClickHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -345,7 +364,7 @@
                 {
                     "name": "left",
                     "id": "f10d15be-8f2a-482e-9f29-af9d8354f8e0",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",

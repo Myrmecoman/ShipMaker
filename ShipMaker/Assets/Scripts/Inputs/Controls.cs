@@ -65,6 +65,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""RightClickHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""4cbe5ca9-d15c-4b3f-a5eb-cc07e11ae40d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -137,7 +145,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""bfd97733-2bf6-46a2-91fd-cd6f93d1baf8"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -230,6 +238,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2ecbd40-1d4a-43a9-9a7c-fe4013aa779a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""RightClickHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -358,7 +377,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""f10d15be-8f2a-482e-9f29-af9d8354f8e0"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
@@ -473,6 +492,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_CraftCam_Movement = m_CraftCam.FindAction("Movement", throwIfNotFound: true);
         m_CraftCam_ClickFrame = m_CraftCam.FindAction("ClickFrame", throwIfNotFound: true);
         m_CraftCam_ClickHold = m_CraftCam.FindAction("ClickHold", throwIfNotFound: true);
+        m_CraftCam_RightClickHold = m_CraftCam.FindAction("RightClickHold", throwIfNotFound: true);
         // ShipControl
         m_ShipControl = asset.FindActionMap("ShipControl", throwIfNotFound: true);
         m_ShipControl_Escape = m_ShipControl.FindAction("Escape", throwIfNotFound: true);
@@ -536,6 +556,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_CraftCam_Movement;
     private readonly InputAction m_CraftCam_ClickFrame;
     private readonly InputAction m_CraftCam_ClickHold;
+    private readonly InputAction m_CraftCam_RightClickHold;
     public struct CraftCamActions
     {
         private @Controls m_Wrapper;
@@ -546,6 +567,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_CraftCam_Movement;
         public InputAction @ClickFrame => m_Wrapper.m_CraftCam_ClickFrame;
         public InputAction @ClickHold => m_Wrapper.m_CraftCam_ClickHold;
+        public InputAction @RightClickHold => m_Wrapper.m_CraftCam_RightClickHold;
         public InputActionMap Get() { return m_Wrapper.m_CraftCam; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -573,6 +595,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ClickHold.started -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
                 @ClickHold.performed -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
                 @ClickHold.canceled -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
+                @RightClickHold.started -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
+                @RightClickHold.performed -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
+                @RightClickHold.canceled -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
             }
             m_Wrapper.m_CraftCamActionsCallbackInterface = instance;
             if (instance != null)
@@ -595,6 +620,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ClickHold.started += instance.OnClickHold;
                 @ClickHold.performed += instance.OnClickHold;
                 @ClickHold.canceled += instance.OnClickHold;
+                @RightClickHold.started += instance.OnRightClickHold;
+                @RightClickHold.performed += instance.OnRightClickHold;
+                @RightClickHold.canceled += instance.OnRightClickHold;
             }
         }
     }
@@ -689,6 +717,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnClickFrame(InputAction.CallbackContext context);
         void OnClickHold(InputAction.CallbackContext context);
+        void OnRightClickHold(InputAction.CallbackContext context);
     }
     public interface IShipControlActions
     {

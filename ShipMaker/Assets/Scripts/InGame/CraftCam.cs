@@ -1,18 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class CraftCam : MonoBehaviour
 {
     public Transform Cam;
     public float Sensivity;
+    public Text ShipName;
 
     public GameObject Hull;
 
     private float CamRotVal;
     private float speed = 5;
     private GameObject GravitationCenter = null;
+    private bool LockMove = false;
     private List<Vector3> LoadedShip = new List<Vector3>();
+    private SaveLoad saveNload;
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -29,11 +33,15 @@ public class CraftCam : MonoBehaviour
         if (Cursor.lockState == CursorLockMode.Locked)
             Cursor.lockState = CursorLockMode.None;
         Cursor.visible = Cursor.lockState == CursorLockMode.None;
+        LockMove = !LockMove;
     }
 
 
     public void PressClick()
     {
+        if (LockMove)
+            return;
+
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30))
         {
             // check if there is already something
@@ -45,11 +53,25 @@ public class CraftCam : MonoBehaviour
         }
     }
 
+
+    public void ExitToMenu()
+    {
+
+    }
+
+
+    public void SaveAs()
+    {
+
+        saveNload.SaveAs(ShipName, /**/);
+    }
+
     #endregion
 
 
     void Start()
     {
+        saveNload = new SaveLoad();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -57,6 +79,9 @@ public class CraftCam : MonoBehaviour
 
     void Update()
     {
+        if (LockMove)
+            return;
+
         // rotation and movements
         if (!GravitationCenter)
         {

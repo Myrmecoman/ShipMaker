@@ -18,6 +18,7 @@ public class SaveLoad
     public string LoadAs(string name)
     {
         string path = Application.persistentDataPath + "/" + name;
-        return File.ReadAllText(path);
+        string ans = File.ReadAllText(path);
+        return ans;
     }
 }

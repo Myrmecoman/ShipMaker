@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -8,6 +7,7 @@ public class CraftCam : MonoBehaviour
     public Transform Cam;
     public float Sensivity;
     public Text ShipName;
+    public Button Save;
 
     public GameObject Hull;
 
@@ -15,7 +15,6 @@ public class CraftCam : MonoBehaviour
     private float speed = 5;
     private GameObject GravitationCenter = null;
     private bool LockMove = false;
-    private List<Vector3> LoadedShip = new List<Vector3>();
     private SaveLoad saveNload;
 
     // Inputs
@@ -62,8 +61,28 @@ public class CraftCam : MonoBehaviour
 
     public void SaveAs()
     {
+        if (ShipName.text == "")
+        {
+            Debug.Log("can't save, name is empty");
+            return;
+        }
 
-        saveNload.SaveAs(ShipName, /**/);
+        ID[] allPieces = GetComponents<ID>();
+        Debug.Log(allPieces.Length);
+        string strs = "";
+        foreach (ID piece in allPieces)
+        {
+            strs +=
+                piece.Id + "-" +
+                piece.transform.position.x + ":" +
+                piece.transform.position.y + ":" +
+                piece.transform.position.z + "-" +
+                piece.transform.rotation.x + ":" +
+                piece.transform.rotation.y + ":" +
+                piece.transform.rotation.z + "\n";
+        }
+        Debug.Log(strs);
+        saveNload.SaveAs(ShipName.text, strs);
     }
 
     #endregion

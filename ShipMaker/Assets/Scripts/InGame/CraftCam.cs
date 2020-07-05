@@ -168,6 +168,9 @@ public class CraftCam : MonoBehaviour
         if (LockMove)
             return;
 
+        if (Input.GetKeyDown(KeyCode.X))
+            Debug.Log(Application.persistentDataPath);
+
         // rotation and movements
         if (!GravitationCenter)
         {

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 
@@ -8,17 +9,22 @@ public class SaveLoad
     {
         string path = Application.persistentDataPath + "/" + name + ".chancla";
 
-        StreamWriter sw = File.CreateText(path);
-        sw.Close();
-        File.WriteAllText(path, content);
-        Debug.Log("Saved as " + name);
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        formatter.Serialize(stream, content);
+        stream.Close();
     }
 
 
     public string LoadAs(string name)
     {
         string path = Application.persistentDataPath + "/" + name + ".chancla";
-        string ans = File.ReadAllText(path);
-        return ans;
+        string s = "";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Open);
+        s = formatter.Deserialize(stream) as string;
+        stream.Close();
+        return s;
     }
 }

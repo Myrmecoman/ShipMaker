@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -6,10 +8,8 @@ public class CraftCam : MonoBehaviour
 {
     public Transform Cam;
     public float Sensivity;
-    public Text ShipName;
+    public InputField ShipName;
     public Button Save;
-
-    public GameObject Hull;
 
     private float CamRotVal;
     private float speed = 5;
@@ -47,7 +47,7 @@ public class CraftCam : MonoBehaviour
             Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
             if (hitColliders.Length == 0)
             {
-                Instantiate(Resources.Load("Craft/Cubes/Hull", typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                Instantiate(Resources.Load("Craft/Cubes/1", typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
             }
         }
     }
@@ -55,7 +55,7 @@ public class CraftCam : MonoBehaviour
 
     public void ExitToMenu()
     {
-
+        SceneManager.LoadScene("Menus");
     }
 
 
@@ -67,25 +67,92 @@ public class CraftCam : MonoBehaviour
             return;
         }
 
-        ID[] allPieces = GetComponents<ID>();
-        Debug.Log(allPieces.Length);
-        string strs = "";
+        ID[] allPieces = FindObjectsOfType<ID>();
+        string strs = ShipName.text + '\n';
         foreach (ID piece in allPieces)
         {
             strs +=
-                piece.Id + "-" +
+                piece.Id + "_" +
                 piece.transform.position.x + ":" +
                 piece.transform.position.y + ":" +
-                piece.transform.position.z + "-" +
+                piece.transform.position.z + "_" +
                 piece.transform.rotation.x + ":" +
                 piece.transform.rotation.y + ":" +
                 piece.transform.rotation.z + "\n";
         }
-        Debug.Log(strs);
         saveNload.SaveAs(ShipName.text, strs);
     }
 
     #endregion
+
+
+    void Awake()
+    {
+        DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
+        if (obj)
+        {
+            StringReader reader = new StringReader(obj.fileValue);
+            ShipName.text = reader.ReadLine();
+            while(true)
+            {
+                string line = reader.ReadLine();
+                if (line == null)
+                    break;
+
+                ushort nb1 = 0;
+                ushort nb2 = 0;
+                string id = "";
+                string posx = "";
+                string posy = "";
+                string posz = "";
+                string rotx = "";
+                string roty = "";
+                string rotz = "";
+
+                for (int j = 0; j < line.Length; j++)
+                {
+                    if (line[j] == '_')
+                    {
+                        nb1++;
+                        nb2 = 0;
+                        continue;
+                    }
+                    if (line[j] == ':')
+                    {
+                        nb2++;
+                        continue;
+                    }
+
+                    // get id
+                    if (nb1 == 0)
+                        id += line[j];
+
+                    // get positions
+                    if (nb1 == 1 && nb2 == 0)
+                        posx += line[j];
+                    if (nb1 == 1 && nb2 == 1)
+                        posy += line[j];
+                    if (nb1 == 1 && nb2 == 2)
+                        posz += line[j];
+
+                    // get rotations
+                    if (nb1 == 2 && nb2 == 0)
+                        rotx += line[j];
+                    if (nb1 == 2 && nb2 == 1)
+                        roty += line[j];
+                    if (nb1 == 2 && nb2 == 2)
+                        rotz += line[j];
+                }
+                Instantiate(
+                    Resources.Load("Craft/Cubes/" + id, typeof(GameObject)),
+                    new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
+                    Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)));
+            }
+            Destroy(obj.gameObject);
+        }
+        else
+            Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
+    }
 
 
     void Start()

@@ -6,18 +6,18 @@ public class SaveLoad
 {
     public void SaveAs(string name, string content)
     {
-        string path = Application.persistentDataPath + "/" + name;
+        string path = Application.persistentDataPath + "/" + name + ".chancla";
 
-        File.Create(path);
-        TextWriter tw = new StreamWriter(path);
-        tw.WriteLine(content);
-        tw.Close();
+        StreamWriter sw = File.CreateText(path);
+        sw.Close();
+        File.WriteAllText(path, content);
+        Debug.Log("Saved as " + name);
     }
 
 
     public string LoadAs(string name)
     {
-        string path = Application.persistentDataPath + "/" + name;
+        string path = Application.persistentDataPath + "/" + name + ".chancla";
         string ans = File.ReadAllText(path);
         return ans;
     }

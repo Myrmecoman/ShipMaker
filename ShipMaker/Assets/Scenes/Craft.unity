@@ -203,7 +203,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 30398390}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6111219416352815163}
+        m_MethodName: ExitToMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &30398390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +573,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
@@ -577,85 +588,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672772640}
   m_CullTransparentMesh: 0
---- !u!1001 &850227240
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3744980315736238467, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3744980315736238467, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7102910101935307167, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_Name
-      value: Mainframe
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7627210690122703653, guid: abd4d227a382af64393b390258ee411c,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: abd4d227a382af64393b390258ee411c, type: 3}
 --- !u!1 &966789385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,9 +1258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cam: {fileID: 6111219416352815165}
   Sensivity: 0.2
-  ShipName: {fileID: 672772642}
+  ShipName: {fileID: 1097929542}
   Save: {fileID: 1188074698}
-  Hull: {fileID: 5874000608970964033, guid: 5fddfa490d7393441b9382799c3a7cf4, type: 3}
   WantMove: {x: 0, y: 0}
   WantMouse: {x: 0, y: 0}
   WantScroll: {x: 0, y: 0}

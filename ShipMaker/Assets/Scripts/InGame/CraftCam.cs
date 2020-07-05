@@ -10,12 +10,14 @@ public class CraftCam : MonoBehaviour
     public float Sensivity;
     public InputField ShipName;
     public Button Save;
+    public GameObject DontDestroyToTest;
 
     private float CamRotVal;
     private float speed = 5;
     private GameObject GravitationCenter = null;
     private bool LockMove = false;
     private SaveLoad saveNload;
+    private string fileValueStored;
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -83,6 +85,14 @@ public class CraftCam : MonoBehaviour
         saveNload.SaveAs(ShipName.text, strs);
     }
 
+
+    public void Test()
+    {
+        GameObject value = Instantiate(DontDestroyToTest);
+        value.GetComponent<DontDestroyLoad>().fileValue = fileValueStored;
+        SceneManager.LoadScene("TestScene");
+    }
+
     #endregion
 
 
@@ -91,7 +101,9 @@ public class CraftCam : MonoBehaviour
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
-            StringReader reader = new StringReader(obj.fileValue);
+            fileValueStored = obj.fileValue;
+            Destroy(obj.gameObject);
+            StringReader reader = new StringReader(fileValueStored);
             ShipName.text = reader.ReadLine();
             while(true)
             {
@@ -148,7 +160,6 @@ public class CraftCam : MonoBehaviour
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)));
             }
-            Destroy(obj.gameObject);
         }
         else
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);

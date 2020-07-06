@@ -4,12 +4,33 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
+    // Inputs
+    [HideInInspector] public Vector2 WantMove = Vector2.zero;
+    [HideInInspector] public Vector2 WantMouse = Vector2.zero;
+    [HideInInspector] public Vector2 WantScroll = Vector2.zero;
+    [HideInInspector] public bool RightClickHold;
+    [HideInInspector] public bool LeftClickHold;
+
+
+    #region Input Functions
+
+    public void PressEscape()
+    {
+
+    }
+
+    #endregion
+
+
     void Awake()
     {
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
-            StringReader reader = new StringReader(obj.fileValue);
+            string str = obj.fileValue;
+            Destroy(obj.gameObject);
+            StringReader reader = new StringReader(str);
+            reader.ReadLine();
             while (true)
             {
                 string line = reader.ReadLine();
@@ -66,7 +87,6 @@ public class ShipController : MonoBehaviour
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
                     transform);
             }
-            Destroy(obj.gameObject);
         }
         else
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity, transform);

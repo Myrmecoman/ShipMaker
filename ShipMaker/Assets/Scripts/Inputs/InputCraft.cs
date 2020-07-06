@@ -42,5 +42,8 @@ public class InputCraft : MonoBehaviour
         controls.CraftCam.Scroll.canceled += _ => cam.WantScroll = Vector2.zero;
         // escape key
         controls.CraftCam.Escape.performed += _ => cam.PressEscape();
+        // alt hold
+        controls.CraftCam.Alt.performed += _ => cam.AltHold = true;
+        controls.CraftCam.Alt.canceled += _ => cam.AltHold = false;
     }
 }

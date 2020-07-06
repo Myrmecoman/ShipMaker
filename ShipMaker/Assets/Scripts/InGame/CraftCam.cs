@@ -24,6 +24,7 @@ public class CraftCam : MonoBehaviour
     [HideInInspector] public Vector2 WantMouse = Vector2.zero;
     [HideInInspector] public Vector2 WantScroll = Vector2.zero;
     [HideInInspector] public bool RightClickHold;
+    [HideInInspector] public bool AltHold;
 
 
     #region Input Functions
@@ -45,11 +46,17 @@ public class CraftCam : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30))
         {
-            // check if there is already something
-            Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
-            if (hitColliders.Length == 0)
+            // Add or remove
+            if (AltHold && hit.collider.GetComponent<ID>().Id != 0)
+                Destroy(hit.collider.gameObject);
+            if(!AltHold)
             {
-                Instantiate(Resources.Load("Craft/Cubes/1", typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                // check if there is already something
+                Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
+                if (hitColliders.Length == 0)
+                {
+                    Instantiate(Resources.Load("Craft/Cubes/1", typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                }
             }
         }
     }
@@ -64,10 +71,7 @@ public class CraftCam : MonoBehaviour
     public void SaveAs()
     {
         if (ShipName.text == "")
-        {
-            Debug.Log("can't save, name is empty");
             return;
-        }
 
         ID[] allPieces = FindObjectsOfType<ID>();
         string strs = ShipName.text + '\n';
@@ -88,8 +92,12 @@ public class CraftCam : MonoBehaviour
 
     public void Test()
     {
+        if (ShipName.text == "")
+            return;
+
+        SaveAs();
         GameObject value = Instantiate(DontDestroyToTest);
-        value.GetComponent<DontDestroyLoad>().fileValue = fileValueStored;
+        value.GetComponent<DontDestroyLoad>().fileValue = saveNload.LoadAs(ShipName.text);
         SceneManager.LoadScene("TestScene");
     }
 
@@ -105,7 +113,7 @@ public class CraftCam : MonoBehaviour
             Destroy(obj.gameObject);
             StringReader reader = new StringReader(fileValueStored);
             ShipName.text = reader.ReadLine();
-            while(true)
+            while (true)
             {
                 string line = reader.ReadLine();
                 if (line == null)
@@ -162,7 +170,9 @@ public class CraftCam : MonoBehaviour
             }
         }
         else
+        {
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
+        }
     }
 
 

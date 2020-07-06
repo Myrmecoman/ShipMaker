@@ -67,6 +67,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
+                    ""name"": ""Alt"",
+                    ""type"": ""Button"",
+                    ""id"": ""b76f43fb-c9a6-4f94-a9a9-278117f1d461"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
                     ""name"": ""RightClickHold"",
                     ""type"": ""Button"",
                     ""id"": ""4cbe5ca9-d15c-4b3f-a5eb-cc07e11ae40d"",
@@ -251,6 +259,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""RightClickHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e17382da-6e3d-488b-b4e2-ea12f871ef20"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Alt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -291,17 +310,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""ClickFrame"",
-                    ""type"": ""Button"",
-                    ""id"": ""4547dbd7-9154-4c14-9bf5-f9c142f83b4d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""ClickHold"",
+                    ""name"": ""LeftClickHold"",
                     ""type"": ""Button"",
                     ""id"": ""e52b7a07-0b54-4196-816e-08daaba397f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""RightClickHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""47f9de67-6382-42fb-9a81-230913572787"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
@@ -310,23 +329,12 @@ public class @Controls : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7fb7c03b-9af7-4b21-8b4e-71131fe03717"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""ClickFrame"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""50af9396-0e11-47b4-9695-a2fc93185ab8"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""ClickHold"",
+                    ""action"": ""LeftClickHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -472,6 +480,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0d80f92-6f78-48ff-abdc-1a342fc0f0dd"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""RightClickHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -492,6 +511,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_CraftCam_Movement = m_CraftCam.FindAction("Movement", throwIfNotFound: true);
         m_CraftCam_ClickFrame = m_CraftCam.FindAction("ClickFrame", throwIfNotFound: true);
         m_CraftCam_ClickHold = m_CraftCam.FindAction("ClickHold", throwIfNotFound: true);
+        m_CraftCam_Alt = m_CraftCam.FindAction("Alt", throwIfNotFound: true);
         m_CraftCam_RightClickHold = m_CraftCam.FindAction("RightClickHold", throwIfNotFound: true);
         // ShipControl
         m_ShipControl = asset.FindActionMap("ShipControl", throwIfNotFound: true);
@@ -499,8 +519,8 @@ public class @Controls : IInputActionCollection, IDisposable
         m_ShipControl_Look = m_ShipControl.FindAction("Look", throwIfNotFound: true);
         m_ShipControl_Scroll = m_ShipControl.FindAction("Scroll", throwIfNotFound: true);
         m_ShipControl_Movement = m_ShipControl.FindAction("Movement", throwIfNotFound: true);
-        m_ShipControl_ClickFrame = m_ShipControl.FindAction("ClickFrame", throwIfNotFound: true);
-        m_ShipControl_ClickHold = m_ShipControl.FindAction("ClickHold", throwIfNotFound: true);
+        m_ShipControl_LeftClickHold = m_ShipControl.FindAction("LeftClickHold", throwIfNotFound: true);
+        m_ShipControl_RightClickHold = m_ShipControl.FindAction("RightClickHold", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -556,6 +576,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_CraftCam_Movement;
     private readonly InputAction m_CraftCam_ClickFrame;
     private readonly InputAction m_CraftCam_ClickHold;
+    private readonly InputAction m_CraftCam_Alt;
     private readonly InputAction m_CraftCam_RightClickHold;
     public struct CraftCamActions
     {
@@ -567,6 +588,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Movement => m_Wrapper.m_CraftCam_Movement;
         public InputAction @ClickFrame => m_Wrapper.m_CraftCam_ClickFrame;
         public InputAction @ClickHold => m_Wrapper.m_CraftCam_ClickHold;
+        public InputAction @Alt => m_Wrapper.m_CraftCam_Alt;
         public InputAction @RightClickHold => m_Wrapper.m_CraftCam_RightClickHold;
         public InputActionMap Get() { return m_Wrapper.m_CraftCam; }
         public void Enable() { Get().Enable(); }
@@ -595,6 +617,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ClickHold.started -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
                 @ClickHold.performed -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
                 @ClickHold.canceled -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnClickHold;
+                @Alt.started -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnAlt;
+                @Alt.performed -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnAlt;
+                @Alt.canceled -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnAlt;
                 @RightClickHold.started -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
                 @RightClickHold.performed -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
                 @RightClickHold.canceled -= m_Wrapper.m_CraftCamActionsCallbackInterface.OnRightClickHold;
@@ -620,6 +645,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ClickHold.started += instance.OnClickHold;
                 @ClickHold.performed += instance.OnClickHold;
                 @ClickHold.canceled += instance.OnClickHold;
+                @Alt.started += instance.OnAlt;
+                @Alt.performed += instance.OnAlt;
+                @Alt.canceled += instance.OnAlt;
                 @RightClickHold.started += instance.OnRightClickHold;
                 @RightClickHold.performed += instance.OnRightClickHold;
                 @RightClickHold.canceled += instance.OnRightClickHold;
@@ -635,8 +663,8 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_ShipControl_Look;
     private readonly InputAction m_ShipControl_Scroll;
     private readonly InputAction m_ShipControl_Movement;
-    private readonly InputAction m_ShipControl_ClickFrame;
-    private readonly InputAction m_ShipControl_ClickHold;
+    private readonly InputAction m_ShipControl_LeftClickHold;
+    private readonly InputAction m_ShipControl_RightClickHold;
     public struct ShipControlActions
     {
         private @Controls m_Wrapper;
@@ -645,8 +673,8 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_ShipControl_Look;
         public InputAction @Scroll => m_Wrapper.m_ShipControl_Scroll;
         public InputAction @Movement => m_Wrapper.m_ShipControl_Movement;
-        public InputAction @ClickFrame => m_Wrapper.m_ShipControl_ClickFrame;
-        public InputAction @ClickHold => m_Wrapper.m_ShipControl_ClickHold;
+        public InputAction @LeftClickHold => m_Wrapper.m_ShipControl_LeftClickHold;
+        public InputAction @RightClickHold => m_Wrapper.m_ShipControl_RightClickHold;
         public InputActionMap Get() { return m_Wrapper.m_ShipControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -668,12 +696,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnMovement;
-                @ClickFrame.started -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickFrame;
-                @ClickFrame.performed -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickFrame;
-                @ClickFrame.canceled -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickFrame;
-                @ClickHold.started -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickHold;
-                @ClickHold.performed -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickHold;
-                @ClickHold.canceled -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnClickHold;
+                @LeftClickHold.started -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnLeftClickHold;
+                @LeftClickHold.performed -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnLeftClickHold;
+                @LeftClickHold.canceled -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnLeftClickHold;
+                @RightClickHold.started -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnRightClickHold;
+                @RightClickHold.performed -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnRightClickHold;
+                @RightClickHold.canceled -= m_Wrapper.m_ShipControlActionsCallbackInterface.OnRightClickHold;
             }
             m_Wrapper.m_ShipControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -690,12 +718,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @ClickFrame.started += instance.OnClickFrame;
-                @ClickFrame.performed += instance.OnClickFrame;
-                @ClickFrame.canceled += instance.OnClickFrame;
-                @ClickHold.started += instance.OnClickHold;
-                @ClickHold.performed += instance.OnClickHold;
-                @ClickHold.canceled += instance.OnClickHold;
+                @LeftClickHold.started += instance.OnLeftClickHold;
+                @LeftClickHold.performed += instance.OnLeftClickHold;
+                @LeftClickHold.canceled += instance.OnLeftClickHold;
+                @RightClickHold.started += instance.OnRightClickHold;
+                @RightClickHold.performed += instance.OnRightClickHold;
+                @RightClickHold.canceled += instance.OnRightClickHold;
             }
         }
     }
@@ -717,6 +745,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnClickFrame(InputAction.CallbackContext context);
         void OnClickHold(InputAction.CallbackContext context);
+        void OnAlt(InputAction.CallbackContext context);
         void OnRightClickHold(InputAction.CallbackContext context);
     }
     public interface IShipControlActions
@@ -725,7 +754,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
-        void OnClickFrame(InputAction.CallbackContext context);
-        void OnClickHold(InputAction.CallbackContext context);
+        void OnLeftClickHold(InputAction.CallbackContext context);
+        void OnRightClickHold(InputAction.CallbackContext context);
     }
 }

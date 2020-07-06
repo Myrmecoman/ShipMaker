@@ -54,6 +54,14 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
+                    "name": "Alt",
+                    "type": "Button",
+                    "id": "b76f43fb-c9a6-4f94-a9a9-278117f1d461",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
                     "name": "RightClickHold",
                     "type": "Button",
                     "id": "4cbe5ca9-d15c-4b3f-a5eb-cc07e11ae40d",
@@ -238,6 +246,17 @@
                     "action": "RightClickHold",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e17382da-6e3d-488b-b4e2-ea12f871ef20",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Alt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -278,17 +297,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "ClickFrame",
-                    "type": "Button",
-                    "id": "4547dbd7-9154-4c14-9bf5-f9c142f83b4d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "ClickHold",
+                    "name": "LeftClickHold",
                     "type": "Button",
                     "id": "e52b7a07-0b54-4196-816e-08daaba397f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "RightClickHold",
+                    "type": "Button",
+                    "id": "47f9de67-6382-42fb-9a81-230913572787",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
@@ -297,23 +316,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "7fb7c03b-9af7-4b21-8b4e-71131fe03717",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "ClickFrame",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "50af9396-0e11-47b4-9695-a2fc93185ab8",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "ClickHold",
+                    "action": "LeftClickHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -457,6 +465,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0d80f92-6f78-48ff-abdc-1a342fc0f0dd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "RightClickHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

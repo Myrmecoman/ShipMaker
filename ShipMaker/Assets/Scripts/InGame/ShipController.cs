@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
+    public Rigidbody rb;
+
+    private float miniY = 0;
+    private float dragToApply = 0; 
+
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
     [HideInInspector] public Vector2 WantMouse = Vector2.zero;
@@ -81,27 +86,42 @@ public class ShipController : MonoBehaviour
                     if (nb1 == 2 && nb2 == 2)
                         rotz += line[j];
                 }
+                // modify Y instanciation
+                if (float.Parse(posy) < miniY)
+                    miniY = float.Parse(posy);
+
                 Instantiate(
                     Resources.Load("Craft/Cubes/" + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
                     transform);
             }
+            transform.position = new Vector3(0, -miniY, 0);
         }
         else
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity, transform);
 
-        // attach all children
-        Rigidbody[] children = GetComponentsInChildren<Rigidbody>(true);
-        for (uint i = 0; i < children.Length; i++)
+        // manage children
+        Transform[] children = GetComponentsInChildren<Transform>();
+        for (uint i = 1; i < children.Length; i++)
         {
-            if (i != 0)
+            if (children[i].GetComponent<Floater>())
             {
-                FixedJoint joint = gameObject.AddComponent<FixedJoint>();
-                joint.connectedBody = children[i];
-                joint.breakForce = 10000;
+                children[i].GetComponent<Floater>().enabled = true;
+                dragToApply++;
+                children[i].GetComponentInChildren<Floater>().rb = rb;
             }
         }
+
+        // tweaks to stabilise the shits
+        rb.drag = dragToApply * 0.15f;
+        rb.angularDrag = dragToApply * 0.1f;
+    }
+
+
+    void Update()
+    {
+        
     }
 
 

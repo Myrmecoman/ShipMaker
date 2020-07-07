@@ -12,6 +12,4 @@ public class ForbidInput : MonoBehaviour
     {
         inputName.text = Regex.Replace(inputName.text, @"[^a-zA-Z0-9°()]", "");
     }
-
-
 }

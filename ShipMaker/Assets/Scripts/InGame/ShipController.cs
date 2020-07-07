@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class ShipController : MonoBehaviour
 {
     public Rigidbody rb;
@@ -127,7 +128,7 @@ public class ShipController : MonoBehaviour
             if (children[i].GetComponent<Floater>())
             {
                 children[i].GetComponent<Floater>().enabled = true;
-                dragToApply++;
+                dragToApply += children[i].GetComponent<Floater>().floaterCount;
                 children[i].GetComponentInChildren<Floater>().rb = rb;
             }
         }

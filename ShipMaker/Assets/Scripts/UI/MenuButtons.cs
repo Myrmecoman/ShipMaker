@@ -8,6 +8,7 @@ public class MenuButtons : MonoBehaviour
 {
     public GameObject parentShips;
     public GameObject shipButton;
+    public GameObject dontdestroyNewCraftName;
 
 
     public void Quit()
@@ -18,6 +19,7 @@ public class MenuButtons : MonoBehaviour
 
     public void Craft()
     {
+        Instantiate(dontdestroyNewCraftName);
         SceneManager.LoadScene("Craft");
     }
 

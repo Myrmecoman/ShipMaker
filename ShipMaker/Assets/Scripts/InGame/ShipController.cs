@@ -1,12 +1,21 @@
 ﻿using System.IO;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ShipController : MonoBehaviour
 {
     public Rigidbody rb;
+    public Transform camPosUpdate;
+    public Transform camRot;
+    public Transform cam;
+    public float Sensivity = 0.2f;
 
+    private float maxiX = 0;
+    private float miniX = 0;
+    private float maxiY = 0;
     private float miniY = 0;
+    private float maxiZ = 0;
+    private float miniZ = 0;
     private float dragToApply = 0; 
 
     // Inputs
@@ -21,7 +30,7 @@ public class ShipController : MonoBehaviour
 
     public void PressEscape()
     {
-
+        
     }
 
     #endregion
@@ -86,9 +95,19 @@ public class ShipController : MonoBehaviour
                     if (nb1 == 2 && nb2 == 2)
                         rotz += line[j];
                 }
-                // modify Y instanciation
+                // get max and mini values
+                if (float.Parse(posx) < miniX)
+                    miniX = float.Parse(posx);
+                if (float.Parse(posx) > maxiX)
+                    maxiX = float.Parse(posx);
                 if (float.Parse(posy) < miniY)
                     miniY = float.Parse(posy);
+                if (float.Parse(posy) > maxiY)
+                    maxiY = float.Parse(posy);
+                if (float.Parse(posz) < miniZ)
+                    miniZ = float.Parse(posz);
+                if (float.Parse(posz) > maxiZ)
+                    maxiZ = float.Parse(posz);
 
                 Instantiate(
                     Resources.Load("Craft/Cubes/" + id, typeof(GameObject)),
@@ -113,15 +132,36 @@ public class ShipController : MonoBehaviour
             }
         }
 
+        // set camera center
+        camPosUpdate.localPosition = new Vector3((miniX + maxiX) / 2, (miniY + maxiY) / 2, (miniZ + maxiZ) / 2);
+        camRot.localPosition = camPosUpdate.localPosition;
+        camRot.localEulerAngles = new Vector3(20, 0, 0);
+        cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
+
         // tweaks to stabilise the shits
         rb.drag = dragToApply * 0.15f;
         rb.angularDrag = dragToApply * 0.1f;
     }
 
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+
     void Update()
     {
-        
+        camRot.position = camPosUpdate.position;
+        camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SceneManager.LoadScene("Menus");
+        }
     }
 
 

@@ -4,9 +4,9 @@
 public class Floater : MonoBehaviour
 {
     public Rigidbody rb;
-    public float DepthBeforeSubmerged = 1f;
-    public float DisplacementAmount = 3f;
-    public int floaterCount = 1;
+    public float DepthBeforeSubmerged = 1;
+    public float DisplacementAmount = 3;
+    public float floaterCount = 1;
     public float WaterDrag = 0.99f;
     public float WaterAngularDrag = 0.5f;
 

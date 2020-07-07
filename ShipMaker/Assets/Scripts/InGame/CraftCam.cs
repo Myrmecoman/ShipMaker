@@ -8,9 +8,9 @@ public class CraftCam : MonoBehaviour
 {
     public Transform Cam;
     public float Sensivity;
-    public InputField ShipName;
-    public Button Save;
+    public Text ShipName;
     public GameObject DontDestroyToTest;
+    public LayerMask layermask;
 
     private float CamRotVal;
     private float speed = 5;
@@ -25,6 +25,7 @@ public class CraftCam : MonoBehaviour
     [HideInInspector] public Vector2 WantScroll = Vector2.zero;
     [HideInInspector] public bool RightClickHold;
     [HideInInspector] public bool AltHold;
+    [HideInInspector] public string SelectedCubeID = "1";
 
 
     #region Input Functions
@@ -44,7 +45,7 @@ public class CraftCam : MonoBehaviour
         if (LockMove)
             return;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30, layermask))
         {
             // Add or remove
             if (AltHold && hit.collider.GetComponent<ID>().Id != 0)
@@ -54,9 +55,7 @@ public class CraftCam : MonoBehaviour
                 // check if there is already something
                 Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
                 if (hitColliders.Length == 0)
-                {
-                    Instantiate(Resources.Load("Craft/Cubes/1", typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
-                }
+                    Instantiate(Resources.Load("Craft/Cubes/" + SelectedCubeID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
             }
         }
     }
@@ -106,6 +105,8 @@ public class CraftCam : MonoBehaviour
 
     void Awake()
     {
+        SelectedCubeID = "1";
+
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
@@ -171,6 +172,7 @@ public class CraftCam : MonoBehaviour
         }
         else
         {
+            ShipName.text = FindObjectOfType<DontDestroyLoadName>().Name;
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
         }
     }
@@ -188,9 +190,6 @@ public class CraftCam : MonoBehaviour
     {
         if (LockMove)
             return;
-
-        if (Input.GetKeyDown(KeyCode.X))
-            Debug.Log(Application.persistentDataPath);
 
         // rotation and movements
         if (!GravitationCenter)

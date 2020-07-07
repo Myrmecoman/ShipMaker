@@ -2005,6 +2005,8 @@ MonoBehaviour:
   parentShips: {fileID: 1872301028}
   shipButton: {fileID: 1253166059049047370, guid: 8c614900e10a7944b99f1508e9bf2b73,
     type: 3}
+  dontdestroyNewCraftName: {fileID: 1542161933322536117, guid: a3dbcdd83f76ae34680a806620acf438,
+    type: 3}
 --- !u!1 &1230027978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2034,7 +2036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde37eff0f7685f41902f400d1de0c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _viewpoint: {fileID: 0}
+  _viewpoint: {fileID: 6111219416352815165}
   _timeProvider: {fileID: 0}
   _primaryLight: {fileID: 1526980366}
   _searchForPrimaryLightOnStartup: 1
@@ -2080,7 +2082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1309069309
 GameObject:
@@ -2128,7 +2130,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1351016398
 GameObject:

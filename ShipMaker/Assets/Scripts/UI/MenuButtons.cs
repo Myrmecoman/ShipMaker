@@ -9,6 +9,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject parentShips;
     public GameObject shipButton;
     public GameObject dontdestroyNewCraftName;
+    public InputField shipName;
 
 
     public void Quit()
@@ -19,8 +20,12 @@ public class MenuButtons : MonoBehaviour
 
     public void Craft()
     {
-        Instantiate(dontdestroyNewCraftName);
-        SceneManager.LoadScene("Craft");
+        if (shipName.text.Length > 0)
+        {
+            GameObject obj = Instantiate(dontdestroyNewCraftName);
+            obj.GetComponent<DontDestroyLoadName>().Name = shipName.text;
+            SceneManager.LoadScene("Craft");
+        }
     }
 
 

@@ -89,6 +89,13 @@ public class CraftCam : MonoBehaviour
     }
 
 
+    public void SaveNquit()
+    {
+        SaveAs();
+        ExitToMenu();
+    }
+
+
     public void Test()
     {
         if (ShipName.text == "")
@@ -172,7 +179,9 @@ public class CraftCam : MonoBehaviour
         }
         else
         {
-            ShipName.text = FindObjectOfType<DontDestroyLoadName>().Name;
+            DontDestroyLoadName newship = FindObjectOfType<DontDestroyLoadName>();
+            ShipName.text = newship.Name;
+            Destroy(newship.gameObject);
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
         }
     }

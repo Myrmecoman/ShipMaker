@@ -8,6 +8,6 @@ public class GizmoAngle : MonoBehaviour
 
     void Update()
     {
-        
+        transform.eulerAngles = new Vector3(0, -copyRot.eulerAngles.y, 0);
     }
 }

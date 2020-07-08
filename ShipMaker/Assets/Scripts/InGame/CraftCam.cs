@@ -11,6 +11,9 @@ public class CraftCam : MonoBehaviour
     public Text ShipName;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
+    public Image Cross;
+    public Sprite CrossBlack;
+    public Sprite CrossRed;
 
     private float CamRotVal;
     private float speed = 5;
@@ -199,6 +202,11 @@ public class CraftCam : MonoBehaviour
     {
         if (LockMove)
             return;
+
+        if (AltHold && Cross.sprite != CrossRed)
+            Cross.sprite = CrossRed;
+        else if(!AltHold && Cross.sprite != CrossBlack)
+            Cross.sprite = CrossBlack;
 
         // rotation and movements
         if (!GravitationCenter)

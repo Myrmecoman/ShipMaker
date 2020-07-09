@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,13 +12,16 @@ public class ShipController : MonoBehaviour
     public Transform cam;
     public float Sensivity = 0.2f;
 
+    private string PrefixStr;
     private float maxiX = 0;
     private float miniX = 0;
     private float maxiY = 0;
     private float miniY = 0;
     private float maxiZ = 0;
     private float miniZ = 0;
-    private float dragToApply = 0; 
+    private float dragToApply = 0;
+    private uint Power = 0;
+    private List<Propeller> propellers = new List<Propeller>();
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -110,8 +114,9 @@ public class ShipController : MonoBehaviour
                 if (float.Parse(posz) > maxiZ)
                     maxiZ = float.Parse(posz);
 
+                UpdatePrefix(id);
                 Instantiate(
-                    Resources.Load("Craft/Cubes/" + id, typeof(GameObject)),
+                    Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
                     transform);
@@ -131,6 +136,14 @@ public class ShipController : MonoBehaviour
                 dragToApply += children[i].GetComponent<Floater>().floaterCount;
                 children[i].GetComponentInChildren<Floater>().rb = rb;
             }
+            if (children[i].GetComponent<ChimneyStat>())
+            {
+                Power += children[i].GetComponentInChildren<ChimneyStat>().Power;
+            }
+            if (children[i].GetComponent<Propeller>())
+            {
+                propellers.Add(children[i].GetComponentInChildren<Propeller>());
+            }
         }
 
         // set camera center
@@ -142,6 +155,31 @@ public class ShipController : MonoBehaviour
         // tweaks to stabilise the shits
         rb.drag = dragToApply * 0.15f;
         rb.angularDrag = dragToApply * 0.1f;
+    }
+
+
+    private void UpdatePrefix(string id)
+    {
+        if (int.Parse(id) < 200)
+        {
+            PrefixStr = "Cubes/";
+            return;
+        }
+        if (int.Parse(id) < 400)
+        {
+            PrefixStr = "Weapons/";
+            return;
+        }
+        if (int.Parse(id) < 600)
+        {
+            PrefixStr = "Engines/";
+            return;
+        }
+        if (int.Parse(id) < 800)
+        {
+            PrefixStr = "Cosmetics/";
+            return;
+        }
     }
 
 
@@ -168,6 +206,10 @@ public class ShipController : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        foreach (Propeller prop in propellers)
+        {
+            if(prop.transform.position.y <= 0)
+                rb.AddForceAtPosition(prop.transform.forward * Power / (1000 * propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+        }
     }
 }

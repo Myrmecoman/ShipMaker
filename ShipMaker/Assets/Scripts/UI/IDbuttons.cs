@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 public class IDbuttons : MonoBehaviour
@@ -8,6 +9,8 @@ public class IDbuttons : MonoBehaviour
 
     public void CraftCallID()
     {
-        FindObjectOfType<CraftCam>().SelectedCubeID = Id.ToString();
+        CraftCam cam = FindObjectOfType<CraftCam>();
+        cam.SelectedID = Id.ToString();
+        cam.SelectedElement.sprite = transform.GetChild(0).GetComponent<Image>().sprite;
     }
 }

@@ -14,6 +14,7 @@ public class CraftCam : MonoBehaviour
     public Image Cross;
     public Sprite CrossBlack;
     public Sprite CrossRed;
+    public Image SelectedElement;
 
     private float CamRotVal;
     private float speed = 5;
@@ -21,6 +22,7 @@ public class CraftCam : MonoBehaviour
     private bool LockMove = false;
     private SaveLoad saveNload;
     private string fileValueStored;
+    private string PrefixStr;
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -28,7 +30,7 @@ public class CraftCam : MonoBehaviour
     [HideInInspector] public Vector2 WantScroll = Vector2.zero;
     [HideInInspector] public bool RightClickHold;
     [HideInInspector] public bool AltHold;
-    [HideInInspector] public string SelectedCubeID = "1";
+    [HideInInspector] public string SelectedID = "1";
 
 
     #region Input Functions
@@ -37,8 +39,15 @@ public class CraftCam : MonoBehaviour
     {
         // cursor usual things
         if (Cursor.lockState == CursorLockMode.Locked)
+        {
             Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = Cursor.lockState == CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         LockMove = !LockMove;
     }
 
@@ -58,7 +67,10 @@ public class CraftCam : MonoBehaviour
                 // check if there is already something
                 Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
                 if (hitColliders.Length == 0)
-                    Instantiate(Resources.Load("Craft/Cubes/" + SelectedCubeID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                {
+                    UpdatePrefix();
+                    Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                }
             }
         }
     }
@@ -115,7 +127,8 @@ public class CraftCam : MonoBehaviour
 
     void Awake()
     {
-        SelectedCubeID = "1";
+        SelectedID = "1";
+        PrefixStr = "Cubes/";
 
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
@@ -174,8 +187,10 @@ public class CraftCam : MonoBehaviour
                     if (nb1 == 2 && nb2 == 2)
                         rotz += line[j];
                 }
+                SelectedID = id;
+                UpdatePrefix();
                 Instantiate(
-                    Resources.Load("Craft/Cubes/" + id, typeof(GameObject)),
+                    Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)));
             }
@@ -186,6 +201,31 @@ public class CraftCam : MonoBehaviour
             ShipName.text = newship.Name;
             Destroy(newship.gameObject);
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
+        }
+    }
+
+
+    private void UpdatePrefix()
+    {
+        if (int.Parse(SelectedID) < 200)
+        {
+            PrefixStr = "Cubes/";
+            return;
+        }
+        if (int.Parse(SelectedID) < 400)
+        {
+            PrefixStr = "Weapons/";
+            return;
+        }
+        if (int.Parse(SelectedID) < 600)
+        {
+            PrefixStr = "Engines/";
+            return;
+        }
+        if (int.Parse(SelectedID) < 800)
+        {
+            PrefixStr = "Cosmetics/";
+            return;
         }
     }
 

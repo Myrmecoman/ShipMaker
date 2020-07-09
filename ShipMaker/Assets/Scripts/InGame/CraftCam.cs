@@ -66,7 +66,7 @@ public class CraftCam : MonoBehaviour
             {
                 // check if there is already something
                 Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
-                if (hitColliders.Length == 0)
+                if (hitColliders.Length == 0 && !hit.collider.CompareTag("CantBuildOn"))
                 {
                     UpdatePrefix();
                     Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);

@@ -209,7 +209,7 @@ public class ShipController : MonoBehaviour
         foreach (Propeller prop in propellers)
         {
             if(prop.transform.position.y <= 0)
-                rb.AddForceAtPosition(prop.transform.forward * Power / (1000 * propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+                rb.AddForceAtPosition(prop.transform.forward * Power / (500 * propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
         }
     }
 }

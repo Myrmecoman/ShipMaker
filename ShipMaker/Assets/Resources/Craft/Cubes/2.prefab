@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 2
+  Weight: 4
 --- !u!33 &4509333484405494457
 MeshFilter:
   m_ObjectHideFlags: 0

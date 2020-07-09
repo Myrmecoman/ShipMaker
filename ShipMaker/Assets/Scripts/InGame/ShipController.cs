@@ -19,7 +19,6 @@ public class ShipController : MonoBehaviour
     private float miniY = 0;
     private float maxiZ = 0;
     private float miniZ = 0;
-    private float dragToApply = 0;
     private uint Power = 0;
     private List<Propeller> propellers = new List<Propeller>();
 
@@ -133,17 +132,14 @@ public class ShipController : MonoBehaviour
             if (children[i].GetComponent<Floater>())
             {
                 children[i].GetComponent<Floater>().enabled = true;
-                dragToApply += children[i].GetComponent<Floater>().floaterCount;
                 children[i].GetComponentInChildren<Floater>().rb = rb;
             }
+            if (children[i].GetComponent<ID>())
+                rb.mass += children[i].GetComponent<ID>().Weight;
             if (children[i].GetComponent<ChimneyStat>())
-            {
                 Power += children[i].GetComponentInChildren<ChimneyStat>().Power;
-            }
             if (children[i].GetComponent<Propeller>())
-            {
                 propellers.Add(children[i].GetComponentInChildren<Propeller>());
-            }
         }
 
         // set camera center
@@ -153,8 +149,8 @@ public class ShipController : MonoBehaviour
         cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
 
         // tweaks to stabilise the shits
-        rb.drag = dragToApply * 0.15f;
-        rb.angularDrag = dragToApply * 0.1f;
+        rb.drag = rb.mass * 0.2f;
+        rb.angularDrag = rb.mass * 0.1f;
     }
 
 
@@ -209,7 +205,7 @@ public class ShipController : MonoBehaviour
         foreach (Propeller prop in propellers)
         {
             if(prop.transform.position.y <= 0)
-                rb.AddForceAtPosition(prop.transform.forward * Power / (500 * propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+                rb.AddForceAtPosition(prop.transform.forward * 20 * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
         }
     }
 }

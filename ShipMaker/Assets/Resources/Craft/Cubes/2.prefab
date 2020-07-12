@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 2
-  Weight: 4
+  Weight: 2
+  Volume: 1
 --- !u!33 &4509333484405494457
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -155,6 +156,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
-  floaterCount: 0.2
+  floaterCount: 0.3
   WaterDrag: 0.99
   WaterAngularDrag: 0.5

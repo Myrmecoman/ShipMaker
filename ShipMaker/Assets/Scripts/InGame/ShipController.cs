@@ -21,6 +21,7 @@ public class ShipController : MonoBehaviour
     private float miniZ = 0;
     private uint Power = 0;
     private List<Propeller> propellers = new List<Propeller>();
+    private List<Rudder> rudders = new List<Rudder>();
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -140,6 +141,8 @@ public class ShipController : MonoBehaviour
                 Power += children[i].GetComponentInChildren<ChimneyStat>().Power;
             if (children[i].GetComponent<Propeller>())
                 propellers.Add(children[i].GetComponentInChildren<Propeller>());
+            if (children[i].GetComponent<Rudder>())
+                rudders.Add(children[i].GetComponentInChildren<Rudder>());
         }
 
         // set camera center
@@ -206,6 +209,11 @@ public class ShipController : MonoBehaviour
         {
             if(prop.transform.position.y <= 0)
                 rb.AddForceAtPosition(prop.transform.forward * 20 * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+        }
+        foreach (Rudder rud in rudders)
+        {
+            if (rud.transform.position.y <= 0)
+                rb.AddForceAtPosition(rud.transform.right * 1000 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
         }
     }
 }

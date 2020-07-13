@@ -3,8 +3,5 @@
 
 public class Propeller : MonoBehaviour
 {
-    public void Propel()
-    {
-
-    }
+    
 }

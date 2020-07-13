@@ -11,7 +11,9 @@ public class ShipController : MonoBehaviour
     public Transform camRot;
     public Transform cam;
     public float Sensivity = 0.2f;
+    public Transform VirtualProp;
 
+    private bool LockMove = false;
     private string PrefixStr;
     private float maxiX = 0;
     private float miniX = 0;
@@ -20,6 +22,7 @@ public class ShipController : MonoBehaviour
     private float maxiZ = 0;
     private float miniZ = 0;
     private uint Power = 0;
+    private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
     private List<Rudder> rudders = new List<Rudder>();
 
@@ -35,7 +38,18 @@ public class ShipController : MonoBehaviour
 
     public void PressEscape()
     {
-        
+        // cursor usual things
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        LockMove = !LockMove;
     }
 
     #endregion
@@ -49,7 +63,7 @@ public class ShipController : MonoBehaviour
             string str = obj.fileValue;
             Destroy(obj.gameObject);
             StringReader reader = new StringReader(str);
-            reader.ReadLine();
+            FindObjectOfType<TestUI>().load = reader.ReadLine();
             while (true)
             {
                 string line = reader.ReadLine();
@@ -135,15 +149,20 @@ public class ShipController : MonoBehaviour
                 children[i].GetComponent<Floater>().enabled = true;
                 children[i].GetComponentInChildren<Floater>().rb = rb;
             }
+
+            if (children[i].GetComponent<ChimneyStat>())
+                chimneys.Add(children[i].GetComponentInChildren<ChimneyStat>());
+
             if (children[i].GetComponent<ID>())
                 rb.mass += children[i].GetComponent<ID>().Weight;
-            if (children[i].GetComponent<ChimneyStat>())
-                Power += children[i].GetComponentInChildren<ChimneyStat>().Power;
+            
             if (children[i].GetComponent<Propeller>())
                 propellers.Add(children[i].GetComponentInChildren<Propeller>());
+
             if (children[i].GetComponent<Rudder>())
                 rudders.Add(children[i].GetComponentInChildren<Rudder>());
         }
+        UpdateChimneys();
 
         // set camera center
         camPosUpdate.localPosition = new Vector3((miniX + maxiX) / 2, (miniY + maxiY) / 2, (miniZ + maxiZ) / 2);
@@ -151,7 +170,7 @@ public class ShipController : MonoBehaviour
         camRot.localEulerAngles = new Vector3(20, 0, 0);
         cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
 
-        // tweaks to stabilise the shits
+        // tweaks to stabilise the shit
         rb.drag = rb.mass * 0.2f;
         rb.angularDrag = rb.mass * 0.1f;
     }
@@ -182,6 +201,14 @@ public class ShipController : MonoBehaviour
     }
 
 
+    public void UpdateChimneys()
+    {
+        Power = 0;
+        foreach(ChimneyStat ch in chimneys)
+            Power += ch.Power;
+    }
+
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -191,29 +218,28 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
-        camRot.position = camPosUpdate.position;
-        camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
-
-        if(Input.GetKeyDown(KeyCode.X))
+        if (!LockMove)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            SceneManager.LoadScene("Menus");
+            camRot.position = camPosUpdate.position;
+            camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
         }
     }
 
 
     void FixedUpdate()
     {
-        foreach (Propeller prop in propellers)
+        if (!LockMove)
         {
-            if(prop.transform.position.y <= 0)
-                rb.AddForceAtPosition(prop.transform.forward * 20 * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
-        }
-        foreach (Rudder rud in rudders)
-        {
-            if (rud.transform.position.y <= 0)
-                rb.AddForceAtPosition(rud.transform.right * 1000 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+            foreach (Propeller prop in propellers)
+            {
+                if (prop.transform.position.y <= 0 && prop.Activated)
+                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * 20 * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+            }
+            foreach (Rudder rud in rudders)
+            {
+                if (rud.transform.position.y <= 0 && rud.Activated)
+                    rb.AddForceAtPosition(rud.transform.right * 1000 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+            }
         }
     }
 }

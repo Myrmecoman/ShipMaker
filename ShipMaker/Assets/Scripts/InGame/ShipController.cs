@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class ShipController : MonoBehaviour
@@ -11,7 +10,6 @@ public class ShipController : MonoBehaviour
     public Transform camRot;
     public Transform cam;
     public float Sensivity = 0.2f;
-    public Transform VirtualProp;
 
     private bool LockMove = false;
     private string PrefixStr;
@@ -169,10 +167,6 @@ public class ShipController : MonoBehaviour
         camRot.localPosition = camPosUpdate.localPosition;
         camRot.localEulerAngles = new Vector3(20, 0, 0);
         cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
-
-        // tweaks to stabilise the shit
-        rb.drag = rb.mass * 0.2f;
-        rb.angularDrag = rb.mass * 0.1f;
     }
 
 
@@ -233,12 +227,12 @@ public class ShipController : MonoBehaviour
             foreach (Propeller prop in propellers)
             {
                 if (prop.transform.position.y <= 0 && prop.Activated)
-                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * 20 * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
             }
             foreach (Rudder rud in rudders)
             {
                 if (rud.transform.position.y <= 0 && rud.Activated)
-                    rb.AddForceAtPosition(rud.transform.right * 1000 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+                    rb.AddForceAtPosition(rud.transform.right * 200 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
             }
         }
     }

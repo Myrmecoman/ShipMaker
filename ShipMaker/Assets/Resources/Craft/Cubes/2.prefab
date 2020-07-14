@@ -157,5 +157,5 @@ MonoBehaviour:
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
   floaterCount: 0.3
-  WaterDrag: 0.99
-  WaterAngularDrag: 0.5
+  WaterDrag: 0.01
+  WaterAngularDrag: 0.1

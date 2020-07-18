@@ -122,6 +122,14 @@ public class CraftCam : MonoBehaviour
         SceneManager.LoadScene("TestScene");
     }
 
+
+    public void DeleteThis()
+    {
+        string s = Application.persistentDataPath + "\\" + ShipName.text + ".chancla";
+        File.Delete(s);
+        ExitToMenu();
+    }
+
     #endregion
 
 

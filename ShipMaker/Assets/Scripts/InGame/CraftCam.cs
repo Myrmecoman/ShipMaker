@@ -23,6 +23,8 @@ public class CraftCam : MonoBehaviour
     private SaveLoad saveNload;
     private string fileValueStored;
     private string PrefixStr;
+    [HideInInspector] public string SelectedID = "1";
+    [HideInInspector] public uint TotalVolume = 0;
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -30,7 +32,6 @@ public class CraftCam : MonoBehaviour
     [HideInInspector] public Vector2 WantScroll = Vector2.zero;
     [HideInInspector] public bool RightClickHold;
     [HideInInspector] public bool AltHold;
-    [HideInInspector] public string SelectedID = "1";
 
 
     #region Input Functions
@@ -135,9 +136,6 @@ public class CraftCam : MonoBehaviour
 
     void Awake()
     {
-        SelectedID = "1";
-        PrefixStr = "Cubes/";
-
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
@@ -210,6 +208,9 @@ public class CraftCam : MonoBehaviour
             Destroy(newship.gameObject);
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
         }
+
+        SelectedID = "1";
+        PrefixStr = "Cubes/";
     }
 
 

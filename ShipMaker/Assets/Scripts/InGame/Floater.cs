@@ -7,8 +7,10 @@ public class Floater : MonoBehaviour
     public float DepthBeforeSubmerged = 1;
     public float DisplacementAmount = 3;
     public float floaterCount = 1;
-    public float WaterDrag = 0.99f;
-    public float WaterAngularDrag = 0.5f;
+    //public float WaterDrag = 0.99f;
+    //public float WaterAngularDrag = 0.5f;
+
+    private float displacementMultiplier;
 
 
     void FixedUpdate()
@@ -16,10 +18,11 @@ public class Floater : MonoBehaviour
         rb.AddForceAtPosition(Physics.gravity / floaterCount, transform.position, ForceMode.Acceleration);
         if(transform.position.y < 0)
         {
-            float displacementMultiplier = Mathf.Clamp01(-transform.position.y / DepthBeforeSubmerged) * DisplacementAmount;
+            displacementMultiplier = Mathf.Clamp01(-transform.position.y / DepthBeforeSubmerged) * DisplacementAmount;
             rb.AddForceAtPosition(new Vector3(0, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0), transform.position, ForceMode.Acceleration);
-            rb.AddForce(displacementMultiplier * -rb.velocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
-            rb.AddTorque(displacementMultiplier * -rb.angularVelocity * WaterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            // code to calculate drag for each cube ** NOT OPTIMIZED **
+            //rb.AddForce(displacementMultiplier * -rb.velocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            //rb.AddTorque(displacementMultiplier * -rb.angularVelocity * WaterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
         }
     }
 }

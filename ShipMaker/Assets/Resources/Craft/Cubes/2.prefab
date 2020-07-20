@@ -156,6 +156,4 @@ MonoBehaviour:
   rb: {fileID: 0}
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
-  floaterCount: 0.3
-  WaterDrag: 0.01
-  WaterAngularDrag: 0.1
+  floaterCount: 1

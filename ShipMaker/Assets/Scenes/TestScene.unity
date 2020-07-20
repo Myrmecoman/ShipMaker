@@ -1101,8 +1101,8 @@ Rigidbody:
   m_GameObject: {fileID: 639222401399833649}
   serializedVersion: 2
   m_Mass: 0.0000001
-  m_Drag: 0.01
-  m_AngularDrag: 0.01
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1141,7 +1141,6 @@ MonoBehaviour:
   camRot: {fileID: 1453988108}
   cam: {fileID: 6111219416352815165}
   Sensivity: 0.2
-  VirtualProp: {fileID: 214548363}
   WantMove: {x: 0, y: 0}
   WantMouse: {x: 0, y: 0}
   WantScroll: {x: 0, y: 0}

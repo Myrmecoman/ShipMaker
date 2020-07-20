@@ -195,12 +195,12 @@ PrefabInstance:
     - target: {fileID: 4104485805104841133, guid: 6fac21d4f8f475846a2b86cc20ee14bd,
         type: 3}
       propertyPath: WaterDrag
-      value: 0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4104485805104841133, guid: 6fac21d4f8f475846a2b86cc20ee14bd,
         type: 3}
       propertyPath: WaterAngularDrag
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fac21d4f8f475846a2b86cc20ee14bd, type: 3}

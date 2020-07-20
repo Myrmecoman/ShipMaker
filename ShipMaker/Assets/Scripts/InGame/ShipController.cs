@@ -58,6 +58,7 @@ public class ShipController : MonoBehaviour
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
+            float NbElements = 0;
             string str = obj.fileValue;
             Destroy(obj.gameObject);
             StringReader reader = new StringReader(str);
@@ -126,6 +127,7 @@ public class ShipController : MonoBehaviour
                 if (float.Parse(posz) > maxiZ)
                     maxiZ = float.Parse(posz);
 
+                NbElements++;
                 UpdatePrefix(id);
                 Instantiate(
                     Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
@@ -134,9 +136,15 @@ public class ShipController : MonoBehaviour
                     transform);
             }
             transform.position = new Vector3(0, -miniY, 0);
+
+            // drag tweaks
+            //rb.drag = Mathf.Clamp(NbElements / 300f, 1.3f, 999f);
+            //rb.angularDrag = Mathf.Clamp(NbElements / 30f, 10f, 999f);
         }
         else
+        {
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity, transform);
+        }
 
         // manage children
         Transform[] children = GetComponentsInChildren<Transform>();
@@ -160,6 +168,9 @@ public class ShipController : MonoBehaviour
             if (children[i].GetComponent<Rudder>())
                 rudders.Add(children[i].GetComponentInChildren<Rudder>());
         }
+
+        
+
         UpdateChimneys();
 
         // set camera center

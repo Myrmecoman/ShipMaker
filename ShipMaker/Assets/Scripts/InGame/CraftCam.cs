@@ -9,6 +9,7 @@ public class CraftCam : MonoBehaviour
     public Transform Cam;
     public float Sensivity;
     public Text ShipName;
+    public Text VolumeText;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
     public Image Cross;
@@ -60,9 +61,15 @@ public class CraftCam : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30, layermask))
         {
-            // Add or remove
+            // remove
             if (AltHold && hit.collider.GetComponent<ID>().Id != 0)
-                Destroy(hit.collider.gameObject);
+            {
+                GameObject destroyed = hit.collider.gameObject;
+                Destroy(destroyed);
+                TotalVolume -= destroyed.GetComponent<ID>().Volume;
+                VolumeText.text = "Total volume : " + TotalVolume;
+            }
+            // add
             if(!AltHold)
             {
                 // check if there is already something
@@ -70,7 +77,9 @@ public class CraftCam : MonoBehaviour
                 if (hitColliders.Length == 0 && !hit.collider.CompareTag("CantBuildOn"))
                 {
                     UpdatePrefix();
-                    Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity);
+                    GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity) as GameObject;
+                    TotalVolume += instantiated.GetComponent<ID>().Volume;
+                    VolumeText.text = "Total volume : " + TotalVolume;
                 }
             }
         }
@@ -195,10 +204,11 @@ public class CraftCam : MonoBehaviour
                 }
                 SelectedID = id;
                 UpdatePrefix();
-                Instantiate(
+                GameObject instantiated = Instantiate(
                     Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
-                    Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)));
+                    Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz))) as GameObject;
+                TotalVolume += instantiated.GetComponent<ID>().Volume;
             }
         }
         else
@@ -209,6 +219,7 @@ public class CraftCam : MonoBehaviour
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
         }
 
+        VolumeText.text = "Total volume : " + TotalVolume;
         SelectedID = "1";
         PrefixStr = "Cubes/";
     }

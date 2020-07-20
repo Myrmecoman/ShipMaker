@@ -212,9 +212,9 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
+        camRot.position = camPosUpdate.position;
         if (!LockMove)
         {
-            camRot.position = camPosUpdate.position;
             camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
         }
     }

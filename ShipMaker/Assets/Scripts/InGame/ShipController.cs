@@ -53,6 +53,8 @@ public class ShipController : MonoBehaviour
     #endregion
 
 
+    #region Initialization
+
     void Awake()
     {
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
@@ -180,6 +182,8 @@ public class ShipController : MonoBehaviour
         cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
     }
 
+    #endregion
+
 
     private void UpdatePrefix(string id)
     {
@@ -224,6 +228,7 @@ public class ShipController : MonoBehaviour
     void Update()
     {
         camRot.position = camPosUpdate.position;
+
         if (!LockMove)
         {
             camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);

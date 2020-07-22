@@ -1195,6 +1195,7 @@ GameObject:
   - component: {fileID: 6111219416352815166}
   - component: {fileID: 6111219416352815160}
   - component: {fileID: 6111219416352815139}
+  - component: {fileID: 6111219416352815162}
   m_Layer: 0
   m_Name: MainCam
   m_TagString: MainCamera
@@ -1202,6 +1203,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6111219416352815162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6111219416352815161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65d023fc48dd53489d8d499e05fc446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 1309069310}
+  normal: {fileID: 11400000, guid: 7ba2b06fb32e5274aad88925a5b8d3f5, type: 2}
+  underwater: {fileID: 11400000, guid: 2802908d9b98bde4593ba6f2f04a0f87, type: 2}
 --- !u!4 &6111219416352815165
 Transform:
   m_ObjectHideFlags: 0

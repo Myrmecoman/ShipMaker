@@ -251,10 +251,11 @@ public class ShipController : MonoBehaviour
                 foreach (Rudder rud in rudders)
                 {
                     if (rud.transform.position.y <= 0 && rud.Activated)
-                        rb.AddForceAtPosition(rud.transform.right * 400 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+                        rb.AddForceAtPosition(rud.transform.right * rud.Strength * 600 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
                 }
             }
         }
-        rb.constraints = RigidbodyConstraints.FreezeRotationY;
+        if(rb.constraints != RigidbodyConstraints.FreezeRotationY)
+            rb.constraints = RigidbodyConstraints.FreezeRotationY;
     }
 }

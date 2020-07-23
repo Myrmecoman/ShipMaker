@@ -21,6 +21,7 @@ public class ShipController : MonoBehaviour
     private float miniY = 0;
     private float maxiZ = 0;
     private float miniZ = 0;
+    private float CamRotVal;
     private uint Power = 0;
     private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
@@ -236,12 +237,12 @@ public class ShipController : MonoBehaviour
 
         if (!LockMove)
         {
-            camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
+            CamRotVal = Mathf.Clamp(CamRotVal - WantMouse.y * Sensivity, -89, 89);
+            camRot.eulerAngles = new Vector3(360 + CamRotVal, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
 
             if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, layermask))
             {
-                Debug.Log("i");
-                target.position = hit.transform.position;
+                target.position = hit.point;
             }
         }
     }

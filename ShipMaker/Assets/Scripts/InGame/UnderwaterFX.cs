@@ -7,11 +7,12 @@ public class UnderwaterFX : MonoBehaviour
     public PostProcessVolume volume;
     public PostProcessProfile normal;
     public PostProcessProfile underwater;
+    public Transform Depth;
 
 
     void Update()
     {
-        if (transform.position.y < 0)
+        if (transform.position.y <= 0)
         {
             if (volume.profile != underwater)
             {
@@ -24,5 +25,7 @@ public class UnderwaterFX : MonoBehaviour
             volume.profile = normal;
             RenderSettings.fog = false;
         }
+
+        Depth.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 }

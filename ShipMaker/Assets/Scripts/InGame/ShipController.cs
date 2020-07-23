@@ -9,7 +9,9 @@ public class ShipController : MonoBehaviour
     public Transform camPosUpdate;
     public Transform camRot;
     public Transform cam;
+    public Transform target;
     public float Sensivity = 0.2f;
+    public LayerMask layermask;
 
     private bool LockMove = false;
     private string PrefixStr;
@@ -158,6 +160,9 @@ public class ShipController : MonoBehaviour
                 children[i].GetComponentInChildren<Floater>().rb = rb;
             }
 
+            if (children[i].GetComponent<TurretController>())
+                children[i].GetComponent<TurretController>().enabled = true;
+
             if (children[i].GetComponent<ChimneyStat>())
                 chimneys.Add(children[i].GetComponentInChildren<ChimneyStat>());
 
@@ -179,7 +184,7 @@ public class ShipController : MonoBehaviour
         camPosUpdate.localPosition = new Vector3((miniX + maxiX) / 2, (miniY + maxiY) / 2, (miniZ + maxiZ) / 2);
         camRot.localPosition = camPosUpdate.localPosition;
         camRot.localEulerAngles = new Vector3(20, 0, 0);
-        cam.localPosition = new Vector3(0, 0, -(miniZ + maxiZ) / 2 - 20);
+        cam.localPosition = new Vector3(0, 5, -(miniZ + maxiZ) / 2 - 20);
     }
 
     #endregion
@@ -232,6 +237,12 @@ public class ShipController : MonoBehaviour
         if (!LockMove)
         {
             camRot.eulerAngles = new Vector3(camRot.eulerAngles.x - WantMouse.y * Sensivity, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
+
+            if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, layermask))
+            {
+                Debug.Log("i");
+                target.position = hit.transform.position;
+            }
         }
     }
 

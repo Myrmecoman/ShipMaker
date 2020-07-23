@@ -26,6 +26,7 @@ public class CraftCam : MonoBehaviour
     private string PrefixStr;
     [HideInInspector] public string SelectedID = "1";
     [HideInInspector] public uint TotalVolume = 0;
+    [HideInInspector] public uint TotalParts = 0;
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -62,24 +63,41 @@ public class CraftCam : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30, layermask))
         {
             // remove
-            if (AltHold && hit.collider.GetComponent<ID>().Id != 0)
+            if (AltHold && TotalParts > 1)
             {
                 GameObject destroyed = hit.collider.gameObject;
                 Destroy(destroyed);
                 TotalVolume -= destroyed.GetComponent<ID>().Volume;
                 VolumeText.text = "Total volume : " + TotalVolume;
+                TotalParts--;
             }
             // add
             if(!AltHold)
             {
-                // check if there is already something
+                // check if there is already something, and if allowed to build here
                 Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
-                if (hitColliders.Length == 0 && !hit.collider.CompareTag("CantBuildOn"))
+                
+                bool Allowed = false;
+                if (hit.normal.z > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[0])
+                    Allowed = true;
+                if (hit.normal.z < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[1])
+                    Allowed = true;
+                if (hit.normal.y > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[2])
+                    Allowed = true;
+                if (hit.normal.y < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[3])
+                    Allowed = true;
+                if (hit.normal.x > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[4])
+                    Allowed = true;
+                if (hit.normal.x < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[5])
+                    Allowed = true;
+
+                if (hitColliders.Length == 0 && Allowed)
                 {
                     UpdatePrefix();
                     GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity) as GameObject;
                     TotalVolume += instantiated.GetComponent<ID>().Volume;
                     VolumeText.text = "Total volume : " + TotalVolume;
+                    TotalParts++;
                 }
             }
         }
@@ -209,6 +227,7 @@ public class CraftCam : MonoBehaviour
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz))) as GameObject;
                 TotalVolume += instantiated.GetComponent<ID>().Volume;
+                TotalParts++;
             }
         }
         else
@@ -217,10 +236,11 @@ public class CraftCam : MonoBehaviour
             ShipName.text = newship.Name;
             Destroy(newship.gameObject);
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);
+            TotalParts = 1;
         }
 
         VolumeText.text = "Total volume : " + TotalVolume;
-        SelectedID = "1";
+        SelectedID = "0";
         PrefixStr = "Cubes/";
     }
 

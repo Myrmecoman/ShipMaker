@@ -264,6 +264,7 @@ MonoBehaviour:
   Id: 200
   Weight: 1
   Volume: 1
+  CanBuild: 000000010000
 --- !u!114 &7492939087366802077
 MonoBehaviour:
   m_ObjectHideFlags: 0

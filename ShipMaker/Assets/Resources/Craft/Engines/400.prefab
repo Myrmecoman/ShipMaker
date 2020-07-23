@@ -58,6 +58,7 @@ MonoBehaviour:
   Id: 400
   Weight: 2
   Volume: 2
+  CanBuild: 000000010000
 --- !u!23 &5561178654340609753
 MeshRenderer:
   m_ObjectHideFlags: 0

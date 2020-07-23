@@ -259,6 +259,7 @@ MonoBehaviour:
   Id: 420
   Weight: 1
   Volume: 1
+  CanBuild: 010000000000
 --- !u!65 &6699731163741210744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -284,6 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6384c6ec407a545a12272ff857ba0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PowerMultiplier: 1
+  Activated: 1
 --- !u!114 &1382843943941809749
 MonoBehaviour:
   m_ObjectHideFlags: 0

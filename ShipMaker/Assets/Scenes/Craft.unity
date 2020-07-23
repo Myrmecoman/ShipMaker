@@ -2703,7 +2703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41d45fcca167de4f99f316f3a0d9237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: 1
 --- !u!1 &916427040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,7 +3727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41d45fcca167de4f99f316f3a0d9237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 1
+  Id: 0
 --- !u!1 &1393596052
 GameObject:
   m_ObjectHideFlags: 0
@@ -6344,6 +6344,7 @@ MonoBehaviour:
   SelectedElement: {fileID: 1053810919}
   SelectedID: 1
   TotalVolume: 0
+  TotalParts: 0
   WantMove: {x: 0, y: 0}
   WantMouse: {x: 0, y: 0}
   WantScroll: {x: 0, y: 0}

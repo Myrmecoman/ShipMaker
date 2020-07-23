@@ -14,11 +14,15 @@ public class UnderwaterFX : MonoBehaviour
         if (transform.position.y < 0)
         {
             if (volume.profile != underwater)
+            {
                 volume.profile = underwater;
+                RenderSettings.fog = true;
+            }
         }
         else if (volume.profile != normal)
         {
             volume.profile = normal;
+            RenderSettings.fog = false;
         }
     }
 }

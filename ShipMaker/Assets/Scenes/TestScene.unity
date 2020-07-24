@@ -1409,7 +1409,6 @@ MonoBehaviour:
   normal: {fileID: 11400000, guid: 7ba2b06fb32e5274aad88925a5b8d3f5, type: 2}
   underwater: {fileID: 11400000, guid: 2802908d9b98bde4593ba6f2f04a0f87, type: 2}
   Depth: {fileID: 2678124500457686899}
-  WaterCollider: {fileID: 1797166555}
 --- !u!4 &6111219416352815165
 Transform:
   m_ObjectHideFlags: 0

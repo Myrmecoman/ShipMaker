@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 8310397541404400377}
   m_Layer: 0
   m_Name: 200
-  m_TagString: CantBuildOn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,6 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 50
   elevationSpeed: 40
+  MaxDepression: -5
+  MaxElevation: 70
   target: {fileID: 0}
   turret: {fileID: 5941402847195479881}
   gun: {fileID: 2314790393090648844}

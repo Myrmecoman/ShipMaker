@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Water Volume
   - IgnoreCraft
-  - CantBuildOn
   layers:
   - Default
   - TransparentFX

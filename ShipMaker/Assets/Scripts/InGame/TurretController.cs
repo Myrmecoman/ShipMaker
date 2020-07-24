@@ -5,9 +5,13 @@ public class TurretController : MonoBehaviour
 {
     public float rotationSpeed = 20;
     public float elevationSpeed = 20;
+    public float MaxDepression = -5;
+    public float MaxElevation = 70;
     public Transform target;
     public Transform turret;
     public Transform gun;
+
+    private float gunRotVal;
 
 
     private void Awake()

@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 1382843943941809749}
   m_Layer: 0
   m_Name: 420
-  m_TagString: CantBuildOn
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

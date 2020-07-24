@@ -109,7 +109,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0714, y: 0.2344, z: -0.1207}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2054857676001841239}
   m_Father: {fileID: 5941402847195479881}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,7 +143,7 @@ MeshRenderer:
   - {fileID: 3922792344113453488, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
   - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
   - {fileID: -2915196502935956116, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -3963241562183589234, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: -2915196502935956116, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
   - {fileID: -7613691057392440208, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -164,6 +165,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &1367994062066493654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054857676001841239}
+  m_Layer: 0
+  m_Name: bulletSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2054857676001841239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367994062066493654}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0714, y: 0.0175, z: 0.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2314790393090648844}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645843393419372396
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,9 +312,12 @@ MonoBehaviour:
   elevationSpeed: 40
   MaxDepression: -5
   MaxElevation: 70
+  reloadingTime: 1
   target: {fileID: 0}
   turret: {fileID: 5941402847195479881}
   gun: {fileID: 2314790393090648844}
+  Bullet: {fileID: 6019969733464064606, guid: f8965ba19c50b1649a8d4a06f8277095, type: 3}
+  BulletSpawn: {fileID: 2054857676001841239}
 --- !u!65 &8310397541404400377
 BoxCollider:
   m_ObjectHideFlags: 0

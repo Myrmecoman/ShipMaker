@@ -16,7 +16,9 @@ public class CraftCam : MonoBehaviour
     public Sprite CrossBlack;
     public Sprite CrossRed;
     public Image SelectedElement;
+    public GameObject ColliderDisplay;
 
+    private GameObject currentCol;
     private float CamRotVal;
     private float speed = 5;
     private GameObject GravitationCenter = null;
@@ -24,7 +26,7 @@ public class CraftCam : MonoBehaviour
     private SaveLoad saveNload;
     private string fileValueStored;
     private string PrefixStr;
-    [HideInInspector] public string SelectedID = "1";
+    [HideInInspector] public string SelectedID = "0";
     [HideInInspector] public uint TotalVolume = 0;
     [HideInInspector] public uint TotalParts = 0;
 
@@ -33,6 +35,7 @@ public class CraftCam : MonoBehaviour
     [HideInInspector] public Vector2 WantMouse = Vector2.zero;
     [HideInInspector] public Vector2 WantScroll = Vector2.zero;
     [HideInInspector] public bool RightClickHold;
+    [HideInInspector] public bool LeftClickHold;
     [HideInInspector] public bool AltHold;
 
 
@@ -282,6 +285,17 @@ public class CraftCam : MonoBehaviour
     {
         if (LockMove)
             return;
+
+        // display collider to user
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit ColHit, 30, layermask) && !ColHit.collider.transform.Find(ColliderDisplay.name))
+        {
+            if (currentCol)
+                Destroy(currentCol.gameObject);
+            currentCol = Instantiate(ColliderDisplay, ColHit.collider.transform.position + ColHit.collider.gameObject.GetComponent<BoxCollider>().center, ColHit.collider.transform.rotation, ColHit.collider.transform);
+            currentCol.transform.localScale = ColHit.collider.gameObject.GetComponent<BoxCollider>().size * 1.0001f;
+        }
+        else if(currentCol)
+            Destroy(currentCol);
 
         if (AltHold && Cross.sprite != CrossRed)
             Cross.sprite = CrossRed;

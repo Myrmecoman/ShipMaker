@@ -50,6 +50,7 @@ MonoBehaviour:
   Id: 1
   Weight: 2
   Volume: 1
+  CanBuild: 010101010101
 --- !u!33 &4509333484405494457
 MeshFilter:
   m_ObjectHideFlags: 0

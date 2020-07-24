@@ -6342,6 +6342,8 @@ MonoBehaviour:
   CrossBlack: {fileID: 21300000, guid: a2a7f9ccbed7b5143933bd952a7e547a, type: 3}
   CrossRed: {fileID: 21300000, guid: 7c5e50cff9047be4cb118068631ffa87, type: 3}
   SelectedElement: {fileID: 1053810919}
+  ColliderDisplay: {fileID: 6093083167039477050, guid: bd17050950036094e8da0e62054aabeb,
+    type: 3}
   SelectedID: 1
   TotalVolume: 0
   TotalParts: 0

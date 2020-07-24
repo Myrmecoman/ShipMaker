@@ -26,6 +26,7 @@ public class ShipController : MonoBehaviour
     private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
     private List<Rudder> rudders = new List<Rudder>();
+    private List<TurretController> turrets = new List<TurretController>();
 
     // Inputs
     [HideInInspector] public Vector2 WantMove = Vector2.zero;
@@ -158,23 +159,26 @@ public class ShipController : MonoBehaviour
             if (children[i].GetComponent<Floater>())
             {
                 children[i].GetComponent<Floater>().enabled = true;
-                children[i].GetComponentInChildren<Floater>().rb = rb;
+                children[i].GetComponent<Floater>().rb = rb;
             }
 
             if (children[i].GetComponent<TurretController>())
+            {
                 children[i].GetComponent<TurretController>().enabled = true;
-
-            if (children[i].GetComponent<ChimneyStat>())
-                chimneys.Add(children[i].GetComponentInChildren<ChimneyStat>());
+                turrets.Add(children[i].GetComponent<TurretController>());
+            }
 
             if (children[i].GetComponent<ID>())
                 rb.mass += children[i].GetComponent<ID>().Weight;
-            
+
+            if (children[i].GetComponent<ChimneyStat>())
+                chimneys.Add(children[i].GetComponent<ChimneyStat>());
+
             if (children[i].GetComponent<Propeller>())
-                propellers.Add(children[i].GetComponentInChildren<Propeller>());
+                propellers.Add(children[i].GetComponent<Propeller>());
 
             if (children[i].GetComponent<Rudder>())
-                rudders.Add(children[i].GetComponentInChildren<Rudder>());
+                rudders.Add(children[i].GetComponent<Rudder>());
         }
 
         
@@ -183,9 +187,9 @@ public class ShipController : MonoBehaviour
 
         // set camera center
         camPosUpdate.localPosition = new Vector3((miniX + maxiX) / 2, (miniY + maxiY) / 2, (miniZ + maxiZ) / 2);
-        camRot.localPosition = camPosUpdate.localPosition;
+        camRot.position = camPosUpdate.position;
         camRot.localEulerAngles = new Vector3(20, 0, 0);
-        cam.localPosition = new Vector3(0, 5, -(miniZ + maxiZ) / 2 - 20);
+        cam.localPosition = new Vector3(0, 5, -(maxiZ - miniZ) / 2 - 10);
     }
 
     #endregion
@@ -193,22 +197,23 @@ public class ShipController : MonoBehaviour
 
     private void UpdatePrefix(string id)
     {
-        if (int.Parse(id) < 200)
+        int parsed = int.Parse(id);
+        if (parsed < 200)
         {
             PrefixStr = "Cubes/";
             return;
         }
-        if (int.Parse(id) < 400)
+        if (parsed < 400)
         {
             PrefixStr = "Weapons/";
             return;
         }
-        if (int.Parse(id) < 600)
+        if (parsed < 600)
         {
             PrefixStr = "Engines/";
             return;
         }
-        if (int.Parse(id) < 800)
+        if (parsed < 800)
         {
             PrefixStr = "Cosmetics/";
             return;
@@ -240,10 +245,10 @@ public class ShipController : MonoBehaviour
             CamRotVal = Mathf.Clamp(CamRotVal - WantMouse.y * Sensivity, -89, 89);
             camRot.eulerAngles = new Vector3(360 + CamRotVal, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
 
-            if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, layermask))
-            {
+            if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, float.PositiveInfinity, layermask))
                 target.position = hit.point;
-            }
+            else
+                target.position = cam.position + cam.TransformDirection(Vector3.forward).normalized * 5000;
         }
     }
 
@@ -252,11 +257,16 @@ public class ShipController : MonoBehaviour
     {
         if (!LockMove)
         {
-            foreach (Propeller prop in propellers)
+            // propellers
+            if (WantMove.y != 0)
             {
-                if (prop.transform.position.y <= 0 && prop.Activated)
-                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+                foreach (Propeller prop in propellers)
+                {
+                    if (prop.transform.position.y <= 0 && prop.Activated)
+                        rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
+                }
             }
+            // rudders
             if (WantMove.x != 0)
             {
                 rb.constraints = RigidbodyConstraints.None;
@@ -266,7 +276,14 @@ public class ShipController : MonoBehaviour
                         rb.AddForceAtPosition(rud.transform.right * rud.Strength * 600 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
                 }
             }
+            // firing
+            if(LeftClickHold)
+            {
+                foreach(TurretController t in turrets)
+                    t.Shoot();
+            }
         }
+
         if(rb.constraints != RigidbodyConstraints.FreezeRotationY)
             rb.constraints = RigidbodyConstraints.FreezeRotationY;
     }

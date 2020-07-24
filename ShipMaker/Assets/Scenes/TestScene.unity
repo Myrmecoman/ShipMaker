@@ -1220,7 +1220,7 @@ MonoBehaviour:
   Sensivity: 0.2
   layermask:
     serializedVersion: 2
-    m_Bits: 1831
+    m_Bits: 16
   WantMove: {x: 0, y: 0}
   WantMouse: {x: 0, y: 0}
   WantScroll: {x: 0, y: 0}

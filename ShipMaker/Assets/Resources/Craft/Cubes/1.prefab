@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 1
+  hp: 10
   Weight: 2
   Volume: 1
   CanBuild: 010101010101

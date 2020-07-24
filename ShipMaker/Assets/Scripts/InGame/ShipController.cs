@@ -14,6 +14,7 @@ public class ShipController : MonoBehaviour
     public LayerMask layermask;
 
     private bool LockMove = false;
+    private float ChangedSensivity;
     private string PrefixStr;
     private float maxiX = 0;
     private float miniX = 0;
@@ -61,6 +62,7 @@ public class ShipController : MonoBehaviour
 
     void Awake()
     {
+        ChangedSensivity = Sensivity;
         DontDestroyLoad obj = FindObjectOfType<DontDestroyLoad>();
         if (obj)
         {
@@ -240,16 +242,24 @@ public class ShipController : MonoBehaviour
     {
         camRot.position = camPosUpdate.position;
 
-        if (!LockMove)
-        {
-            CamRotVal = Mathf.Clamp(CamRotVal - WantMouse.y * Sensivity, -89, 89);
-            camRot.eulerAngles = new Vector3(360 + CamRotVal, camRot.eulerAngles.y + WantMouse.x * Sensivity, 0);
+        if (LockMove)
+            return;
 
-            if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, float.PositiveInfinity, layermask))
-                target.position = hit.point;
-            else
-                target.position = cam.position + cam.TransformDirection(Vector3.forward).normalized * 5000;
-        }
+        // adapt sensivity to fov
+        ChangedSensivity = Sensivity * cam.GetComponent<Camera>().fieldOfView / 60;
+
+        // camera movements
+        CamRotVal = Mathf.Clamp(CamRotVal - WantMouse.y * ChangedSensivity, -89, 89);
+        camRot.eulerAngles = new Vector3(360 + CamRotVal, camRot.eulerAngles.y + WantMouse.x * ChangedSensivity, 0);
+
+        // change fov
+        cam.GetComponent<Camera>().fieldOfView = Mathf.Clamp(cam.GetComponent<Camera>().fieldOfView - WantScroll.y * 1 / 20, 10, 90);
+
+        // target for weaponery
+        if (Physics.Raycast(cam.position, cam.TransformDirection(Vector3.forward), out RaycastHit hit, float.PositiveInfinity, layermask))
+            target.position = hit.point;
+        else
+            target.position = cam.position + cam.TransformDirection(Vector3.forward).normalized * 1000;
     }
 
 

@@ -13,6 +13,7 @@ public class TurretController : MonoBehaviour
     public Transform gun;
     public GameObject Bullet;
     public Transform BulletSpawn;
+    public bool Activated = true;
 
     private float gunRotVal;
     private float currentTime = 0;
@@ -28,6 +29,9 @@ public class TurretController : MonoBehaviour
 
     void Update()
     {
+        if(!Activated)
+            return;
+
         if (currentTime > 0)
             currentTime -= Time.deltaTime;
 
@@ -60,10 +64,11 @@ public class TurretController : MonoBehaviour
 
     public void Shoot()
     {
-        if (currentTime > 0)
+        if (currentTime > 0 || !Activated)
             return;
 
         currentTime = reloadingTime;
         GameObject obj = Instantiate(Bullet, BulletSpawn.position, Quaternion.identity);
+        obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200, ForceMode.VelocityChange);
     }
 }

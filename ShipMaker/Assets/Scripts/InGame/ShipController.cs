@@ -11,6 +11,8 @@ public class ShipController : MonoBehaviour
     public Transform cam;
     public Transform target;
     public float Sensivity = 0.2f;
+    public SteerLerp steerUI;
+    public ThrottleLerp throttleUI;
     public LayerMask layermask;
 
     private bool LockMove = false;
@@ -53,6 +55,14 @@ public class ShipController : MonoBehaviour
             Cursor.visible = false;
         }
         LockMove = !LockMove;
+    }
+
+
+    public void MoveInput(Vector2 move)
+    {
+        Debug.Log("pressed");
+        throttleUI.input = move.y;
+        steerUI.input = move.x;
     }
 
     #endregion

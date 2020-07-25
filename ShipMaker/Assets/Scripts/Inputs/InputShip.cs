@@ -29,6 +29,8 @@ public class InputShip : MonoBehaviour
         // move
         controls.ShipControl.Movement.performed += _ => ship.WantMove = _.ReadValue<Vector2>();
         controls.ShipControl.Movement.canceled += _ => ship.WantMove = Vector2.zero;
+        // move but single frame
+        controls.ShipControl.Movement.performed += _ => ship.MoveInput(_.ReadValue<Vector2>());
         // look around
         controls.ShipControl.Look.performed += _ => ship.WantMouse = _.ReadValue<Vector2>();
         controls.ShipControl.Look.canceled += _ => ship.WantMouse = Vector2.zero;

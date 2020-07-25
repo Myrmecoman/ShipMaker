@@ -289,7 +289,10 @@ public class ShipController : MonoBehaviour
             foreach (Rudder rud in rudders)
             {
                 if (rud.transform.position.y <= 0 && rud.Activated)
+                {
                     rb.AddForceAtPosition(rud.transform.right * rud.Strength * 300 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+                    rud.dir = WantMove.x;
+                }
             }
         }
 

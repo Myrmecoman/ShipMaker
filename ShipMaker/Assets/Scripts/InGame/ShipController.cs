@@ -226,8 +226,11 @@ public class ShipController : MonoBehaviour
     public void UpdateChimneys()
     {
         Power = 0;
-        foreach(ChimneyStat ch in chimneys)
-            Power += ch.Power;
+        foreach (ChimneyStat ch in chimneys)
+        {
+            if(ch.Activated)
+                Power += ch.Power;
+        }
     }
 
 
@@ -265,36 +268,36 @@ public class ShipController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!LockMove)
+        if (LockMove)
+            return;
+
+        UpdateChimneys();
+
+        // propellers
+        if (WantMove.y != 0)
         {
-            // propellers
-            if (WantMove.y != 0)
+            foreach (Propeller prop in propellers)
             {
-                foreach (Propeller prop in propellers)
-                {
-                    if (prop.transform.position.y <= 0 && prop.Activated)
-                        rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
-                }
-            }
-            // rudders
-            if (WantMove.x != 0)
-            {
-                rb.constraints = RigidbodyConstraints.None;
-                foreach (Rudder rud in rudders)
-                {
-                    if (rud.transform.position.y <= 0 && rud.Activated)
-                        rb.AddForceAtPosition(rud.transform.right * rud.Strength * 600 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
-                }
-            }
-            // firing
-            if(LeftClickHold)
-            {
-                foreach(TurretController t in turrets)
-                    t.Shoot();
+                if (prop.transform.position.y <= 0 && prop.Activated)
+                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
             }
         }
 
-        if(rb.constraints != RigidbodyConstraints.FreezeRotationY)
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
+        // rudders
+        if (WantMove.x != 0)
+        {
+            foreach (Rudder rud in rudders)
+            {
+                if (rud.transform.position.y <= 0 && rud.Activated)
+                    rb.AddForceAtPosition(rud.transform.right * rud.Strength * 300 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
+            }
+        }
+
+        // firing
+        if (LeftClickHold)
+        {
+            foreach (TurretController t in turrets)
+                t.Shoot();
+        }
     }
 }

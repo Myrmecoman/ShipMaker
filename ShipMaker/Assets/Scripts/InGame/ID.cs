@@ -10,13 +10,24 @@ public class ID : MonoBehaviour
     [Header("order : front, back, up, down, right, left")]
     public bool[] CanBuild = {true, true, true, true, true, true};
 
+    private float InitialHp;
     private bool Dead = false;
+
+
+    void Awake()
+    {
+        InitialHp = hp;
+    }
 
 
     public void Damage(float dmg)
     {
+        if (Dead)
+            return;
+
         hp -= dmg;
-        if(hp <= 0 && !Dead)
+
+        if(hp <= 0)
         {
             Dead = true;
 

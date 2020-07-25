@@ -60,7 +60,6 @@ public class ShipController : MonoBehaviour
 
     public void MoveInput(Vector2 move)
     {
-        Debug.Log("pressed");
         throttleUI.input = move.y;
         steerUI.input = move.x;
     }
@@ -278,33 +277,27 @@ public class ShipController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (LockMove)
-            return;
-
         UpdateChimneys();
 
         // propellers
-        if (WantMove.y != 0)
+        foreach (Propeller prop in propellers)
         {
-            foreach (Propeller prop in propellers)
-            {
-                if (prop.transform.position.y <= 0 && prop.Activated)
-                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * WantMove.y, prop.transform.position, ForceMode.Force);
-            }
+            if (prop.transform.position.y <= 0 && prop.Activated)
+                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * throttleUI.value, prop.transform.position, ForceMode.Force);
         }
 
         // rudders
-        if (WantMove.x != 0)
+        foreach (Rudder rud in rudders)
         {
-            foreach (Rudder rud in rudders)
+            if (rud.transform.position.y <= 0 && rud.Activated)
             {
-                if (rud.transform.position.y <= 0 && rud.Activated)
-                {
-                    rb.AddForceAtPosition(rud.transform.right * rud.Strength * 300 * rb.velocity.magnitude * -WantMove.x, rud.transform.position, ForceMode.Force);
-                    rud.dir = WantMove.x;
-                }
+                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 300 * rb.velocity.magnitude * steerUI.value, rud.transform.position, ForceMode.Force);
+                rud.dir = steerUI.value;
             }
         }
+
+        if (LockMove)
+            return;
 
         // firing
         if (LeftClickHold)

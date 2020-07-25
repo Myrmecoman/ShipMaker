@@ -13,10 +13,6 @@ public class Rudder : MonoBehaviour
 
     private void Update()
     {
-        angle = RudderAxis.localEulerAngles.y - dir * Time.deltaTime * 50;
-        if (angle > 180f)
-            angle -= 360;
-        angle = Mathf.Clamp(angle, -45, 45);
-        RudderAxis.localEulerAngles = new Vector3(0, angle, 0);
+        RudderAxis.localEulerAngles = new Vector3(0, 45 * dir, 0);
     }
 }

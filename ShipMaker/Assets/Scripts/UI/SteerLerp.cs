@@ -13,12 +13,15 @@ public class SteerLerp : MonoBehaviour
 
     private RectTransform own;
     private RectTransform current;
+    private float Width;
+    private float TargetValue = 0;
 
 
     private void Awake()
     {
         own = GetComponent<RectTransform>();
         current = Zero;
+        Width = (FullR.anchoredPosition.x - FullL.anchoredPosition.x)/2;
     }
 
 
@@ -26,7 +29,8 @@ public class SteerLerp : MonoBehaviour
     {
         if (input != 0)
             ResolveNewPos(input);
-        own.anchoredPosition = Vector2.MoveTowards(own.anchoredPosition, current.anchoredPosition, Time.deltaTime * 10);
+        value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 3f);
+        own.anchoredPosition = new Vector2(-Width * value, own.anchoredPosition.y);
     }
 
 
@@ -36,25 +40,49 @@ public class SteerLerp : MonoBehaviour
         if (input > 0)
         {
             if (current == FullL)
+            {
                 current = HalfL;
-            if (current == HalfL)
+                TargetValue = 0.5f;
+            }
+            else if (current == HalfL)
+            {
                 current = Zero;
-            if (current == Zero)
+                TargetValue = 0;
+            }
+            else if (current == Zero)
+            {
                 current = HalfR;
-            if (current == HalfR)
+                TargetValue = -0.5f;
+            }
+            else if (current == HalfR)
+            {
                 current = FullR;
+                TargetValue = -1;
+            }
         }
         // left
         else
         {
             if (current == HalfL)
+            {
                 current = FullL;
-            if (current == Zero)
+                TargetValue = 1;
+            }
+            else if (current == Zero)
+            {
                 current = HalfL;
-            if (current == HalfR)
+                TargetValue = 0.5f;
+            }
+            else if (current == HalfR)
+            {
                 current = Zero;
-            if (current == FullR)
+                TargetValue = 0;
+            }
+            else if (current == FullR)
+            {
                 current = HalfR;
+                TargetValue = -0.5f;
+            }
         }
         input = 0;
     }

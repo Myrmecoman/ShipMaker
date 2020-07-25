@@ -14,12 +14,17 @@ public class ThrottleLerp : MonoBehaviour
 
     private RectTransform own;
     private RectTransform current;
+    private float Height;
+    private float ZeroHeight;
+    private float TargetValue = 0;
 
 
     private void Awake()
     {
         own = GetComponent<RectTransform>();
         current = Stop;
+        Height = Full.anchoredPosition.y - FullBack.anchoredPosition.y;
+        ZeroHeight = Stop.anchoredPosition.y;
     }
 
 
@@ -27,7 +32,8 @@ public class ThrottleLerp : MonoBehaviour
     {
         if (input != 0)
             ResolveNewPos(input);
-        own.anchoredPosition = Vector2.MoveTowards(own.anchoredPosition, current.anchoredPosition, Time.deltaTime * 10);
+        value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 5f);
+        //own.anchoredPosition = Vector2.MoveTowards(own.anchoredPosition, current.anchoredPosition, Time.deltaTime * 30);
     }
 
 
@@ -37,29 +43,59 @@ public class ThrottleLerp : MonoBehaviour
         if(input > 0)
         {
             if (current == FullBack)
+            {
                 current = Stop;
-            if (current == Stop)
+                TargetValue = 0;
+            }
+            else if (current == Stop)
+            {
                 current = Quart;
-            if (current == Quart)
+                TargetValue = 0.25f;
+            }
+            else if (current == Quart)
+            {
                 current = Half;
-            if (current == Half)
+                TargetValue = 0.5f;
+            }
+            else if (current == Half)
+            {
                 current = AlmostFull;
-            if (current == AlmostFull)
+                TargetValue = 0.75f;
+            }
+            else if (current == AlmostFull)
+            {
                 current = Full;
+                TargetValue = 1;
+            }
         }
         // backward
         else
         {
             if (current == Stop)
+            {
                 current = FullBack;
-            if (current == Quart)
+                TargetValue = -1;
+            }
+            else if (current == Quart)
+            {
                 current = Stop;
-            if (current == Half)
+                TargetValue = 0;
+            }
+            else if (current == Half)
+            {
                 current = Quart;
-            if (current == AlmostFull)
+                TargetValue = 0.25f;
+            }
+            else if (current == AlmostFull)
+            {
                 current = Half;
-            if (current == Full)
+                TargetValue = 0.5f;
+            }
+            else if (current == Full)
+            {
                 current = AlmostFull;
+                TargetValue = 0.75f;
+            }
         }
         input = 0;
     }

@@ -1,6 +1,8 @@
 # ShipMaker
 Ship crafting game
 
-What's left to make it functionnal :
-- Rotation system while crafting;
-- Detached parts from the ship (subgraphs);
+What's yet to be done :
+- Rotation system while crafting
+- Detached parts from the ship (subgraphs)
+- Prevent guns to shoot own ship
+- Be able to color parts

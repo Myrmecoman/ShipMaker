@@ -291,7 +291,7 @@ public class ShipController : MonoBehaviour
         {
             if (rud.transform.position.y <= 0 && rud.Activated)
             {
-                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 300 * rb.velocity.magnitude * steerUI.value, rud.transform.position, ForceMode.Force);
+                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 100 * rb.velocity.magnitude * steerUI.value, rud.transform.position, ForceMode.Force);
                 rud.dir = steerUI.value;
             }
         }

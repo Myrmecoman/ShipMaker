@@ -3,6 +3,7 @@
 
 public class ThrottleLerp : MonoBehaviour
 {
+    public RectTransform InstantIndicator;
     public RectTransform FullBack;
     public RectTransform Stop;
     public RectTransform Quart;
@@ -14,8 +15,9 @@ public class ThrottleLerp : MonoBehaviour
 
     private RectTransform own;
     private RectTransform current;
-    private float Height;
     private float ZeroHeight;
+    private float FullDistance;
+    private float FullBackDistance;
     private float TargetValue = 0;
 
 
@@ -23,8 +25,9 @@ public class ThrottleLerp : MonoBehaviour
     {
         own = GetComponent<RectTransform>();
         current = Stop;
-        Height = Full.anchoredPosition.y - FullBack.anchoredPosition.y;
         ZeroHeight = Stop.anchoredPosition.y;
+        FullDistance = Full.anchoredPosition.y - ZeroHeight;
+        FullBackDistance = -(FullBack.anchoredPosition.y - ZeroHeight);
     }
 
 
@@ -33,7 +36,15 @@ public class ThrottleLerp : MonoBehaviour
         if (input != 0)
             ResolveNewPos(input);
         value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 5f);
-        //own.anchoredPosition = Vector2.MoveTowards(own.anchoredPosition, current.anchoredPosition, Time.deltaTime * 30);
+        if (value >= 0)
+            own.anchoredPosition = new Vector2(own.anchoredPosition.x, ZeroHeight + FullDistance * value);
+        else
+            own.anchoredPosition = new Vector2(own.anchoredPosition.x, ZeroHeight + FullBackDistance * value);
+
+        if(TargetValue >= 0)
+            InstantIndicator.anchoredPosition = new Vector2(InstantIndicator.anchoredPosition.x, ZeroHeight + FullDistance * TargetValue);
+        else
+            InstantIndicator.anchoredPosition = new Vector2(InstantIndicator.anchoredPosition.x, ZeroHeight - FullBackDistance);
     }
 
 

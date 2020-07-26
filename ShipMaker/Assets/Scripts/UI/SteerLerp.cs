@@ -3,6 +3,7 @@
 
 public class SteerLerp : MonoBehaviour
 {
+    public RectTransform ThrottleIndicator;
     public RectTransform FullL;
     public RectTransform HalfL;
     public RectTransform Zero;
@@ -31,6 +32,7 @@ public class SteerLerp : MonoBehaviour
             ResolveNewPos(input);
         value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 3f);
         own.anchoredPosition = new Vector2(-Width * value, own.anchoredPosition.y);
+        ThrottleIndicator.anchoredPosition = new Vector2(-Width * TargetValue, ThrottleIndicator.anchoredPosition.y);
     }
 
 

@@ -27,6 +27,34 @@ public class ID : MonoBehaviour
 
         hp -= dmg;
 
+        if (hp/InitialHp <= 0)
+        {
+            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer re in renderers)
+            {
+                foreach (Material m in re.materials)
+                    m.SetTexture("_MainTex", Resources.Load("Textures/burnt3") as Texture);
+            }
+        }
+        else if (hp / InitialHp <= 0.34f)
+        {
+            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer re in renderers)
+            {
+                foreach (Material m in re.materials)
+                    m.SetTexture("_MainTex", Resources.Load("Textures/burnt2") as Texture);
+            }
+        }
+        else if (hp / InitialHp <= 0.67f)
+        {
+            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer re in renderers)
+            {
+                foreach (Material m in re.materials)
+                    m.SetTexture("_MainTex", Resources.Load("Textures/burnt1") as Texture);
+            }
+        }
+
         if(hp <= 0)
         {
             Dead = true;

@@ -200,14 +200,17 @@ public class ShipController : MonoBehaviour
                 turrets.Add(children[i].GetComponent<TurretController>());
             }
 
+            if (children[i].GetComponent<Propeller>())
+            {
+                children[i].GetComponent<Propeller>().Boat = rb;
+                propellers.Add(children[i].GetComponent<Propeller>());
+            }
+
             if (children[i].GetComponent<ID>())
                 rb.mass += children[i].GetComponent<ID>().Weight;
 
             if (children[i].GetComponent<ChimneyStat>())
                 chimneys.Add(children[i].GetComponent<ChimneyStat>());
-
-            if (children[i].GetComponent<Propeller>())
-                propellers.Add(children[i].GetComponent<Propeller>());
 
             if (children[i].GetComponent<Rudder>())
                 rudders.Add(children[i].GetComponent<Rudder>());

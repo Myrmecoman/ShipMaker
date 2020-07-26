@@ -258,8 +258,8 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: 3922792344113453488, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -3963241562183589234, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 200
+  hp: 10
   Weight: 1
   Volume: 1
   CanBuild: 000000010000
@@ -318,6 +319,7 @@ MonoBehaviour:
   gun: {fileID: 2314790393090648844}
   Bullet: {fileID: 6019969733464064606, guid: f8965ba19c50b1649a8d4a06f8277095, type: 3}
   BulletSpawn: {fileID: 2054857676001841239}
+  Activated: 1
 --- !u!65 &8310397541404400377
 BoxCollider:
   m_ObjectHideFlags: 0

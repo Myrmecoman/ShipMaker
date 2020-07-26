@@ -6988,7 +6988,7 @@ MonoBehaviour:
   Sensivity: 0.2
   ShipName: {fileID: 672772642}
   VolumeText: {fileID: 1981593358}
-  BuildMode: {fileID: 1147288527}
+  colorPicker: {fileID: 784833827}
   DontDestroyToTest: {fileID: 1986899307543213033, guid: de01a43608c76604397b020729ff4b88,
     type: 3}
   layermask:

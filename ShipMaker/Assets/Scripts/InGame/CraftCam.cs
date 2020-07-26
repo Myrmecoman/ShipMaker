@@ -10,7 +10,7 @@ public class CraftCam : MonoBehaviour
     public float Sensivity;
     public Text ShipName;
     public Text VolumeText;
-    public Text BuildMode;
+    public ColorPicker colorPicker;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
     public Image Cross;
@@ -47,9 +47,9 @@ public class CraftCam : MonoBehaviour
         // cursor usual things
         if (Cursor.lockState == CursorLockMode.Locked)
         {
-            if (BuildMode.text == "Paint mode")
+            if (colorPicker.BuildMode.text == "Paint mode")
             {
-                BuildMode.text = "Craft mode";
+                colorPicker.BuildMode.text = "Craft mode";
                 return;
             }
             Cursor.lockState = CursorLockMode.None;
@@ -73,7 +73,7 @@ public class CraftCam : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30, layermask))
         {
             // craft mode
-            if (BuildMode.text == "Craft mode")
+            if (colorPicker.BuildMode.text == "Craft mode")
             {
                 // remove
                 if (AltHold && TotalParts > 1)
@@ -117,7 +117,12 @@ public class CraftCam : MonoBehaviour
             // paint mode
             else
             {
-
+                MeshRenderer[] renderers = hit.collider.gameObject.GetComponentsInChildren<MeshRenderer>();
+                foreach(MeshRenderer r in renderers)
+                {
+                    foreach(Material m in r.materials)
+                        m.color = colorPicker.col;
+                }
             }
         }
     }
@@ -138,6 +143,8 @@ public class CraftCam : MonoBehaviour
         string strs = ShipName.text + '\n';
         foreach (ID piece in allPieces)
         {
+            Color oof = piece.gameObject.GetComponent<MeshRenderer>().material.color;
+
             strs +=
                 piece.Id + "_" +
                 piece.transform.position.x + ":" +
@@ -145,7 +152,10 @@ public class CraftCam : MonoBehaviour
                 piece.transform.position.z + "_" +
                 piece.transform.rotation.x + ":" +
                 piece.transform.rotation.y + ":" +
-                piece.transform.rotation.z + "\n";
+                piece.transform.rotation.z + "_" +
+                oof.r + ":" +
+                oof.g + ":" +
+                oof.b + "\n";
         }
         saveNload.SaveAs(ShipName.text, strs);
     }
@@ -204,6 +214,9 @@ public class CraftCam : MonoBehaviour
                 string rotx = "";
                 string roty = "";
                 string rotz = "";
+                string r = "";
+                string g = "";
+                string b = "";
 
                 for (int j = 0; j < line.Length; j++)
                 {
@@ -238,6 +251,14 @@ public class CraftCam : MonoBehaviour
                         roty += line[j];
                     if (nb1 == 2 && nb2 == 2)
                         rotz += line[j];
+
+                    // get color
+                    if (nb1 == 3 && nb2 == 0)
+                        r += line[j];
+                    if (nb1 == 3 && nb2 == 1)
+                        g += line[j];
+                    if (nb1 == 3 && nb2 == 2)
+                        b += line[j];
                 }
                 SelectedID = id;
                 UpdatePrefix();
@@ -247,6 +268,12 @@ public class CraftCam : MonoBehaviour
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz))) as GameObject;
                 TotalVolume += instantiated.GetComponent<ID>().Volume;
                 TotalParts++;
+                MeshRenderer[] renderers = instantiated.GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer re in renderers)
+                {
+                    foreach (Material m in re.materials)
+                        m.color = new Color(float.Parse(r), float.Parse(g), float.Parse(b));
+                }
             }
         }
         else

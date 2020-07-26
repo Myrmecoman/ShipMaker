@@ -99,6 +99,9 @@ public class ShipController : MonoBehaviour
                 string rotx = "";
                 string roty = "";
                 string rotz = "";
+                string r = "";
+                string g = "";
+                string b = "";
 
                 for (int j = 0; j < line.Length; j++)
                 {
@@ -133,6 +136,14 @@ public class ShipController : MonoBehaviour
                         roty += line[j];
                     if (nb1 == 2 && nb2 == 2)
                         rotz += line[j];
+
+                    // get color
+                    if (nb1 == 3 && nb2 == 0)
+                        r += line[j];
+                    if (nb1 == 3 && nb2 == 1)
+                        g += line[j];
+                    if (nb1 == 3 && nb2 == 2)
+                        b += line[j];
                 }
                 // get max and mini values
                 if (float.Parse(posx) < miniX)
@@ -150,11 +161,17 @@ public class ShipController : MonoBehaviour
 
                 NbElements++;
                 UpdatePrefix(id);
-                Instantiate(
+                GameObject instantiated = Instantiate(
                     Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
-                    transform);
+                    transform) as GameObject;
+                MeshRenderer[] renderers = instantiated.GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer re in renderers)
+                {
+                    foreach (Material m in re.materials)
+                        m.color = new Color(float.Parse(r), float.Parse(g), float.Parse(b));
+                }
             }
             transform.position = new Vector3(0, -miniY, 0);
 

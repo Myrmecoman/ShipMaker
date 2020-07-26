@@ -10,6 +10,7 @@ public class CraftCam : MonoBehaviour
     public float Sensivity;
     public Text ShipName;
     public Text VolumeText;
+    public Text BuildMode;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
     public Image Cross;
@@ -46,15 +47,21 @@ public class CraftCam : MonoBehaviour
         // cursor usual things
         if (Cursor.lockState == CursorLockMode.Locked)
         {
+            if (BuildMode.text == "Paint mode")
+            {
+                BuildMode.text = "Craft mode";
+                return;
+            }
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            LockMove = true;
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            LockMove = false;
         }
-        LockMove = !LockMove;
     }
 
 
@@ -65,43 +72,52 @@ public class CraftCam : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out RaycastHit hit, 30, layermask))
         {
-            // remove
-            if (AltHold && TotalParts > 1)
+            // craft mode
+            if (BuildMode.text == "Craft mode")
             {
-                GameObject destroyed = hit.collider.gameObject;
-                Destroy(destroyed);
-                TotalVolume -= destroyed.GetComponent<ID>().Volume;
-                VolumeText.text = "Total volume : " + TotalVolume;
-                TotalParts--;
-            }
-            // add
-            if(!AltHold)
-            {
-                // check if there is already something, and if allowed to build here
-                Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
-                
-                bool Allowed = false;
-                if (hit.normal.z > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[0])
-                    Allowed = true;
-                if (hit.normal.z < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[1])
-                    Allowed = true;
-                if (hit.normal.y > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[2])
-                    Allowed = true;
-                if (hit.normal.y < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[3])
-                    Allowed = true;
-                if (hit.normal.x > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[4])
-                    Allowed = true;
-                if (hit.normal.x < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[5])
-                    Allowed = true;
-
-                if (hitColliders.Length == 0 && Allowed)
+                // remove
+                if (AltHold && TotalParts > 1)
                 {
-                    UpdatePrefix();
-                    GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity) as GameObject;
-                    TotalVolume += instantiated.GetComponent<ID>().Volume;
+                    GameObject destroyed = hit.collider.gameObject;
+                    Destroy(destroyed);
+                    TotalVolume -= destroyed.GetComponent<ID>().Volume;
                     VolumeText.text = "Total volume : " + TotalVolume;
-                    TotalParts++;
+                    TotalParts--;
                 }
+                // add
+                if (!AltHold)
+                {
+                    // check if there is already something, and if allowed to build here
+                    Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
+
+                    bool Allowed = false;
+                    if (hit.normal.z > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[0])
+                        Allowed = true;
+                    if (hit.normal.z < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[1])
+                        Allowed = true;
+                    if (hit.normal.y > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[2])
+                        Allowed = true;
+                    if (hit.normal.y < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[3])
+                        Allowed = true;
+                    if (hit.normal.x > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[4])
+                        Allowed = true;
+                    if (hit.normal.x < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[5])
+                        Allowed = true;
+
+                    if (hitColliders.Length == 0 && Allowed)
+                    {
+                        UpdatePrefix();
+                        GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity) as GameObject;
+                        TotalVolume += instantiated.GetComponent<ID>().Volume;
+                        VolumeText.text = "Total volume : " + TotalVolume;
+                        TotalParts++;
+                    }
+                }
+            }
+            // paint mode
+            else
+            {
+
             }
         }
     }

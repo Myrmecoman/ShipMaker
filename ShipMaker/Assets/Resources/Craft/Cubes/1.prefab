@@ -158,4 +158,4 @@ MonoBehaviour:
   rb: {fileID: 0}
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
-  floaterCount: 1
+  floaterCount: 0.5

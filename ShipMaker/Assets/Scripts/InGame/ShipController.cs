@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class ShipController : MonoBehaviour
@@ -13,6 +15,7 @@ public class ShipController : MonoBehaviour
     public float Sensivity = 0.2f;
     public SteerLerp steerUI;
     public ThrottleLerp throttleUI;
+    public Text SpeedTxt;
     public LayerMask layermask;
 
     private bool LockMove = false;
@@ -25,6 +28,7 @@ public class ShipController : MonoBehaviour
     private float maxiZ = 0;
     private float miniZ = 0;
     private float CamRotVal;
+    private float Speed;
     private uint Power = 0;
     private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
@@ -254,6 +258,9 @@ public class ShipController : MonoBehaviour
     {
         camRot.position = camPosUpdate.position;
 
+        Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54*/;
+        SpeedTxt.text = String.Format("{0:0.0}", Speed) + " knots";
+
         if (LockMove)
             return;
 
@@ -282,7 +289,9 @@ public class ShipController : MonoBehaviour
         // propellers
         foreach (Propeller prop in propellers)
         {
-            if (prop.transform.position.y <= 0 && prop.Activated)
+            if(Speed > 50 && prop.transform.position.y <= 0 && prop.Activated)
+                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power * (50/Speed) / propellers.Count) * throttleUI.value, prop.transform.position, ForceMode.Force);
+            else if (prop.transform.position.y <= 0 && prop.Activated)
                 rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * throttleUI.value, prop.transform.position, ForceMode.Force);
         }
 

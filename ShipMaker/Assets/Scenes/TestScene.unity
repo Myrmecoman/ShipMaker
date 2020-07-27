@@ -1520,7 +1520,7 @@ GameObject:
   - component: {fileID: 1544992988}
   m_Layer: 11
   m_Name: DepthCollision
-  m_TagString: Untagged
+  m_TagString: Water Volume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -2067,7 +2067,7 @@ GameObject:
   - component: {fileID: 1797166554}
   m_Layer: 4
   m_Name: OceanCollision
-  m_TagString: Untagged
+  m_TagString: Water Volume
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

@@ -67,6 +67,13 @@ public class TurretController : MonoBehaviour
         if (currentTime > 0 || !Activated)
             return;
 
+        if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * 0.2f, BulletSpawn.forward, out RaycastHit hitL, 1000) &&
+            hitL.collider.CompareTag("Untagged")) ||
+            (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * 0.2f, BulletSpawn.forward, out RaycastHit hitR, 1000) &&
+            hitR.collider.CompareTag("Untagged")))
+            return;
+
+        Debug.Log("Shoot");
         currentTime = reloadingTime;
         GameObject obj = Instantiate(Bullet, BulletSpawn.position, Quaternion.identity);
         obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200, ForceMode.VelocityChange);

@@ -8,11 +8,13 @@ public class TurretController : MonoBehaviour
     public float MaxDepression = -5;
     public float MaxElevation = 70;
     public float reloadingTime = 1;
+    public float BulletDiameter = 0.2f;
+    public float Damage = 1;
     public Transform target;
     public Transform turret;
     public Transform gun;
     public GameObject Bullet;
-    public Transform BulletSpawn;
+    public Transform[] BulletSpawns;
     public bool Activated = true;
 
     private float gunRotVal;
@@ -67,15 +69,38 @@ public class TurretController : MonoBehaviour
         if (currentTime > 0 || !Activated)
             return;
 
-        if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * 0.2f, BulletSpawn.forward, out RaycastHit hitL, 1000) &&
-            hitL.collider.CompareTag("Untagged")) ||
-            (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * 0.2f, BulletSpawn.forward, out RaycastHit hitR, 1000) &&
-            hitR.collider.CompareTag("Untagged")))
-            return;
+        /*
+        foreach (Transform BulletSpawn in BulletSpawns)
+        {
+            Debug.DrawRay(BulletSpawn.position - BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, Color.red, 1);
+            Debug.DrawRay(BulletSpawn.position + BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, Color.red, 1);
+            Debug.DrawRay(BulletSpawn.position - BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, Color.red, 1);
+            Debug.DrawRay(BulletSpawn.position + BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, Color.red, 1);
+        }
+        */
 
-        Debug.Log("Shoot");
+        // - BulletSpawn.forward * (0.5f + BulletDiameter) offesets backwards to start the ray into the turret collider
+        foreach (Transform BulletSpawn in BulletSpawns)
+        {
+            if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitL, 1000) &&
+                hitL.collider.CompareTag("Untagged")) ||
+                (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitR, 1000) &&
+                hitR.collider.CompareTag("Untagged")) ||
+                (Physics.Raycast(BulletSpawn.position - BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitU, 1000) &&
+                hitU.collider.CompareTag("Untagged")) ||
+                (Physics.Raycast(BulletSpawn.position + BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitD, 1000) &&
+                hitD.collider.CompareTag("Untagged")))
+                return;
+        }
+
         currentTime = reloadingTime;
-        GameObject obj = Instantiate(Bullet, BulletSpawn.position, Quaternion.identity);
-        obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200, ForceMode.VelocityChange);
+
+        foreach (Transform BulletSpawn in BulletSpawns)
+        {
+            GameObject obj = Instantiate(Bullet, BulletSpawn.position, Quaternion.identity);
+            obj.GetComponent<Transform>().localScale = new Vector3(BulletDiameter, BulletDiameter, BulletDiameter);
+            obj.GetComponent<Bullet>().damage = Damage;
+            obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200, ForceMode.VelocityChange);
+        }
     }
 }

@@ -205,9 +205,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2133832610887974358}
   - component: {fileID: 3040843311508107891}
-  - component: {fileID: 997487568327067321}
   - component: {fileID: 3473328319094106017}
   - component: {fileID: 7492939087366802077}
+  - component: {fileID: 997487568327067321}
   - component: {fileID: 8310397541404400377}
   m_Layer: 0
   m_Name: 200
@@ -239,6 +239,49 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645843393419372396}
   m_Mesh: {fileID: 3700765534981561179, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+--- !u!114 &3473328319094106017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645843393419372396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caecfdd94781596418a0ed838e543ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: 200
+  hp: 10
+  Weight: 1
+  Volume: 1
+  CanBuild: 000000010000
+--- !u!114 &7492939087366802077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645843393419372396}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc70e88be2ac5e34cb4acfdd03fe22a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  elevationSpeed: 40
+  MaxDepression: -5
+  MaxElevation: 70
+  reloadingTime: 1
+  BulletDiameter: 0.2
+  Damage: 1
+  target: {fileID: 0}
+  turret: {fileID: 5941402847195479881}
+  gun: {fileID: 2314790393090648844}
+  Bullet: {fileID: 6019969733464064606, guid: f8965ba19c50b1649a8d4a06f8277095, type: 3}
+  BulletSpawns:
+  - {fileID: 2054857676001841239}
+  Activated: 1
 --- !u!23 &997487568327067321
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -280,46 +323,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3473328319094106017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645843393419372396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caecfdd94781596418a0ed838e543ba4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Id: 200
-  hp: 10
-  Weight: 1
-  Volume: 1
-  CanBuild: 000000010000
---- !u!114 &7492939087366802077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645843393419372396}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc70e88be2ac5e34cb4acfdd03fe22a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 50
-  elevationSpeed: 40
-  MaxDepression: -5
-  MaxElevation: 70
-  reloadingTime: 1
-  target: {fileID: 0}
-  turret: {fileID: 5941402847195479881}
-  gun: {fileID: 2314790393090648844}
-  Bullet: {fileID: 6019969733464064606, guid: f8965ba19c50b1649a8d4a06f8277095, type: 3}
-  BulletSpawn: {fileID: 2054857676001841239}
-  Activated: 1
 --- !u!65 &8310397541404400377
 BoxCollider:
   m_ObjectHideFlags: 0

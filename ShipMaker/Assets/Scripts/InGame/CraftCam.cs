@@ -134,12 +134,56 @@ public class CraftCam : MonoBehaviour
     }
 
 
+    private bool DFS(ID[] pieces, ID id, ID reference)
+    {
+        if (id == reference)
+            return true;
+        id.Dead = true; // use the dead variable to check if we met it already
+        Collider[] col = Physics.OverlapSphere(id.transform.position, 0.95f);
+        foreach(Collider c in col)
+        {
+            ID i = c.GetComponent<ID>();
+            if (i.transform.position.x - id.transform.position.x == 1 && !id.CanBuild[0] || !i.CanBuild[1])
+                continue;
+            if (i.transform.position.x - id.transform.position.x == -1 && !id.CanBuild[1] || !i.CanBuild[0])
+                continue;
+            if (i.transform.position.y - id.transform.position.y == 1 && !id.CanBuild[2] || !i.CanBuild[3])
+                continue;
+            if (i.transform.position.y - id.transform.position.y == -1 && !id.CanBuild[3] || !i.CanBuild[2])
+                continue;
+            if (i.transform.position.z - id.transform.position.z == 1 && !id.CanBuild[4] || !i.CanBuild[5])
+                continue;
+            if (i.transform.position.z - id.transform.position.z == -1 && !id.CanBuild[5] || !i.CanBuild[4])
+                continue;
+            if (!i.Dead)
+                DFS(pieces, i, reference);
+        }
+        return false;
+    }
+
+
     public void SaveAs()
     {
         if (ShipName.text == "")
             return;
 
         ID[] allPieces = FindObjectsOfType<ID>();
+
+        // ---------- check that the craft is correct ----------
+
+        ID reference = allPieces[0]; // reference to which every part should be able to connect (it does not matter)
+        for (uint i = 1; i < allPieces.Length; i++)
+        {
+            if (!DFS(allPieces, allPieces[i], reference))
+            {
+                Debug.LogError("damn boi");
+                return;
+            }
+            foreach (ID ahi in allPieces)
+                ahi.Dead = false;
+        }
+
+        // actually save
         string strs = ShipName.text + '\n';
         foreach (ID piece in allPieces)
         {

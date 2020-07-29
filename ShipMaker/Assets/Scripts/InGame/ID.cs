@@ -9,9 +9,9 @@ public class ID : MonoBehaviour
     public uint Volume = 1;
     [Header("order : front, back, up, down, right, left")]
     public bool[] CanBuild = {true, true, true, true, true, true};
+    [HideInInspector] public bool Dead = false;
 
     private float InitialHp;
-    private bool Dead = false;
 
 
     void Awake()

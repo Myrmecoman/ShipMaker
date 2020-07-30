@@ -134,29 +134,27 @@ public class CraftCam : MonoBehaviour
     }
 
 
-    private bool DFS(ID[] pieces, ID id, ID reference)
+    private bool DFS(ID[] pieces, ID id)
     {
-        if (id == reference)
+        if (id.Id == uint.MaxValue)
             return true;
         id.Dead = true; // use the dead variable to check if we met it already
         Collider[] col = Physics.OverlapSphere(id.transform.position, 0.95f);
-        foreach(Collider c in col)
+        for(uint aya = 0; aya < col.Length; aya++)
         {
-            ID i = c.GetComponent<ID>();
-            if (i.transform.position.x - id.transform.position.x == 1 && !id.CanBuild[0] || !i.CanBuild[1])
+            ID i = col[aya].GetComponent<ID>();
+            if (i == id)
                 continue;
-            if (i.transform.position.x - id.transform.position.x == -1 && !id.CanBuild[1] || !i.CanBuild[0])
+            if (i.transform.position.z - id.transform.position.x == 1 && (!id.CanBuild[0] || !i.CanBuild[1]) ||
+                i.transform.position.z - id.transform.position.x == -1 && (!id.CanBuild[1] || !i.CanBuild[0]) ||
+                i.transform.position.y - id.transform.position.y == 1 && (!id.CanBuild[2] || !i.CanBuild[3]) ||
+                i.transform.position.y - id.transform.position.y == -1 && (!id.CanBuild[3] || !i.CanBuild[2]) ||
+                i.transform.position.x - id.transform.position.z == 1 && (!id.CanBuild[4] || !i.CanBuild[5]) ||
+                i.transform.position.x - id.transform.position.z == -1 && (!id.CanBuild[5] || !i.CanBuild[4]))
                 continue;
-            if (i.transform.position.y - id.transform.position.y == 1 && !id.CanBuild[2] || !i.CanBuild[3])
-                continue;
-            if (i.transform.position.y - id.transform.position.y == -1 && !id.CanBuild[3] || !i.CanBuild[2])
-                continue;
-            if (i.transform.position.z - id.transform.position.z == 1 && !id.CanBuild[4] || !i.CanBuild[5])
-                continue;
-            if (i.transform.position.z - id.transform.position.z == -1 && !id.CanBuild[5] || !i.CanBuild[4])
-                continue;
+            Debug.Log(i.transform.localPosition);
             if (!i.Dead)
-                DFS(pieces, i, reference);
+                DFS(pieces, i);
         }
         return false;
     }
@@ -171,17 +169,19 @@ public class CraftCam : MonoBehaviour
 
         // ---------- check that the craft is correct ----------
 
-        ID reference = allPieces[0]; // reference to which every part should be able to connect (it does not matter)
+        uint keptValue = allPieces[0].Id; // reference to which every part should be able to connect (it does not matter)
+        allPieces[0].Id = uint.MaxValue;
         for (uint i = 1; i < allPieces.Length; i++)
         {
-            if (!DFS(allPieces, allPieces[i], reference))
-            {
-                Debug.LogError("damn boi");
-                return;
-            }
             foreach (ID ahi in allPieces)
                 ahi.Dead = false;
+            if (!DFS(allPieces, allPieces[i]))
+            {
+                Debug.LogError("index " + i + " gives an issue. LocalPosition is " + allPieces[i].transform.localPosition);
+                //return;
+            }
         }
+        allPieces[0].Id = keptValue;
 
         // actually save
         string strs = ShipName.text + '\n';

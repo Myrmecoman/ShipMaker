@@ -16,7 +16,6 @@ public class CraftCam : MonoBehaviour
     public Image Cross;
     public Sprite CrossBlack;
     public Sprite CrossRed;
-    public Image SelectedElement;
     public GameObject ColliderDisplay;
 
     private GameObject currentCol;

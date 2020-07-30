@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 
 public class IDbuttons : MonoBehaviour
 {
     public uint Id = 0;
 
+    private CraftCam craftCam;
+    private GizmoAngle gizmoScript;
+
+
+    private void Awake()
+    {
+        craftCam = FindObjectOfType<CraftCam>();
+        gizmoScript = FindObjectOfType<GizmoAngle>();
+    }
+
 
     public void CraftCallID()
     {
-        CraftCam cam = FindObjectOfType<CraftCam>();
-        cam.SelectedID = Id.ToString();
-        cam.SelectedElement.sprite = transform.GetChild(0).GetComponent<Image>().sprite;
+        craftCam.SelectedID = Id.ToString();
+        gizmoScript.ChangeObj(Id.ToString());
     }
 }

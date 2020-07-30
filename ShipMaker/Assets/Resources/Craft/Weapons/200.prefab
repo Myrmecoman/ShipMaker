@@ -59,8 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: 3922792344113453488, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: 2100000, guid: 29c73ea7f923f5a40b93556a7fa6a7cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,11 +139,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3922792344113453488, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -2915196502935956116, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -2915196502935956116, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -7613691057392440208, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: 2100000, guid: 29c73ea7f923f5a40b93556a7fa6a7cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -256,6 +251,7 @@ MonoBehaviour:
   Weight: 1
   Volume: 1
   CanBuild: 000000010000
+  Dead: 0
 --- !u!114 &7492939087366802077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,9 +296,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
-  - {fileID: -5032859897469569040, guid: 0ad75ad513537134693bc7344c10fae4, type: 3}
+  - {fileID: 2100000, guid: 29c73ea7f923f5a40b93556a7fa6a7cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

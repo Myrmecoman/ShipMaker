@@ -139,13 +139,15 @@ public class CraftCam : MonoBehaviour
             ID i = col[aya].GetComponent<ID>();
             Vector3 Ipos = i.transform.position;
             Vector3 IDpos = id.transform.position;
+            // checking :
+            //     relative position      |        build possibility        |        same axis (not diagonal)
             if (i == id                                                                                                ||
-               Ipos.z - IDpos.z == 1 && (!id.CanBuild[0]  || !i.CanBuild[1] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) ||
-               Ipos.z - IDpos.z == -1 && (!id.CanBuild[1] || !i.CanBuild[0] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) ||
-               Ipos.y - IDpos.y == 1 && (!id.CanBuild[2]  || !i.CanBuild[3] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) ||
-               Ipos.y - IDpos.y == -1 && (!id.CanBuild[3] || !i.CanBuild[2] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) ||
-               Ipos.x - IDpos.x == 1 && (!id.CanBuild[4]  || !i.CanBuild[5] || Ipos.z != IDpos.z || Ipos.y != IDpos.y) ||
-               Ipos.x - IDpos.x == -1 && (!id.CanBuild[5] || !i.CanBuild[4] || Ipos.z != IDpos.z || Ipos.y != IDpos.y))
+               Ipos.z - IDpos.z == 1 && (!id.CanBuild[0]  || !i.CanBuild[1] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) || // forward
+               Ipos.z - IDpos.z == -1 && (!id.CanBuild[1] || !i.CanBuild[0] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) || // back
+               Ipos.y - IDpos.y == 1 && (!id.CanBuild[2]  || !i.CanBuild[3] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) || // up
+               Ipos.y - IDpos.y == -1 && (!id.CanBuild[3] || !i.CanBuild[2] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) || // down
+               Ipos.x - IDpos.x == 1 && (!id.CanBuild[4]  || !i.CanBuild[5] || Ipos.z != IDpos.z || Ipos.y != IDpos.y) || // right
+               Ipos.x - IDpos.x == -1 && (!id.CanBuild[5] || !i.CanBuild[4] || Ipos.z != IDpos.z || Ipos.y != IDpos.y))   // left
                 continue;
             if (!i.Dead)
             {

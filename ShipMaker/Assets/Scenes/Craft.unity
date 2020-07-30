@@ -2338,14 +2338,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f391800d302c947a3e8d56233ab9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorPicker: {fileID: 2800000, guid: 28de775820c6cb142808c2fd4edadb53, type: 3}
+  colorPicker: {fileID: 2800000, guid: b4b12136601ba8647bf9fe73f6f66bf9, type: 3}
   colorPanelRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 200
     height: 200
-  col: {r: 0, g: 0, b: 0, a: 0}
+  col: {r: 1, g: 1, b: 1, a: 0}
   helpScreen: {fileID: 1043146330}
   BuildMode: {fileID: 1147288527}
 --- !u!1 &790829749

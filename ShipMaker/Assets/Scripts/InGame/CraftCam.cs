@@ -16,6 +16,7 @@ public class CraftCam : MonoBehaviour
     public Image Cross;
     public Sprite CrossBlack;
     public Sprite CrossRed;
+    public GizmoAngle gizmoScript;
     public GameObject ColliderDisplay;
 
     private GameObject currentCol;
@@ -106,7 +107,9 @@ public class CraftCam : MonoBehaviour
                     if (hitColliders.Length == 0 && Allowed)
                     {
                         UpdatePrefix();
-                        GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, Quaternion.identity) as GameObject;
+                        Quaternion rot = Quaternion.identity;
+                        rot.eulerAngles = gizmoScript.rotation;
+                        GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, rot) as GameObject;
                         TotalVolume += instantiated.GetComponent<ID>().Volume;
                         VolumeText.text = "Total volume : " + TotalVolume;
                         TotalParts++;

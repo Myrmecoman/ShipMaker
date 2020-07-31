@@ -6,6 +6,7 @@ public class GizmoAngle : MonoBehaviour
     public Transform copyRot;
     public Transform Gizmo;
     public Transform ObjPos;
+    [HideInInspector] public Vector3 rotation = Vector3.zero;
 
     private GameObject PreviewObj;
 
@@ -22,12 +23,13 @@ public class GizmoAngle : MonoBehaviour
     void Update()
     {
         Gizmo.eulerAngles = new Vector3(0, -copyRot.eulerAngles.y, 0);
-        PreviewObj.transform.eulerAngles = new Vector3(0, -copyRot.eulerAngles.y, 0);
+        PreviewObj.transform.eulerAngles = new Vector3(0, -copyRot.eulerAngles.y, 0) + rotation;
     }
 
 
     public void ChangeObj(string id)
     {
+        rotation = Vector3.zero;
         Destroy(PreviewObj.gameObject);
         PreviewObj = Instantiate(Resources.Load("Craft/" + UpdatePrefix(id) + id, typeof(GameObject)), ObjPos.position, Quaternion.identity) as GameObject;
         Destroy(PreviewObj.GetComponent<ID>());
@@ -55,5 +57,17 @@ public class GizmoAngle : MonoBehaviour
         if (int.Parse(id) < 800)
             return "Cosmetics/";
         return "ERROR : gizmoScript, invalid ID";
+    }
+
+
+    public void RotY(float rot)
+    {
+        rotation.y += rot;
+    }
+
+
+    public void ROTXZ(float rot)
+    {
+        Debug.Log(copyRot.eulerAngles.y);
     }
 }

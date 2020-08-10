@@ -8,7 +8,7 @@ public class ID : MonoBehaviour
     public uint Weight = 1;
     public uint Volume = 1;
     [Header("order : front, back, up, down, right, left")]
-    public bool[] CanBuild = {true, true, true, true, true, true};
+    public Transform[] CanBuild;
     [HideInInspector] public bool Dead = false;
 
     private float InitialHp;

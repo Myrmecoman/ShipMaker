@@ -64,14 +64,4 @@ public class GizmoAngle : MonoBehaviour
     {
         rotation.y += rot;
     }
-
-
-    public void ROTXZ(float rot)
-    {
-        float rotY = copyRot.eulerAngles.y;
-        if ((rotY > 225 && rotY < 315) || (rotY > 45 && rotY < 135))
-            rotation.z += rot;
-        else
-            rotation.x += rot;
-    }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MenuButtons : MonoBehaviour
 {
     public GameObject parentShips;
+    public GameObject parentAIs;
     public GameObject shipButton;
     public GameObject dontdestroyNewCraftName;
     public InputField shipName;
@@ -41,6 +42,7 @@ public class MenuButtons : MonoBehaviour
     void Start()
     {
         UpdateListShips();
+        UpdateListAIs();
     }
 
 
@@ -56,6 +58,23 @@ public class MenuButtons : MonoBehaviour
             string s2 = s.Replace(Application.persistentDataPath + "\\", "");
             s2 = s2.Remove(s2.Length - 8);
             obj.GetComponentInChildren<Text>().text = s2;
+        }
+    }
+
+
+    private void UpdateListAIs()
+    {
+        foreach (Transform child in parentAIs.transform)
+            Destroy(child.gameObject);
+
+        GameObject[] AllAIs = Resources.LoadAll("AIs") as GameObject[];
+        if (AllAIs != null)
+        {
+            foreach (GameObject ahi in AllAIs)
+            {
+                GameObject obj = Instantiate(shipButton, parentAIs.transform);
+                obj.GetComponentInChildren<Text>().text = ahi.name;
+            }
         }
     }
 }

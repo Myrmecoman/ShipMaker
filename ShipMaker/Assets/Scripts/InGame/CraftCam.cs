@@ -9,6 +9,7 @@ public class CraftCam : MonoBehaviour
     public Transform Cam;
     public float Sensivity;
     public Text ShipName;
+    public Text ErrorText;
     public Text VolumeText;
     public ColorPicker colorPicker;
     public GameObject DontDestroyToTest;
@@ -22,6 +23,7 @@ public class CraftCam : MonoBehaviour
     private GameObject currentCol;
     private float CamRotVal;
     private float speed = 5;
+    private float ErrorTime = -1;
     private GameObject GravitationCenter = null;
     private bool LockMove = false;
     private SaveLoad saveNload;
@@ -197,7 +199,11 @@ public class CraftCam : MonoBehaviour
                 ahi.Dead = false;
             if (!DFS(allPieces, allPieces[i]))
             {
-                Debug.LogError("index " + i + " gives an issue. LocalPosition is " + allPieces[i].transform.localPosition);
+                ErrorText.color = new Color(ErrorText.color.r, ErrorText.color.g, ErrorText.color.b, 1);
+                ErrorTime = 3;
+                //GameObject obj = Instantiate(ColliderDisplay, allPieces[i].transform.position + allPieces[i].GetComponent<BoxCollider>().center, allPieces[i].transform.rotation, allPieces[i].transform);
+                //obj.transform.localScale = allPieces[i].gameObject.GetComponent<BoxCollider>().size * 1.0002f;
+                //obj.transform.GetComponent<Outline>().OutlineColor = Color.red;
                 allPieces[0].Id = keptValue;
                 return false;
             }
@@ -399,6 +405,13 @@ public class CraftCam : MonoBehaviour
 
     void Update()
     {
+        // fade error message
+        if (ErrorTime >= 0)
+        {
+            ErrorText.color = new Color(ErrorText.color.r, ErrorText.color.g, ErrorText.color.b, ErrorTime / 3);
+            ErrorTime -= Time.deltaTime;
+        }
+
         if (LockMove)
             return;
 

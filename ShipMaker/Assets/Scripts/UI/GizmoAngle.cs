@@ -68,6 +68,10 @@ public class GizmoAngle : MonoBehaviour
 
     public void ROTXZ(float rot)
     {
-        Debug.Log(copyRot.eulerAngles.y);
+        float rotY = copyRot.eulerAngles.y;
+        if ((rotY > 225 && rotY < 315) || (rotY > 45 && rotY < 135))
+            rotation.z += rot;
+        else
+            rotation.x += rot;
     }
 }

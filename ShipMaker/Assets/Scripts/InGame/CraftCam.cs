@@ -140,16 +140,34 @@ public class CraftCam : MonoBehaviour
             ID i = col[aya].GetComponent<ID>();
             Vector3 IDpos = id.transform.position; // function ID
             Vector3 Ipos = i.transform.position;   // one of IDs around
-            // checking :
-            //     relative position      |        build possibility        |        same axis (not diagonal)
-            if (i == id                                                                                                ||
-               Ipos.z - IDpos.z == 1 && (!id.CanBuild[0]  || !i.CanBuild[1] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) || // forward
-               Ipos.z - IDpos.z == -1 && (!id.CanBuild[1] || !i.CanBuild[0] || Ipos.x != IDpos.x || Ipos.y != IDpos.y) || // back
-               Ipos.y - IDpos.y == 1 && (!id.CanBuild[2]  || !i.CanBuild[3] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) || // up
-               Ipos.y - IDpos.y == -1 && (!id.CanBuild[3] || !i.CanBuild[2] || Ipos.x != IDpos.x || Ipos.z != IDpos.z) || // down
-               Ipos.x - IDpos.x == 1 && (!id.CanBuild[4]  || !i.CanBuild[5] || Ipos.z != IDpos.z || Ipos.y != IDpos.y) || // right
-               Ipos.x - IDpos.x == -1 && (!id.CanBuild[5] || !i.CanBuild[4] || Ipos.z != IDpos.z || Ipos.y != IDpos.y))   // left
+
+            // if in diagonal
+            if (IDpos.x == Ipos.x && IDpos.y != Ipos.y && IDpos.z != Ipos.z ||
+                IDpos.y == Ipos.y && IDpos.x != Ipos.x && IDpos.z != Ipos.z ||
+                IDpos.z == Ipos.z && IDpos.x != Ipos.x && IDpos.y != Ipos.y)
                 continue;
+
+            // finding closest transforms of those IDs
+            float miniDist = 999;
+            int[] posXY = { 0, 0 };
+            for(int index1 = 0; index1 < id.CanBuild.Length; index1++)
+            {
+                for (int index2 = 0; index2 < i.CanBuild.Length; index2++)
+                {
+                    float dist = Vector3.Distance(id.CanBuild[index1].position, i.CanBuild[index2].position);
+                    if (dist < miniDist)
+                    {
+                        miniDist = dist;
+                        posXY[0] = index1;
+                        posXY[1] = index2;
+                    }
+                }
+            }
+
+            // checking if it's ourself or if we can't reach it
+            if (i == id || id.CanBuild[posXY[0]].name == "no" || i.CanBuild[posXY[1]].name == "no")
+                continue;
+
             if (!i.Dead)
             {
                 if (DFS(pieces, i))

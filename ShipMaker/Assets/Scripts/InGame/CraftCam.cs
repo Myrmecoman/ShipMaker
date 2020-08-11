@@ -90,21 +90,20 @@ public class CraftCam : MonoBehaviour
                     // check if there is already something, and if allowed to build here
                     Collider[] hitColliders = Physics.OverlapSphere(hit.collider.transform.position + hit.normal, 0.4f);
 
-                    bool Allowed = false;
-                    if (hit.normal.z > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[0])
-                        Allowed = true;
-                    if (hit.normal.z < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[1])
-                        Allowed = true;
-                    if (hit.normal.y > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[2])
-                        Allowed = true;
-                    if (hit.normal.y < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[3])
-                        Allowed = true;
-                    if (hit.normal.x > 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[4])
-                        Allowed = true;
-                    if (hit.normal.x < 0 && hit.collider.gameObject.GetComponent<ID>().CanBuild[5])
-                        Allowed = true;
+                    Transform[] simp = hit.collider.gameObject.GetComponent<ID>().CanBuild;
+                    float miniDistance = 999;
+                    int miniDistanceIndex = 0;
+                    for (int i = 0; i < simp.Length; i++)
+                    {
+                        float dist = Vector3.Distance(simp[i].position, hit.collider.transform.position + hit.normal);
+                        if (dist < miniDistance)
+                        {
+                            miniDistance = dist;
+                            miniDistanceIndex = i;
+                        }
+                    }
 
-                    if (hitColliders.Length == 0 && Allowed)
+                    if (hitColliders.Length == 0 && simp[miniDistanceIndex].name != "no")
                     {
                         UpdatePrefix();
                         Quaternion rot = Quaternion.identity;
@@ -139,8 +138,8 @@ public class CraftCam : MonoBehaviour
         for(uint aya = 0; aya < col.Length; aya++)
         {
             ID i = col[aya].GetComponent<ID>();
-            Vector3 Ipos = i.transform.position;
-            Vector3 IDpos = id.transform.position;
+            Vector3 IDpos = id.transform.position; // function ID
+            Vector3 Ipos = i.transform.position;   // one of IDs around
             // checking :
             //     relative position      |        build possibility        |        same axis (not diagonal)
             if (i == id                                                                                                ||

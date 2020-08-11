@@ -207,7 +207,11 @@ public class ShipController : MonoBehaviour
             }
 
             if (children[i].GetComponent<ID>())
+            {
                 rb.mass += children[i].GetComponent<ID>().Weight;
+                foreach (Transform t in children[i].GetComponent<ID>().CanBuild)
+                    Destroy(t.gameObject);
+            }
 
             if (children[i].GetComponent<ChimneyStat>())
                 chimneys.Add(children[i].GetComponent<ChimneyStat>());

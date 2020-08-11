@@ -196,7 +196,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
-  floaterCount: 0.5
+  floaterCount: 0.4
 --- !u!1 &2120135327277354009
 GameObject:
   m_ObjectHideFlags: 0

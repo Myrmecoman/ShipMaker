@@ -174,10 +174,6 @@ public class ShipController : MonoBehaviour
                 }
             }
             transform.position = new Vector3(0, -miniY, 0);
-
-            // drag tweaks
-            //rb.drag = Mathf.Clamp(NbElements / 300f, 1.3f, 999f);
-            //rb.angularDrag = Mathf.Clamp(NbElements / 30f, 10f, 999f);
         }
         else
         {

@@ -215,9 +215,9 @@ public class CraftCam : MonoBehaviour
                 piece.transform.position.x + ":" +
                 piece.transform.position.y + ":" +
                 piece.transform.position.z + "_" +
-                piece.transform.rotation.x + ":" +
-                piece.transform.rotation.y + ":" +
-                piece.transform.rotation.z + "_" +
+                piece.transform.eulerAngles.x + ":" +
+                piece.transform.eulerAngles.y + ":" +
+                piece.transform.eulerAngles.z + "_" +
                 oof.r + ":" +
                 oof.g + ":" +
                 oof.b + "\n";

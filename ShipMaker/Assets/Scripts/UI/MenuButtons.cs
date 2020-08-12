@@ -9,6 +9,7 @@ public class MenuButtons : MonoBehaviour
     public GameObject parentShips;
     public GameObject parentAIs;
     public GameObject shipButton;
+    public GameObject AiButton;
     public GameObject dontdestroyNewCraftName;
     public InputField shipName;
 
@@ -72,7 +73,7 @@ public class MenuButtons : MonoBehaviour
         {
             foreach (GameObject ahi in AllAIs)
             {
-                GameObject obj = Instantiate(shipButton, parentAIs.transform);
+                GameObject obj = Instantiate(AiButton, parentAIs.transform);
                 obj.GetComponentInChildren<Text>().text = ahi.name;
             }
         }

@@ -64,4 +64,10 @@ public class GizmoAngle : MonoBehaviour
     {
         rotation.y += rot;
     }
+
+
+    public void ROTXZ(float rot)
+    {
+        rotation.z += rot;
+    }
 }

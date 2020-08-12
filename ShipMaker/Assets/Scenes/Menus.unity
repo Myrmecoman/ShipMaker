@@ -3007,6 +3007,8 @@ MonoBehaviour:
   parentAIs: {fileID: 698014489}
   shipButton: {fileID: 1253166059049047370, guid: 8c614900e10a7944b99f1508e9bf2b73,
     type: 3}
+  AiButton: {fileID: 2477607749837753812, guid: 0161c5e0e07a127409f65f9c810409fe,
+    type: 3}
   dontdestroyNewCraftName: {fileID: 1542161933322536117, guid: a3dbcdd83f76ae34680a806620acf438,
     type: 3}
   shipName: {fileID: 243726895}

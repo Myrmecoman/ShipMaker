@@ -67,15 +67,19 @@ public class MenuButtons : MonoBehaviour
     {
         foreach (Transform child in parentAIs.transform)
             Destroy(child.gameObject);
+        
+        TextAsset[] AllAIs = (TextAsset[])Resources.LoadAll("AIs", typeof(TextAsset[]));
 
-        TextAsset AllAIs = (TextAsset) Resources.Load("AIs/ahi");
-        //if (AllAIs != null)
-        //{
-          //  foreach (TextAsset ahi in AllAIs)
-            //{
-                GameObject obj = Instantiate(AiButton, parentAIs.transform);
-                obj.GetComponentInChildren<Text>().text = "ahi";
-            //}
-        //}
+        if (AllAIs == null || AllAIs.Length == 0)
+        {
+            Debug.Log("chanclu");
+            return;
+        }
+
+        foreach (TextAsset ahi in AllAIs)
+        {
+            GameObject obj = Instantiate(AiButton, parentAIs.transform);
+            obj.GetComponentInChildren<Text>().text = ahi.text;
+        }
     }
 }

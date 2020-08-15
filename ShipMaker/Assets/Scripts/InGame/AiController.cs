@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class AiController : MonoBehaviour
 {
     public Rigidbody rb;
+    public Transform PlayerShip;
     public Transform target;
     public LayerMask layermask;
 
@@ -224,9 +223,9 @@ public class AiController : MonoBehaviour
         foreach (Propeller prop in propellers)
         {
             if (Speed > 50 && prop.transform.position.y <= 0 && prop.Activated)
-                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power * (50 / Speed) / propellers.Count) * 1 /* change this */, prop.transform.position, ForceMode.Force);
+                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power * (50 / Speed) / propellers.Count) * 0 /* change this */, prop.transform.position, ForceMode.Force);
             else if (prop.transform.position.y <= 0 && prop.Activated)
-                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * 1 /* change this */, prop.transform.position, ForceMode.Force);
+                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * 0 /* change this */, prop.transform.position, ForceMode.Force);
         }
 
         // rudders
@@ -234,8 +233,8 @@ public class AiController : MonoBehaviour
         {
             if (rud.transform.position.y <= 0 && rud.Activated)
             {
-                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 100 * rb.velocity.magnitude * 1 /* change this */, rud.transform.position, ForceMode.Force);
-                rud.dir = 1 /* change this */;
+                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 100 * rb.velocity.magnitude * 0 /* change this */, rud.transform.position, ForceMode.Force);
+                rud.dir = 0 /* change this */;
             }
         }
 

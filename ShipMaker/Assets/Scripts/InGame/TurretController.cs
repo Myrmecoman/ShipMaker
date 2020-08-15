@@ -23,6 +23,13 @@ public class TurretController : MonoBehaviour
 
     private void Awake()
     {
+        AiController AI = transform.parent.GetComponent<AiController>();
+        if(AI)
+        {
+            target = AI.target;
+            return;
+        }
+
         ShipController ship = FindObjectOfType<ShipController>();
         if(ship)
             target = ship.target;

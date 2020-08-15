@@ -19,6 +19,7 @@ public class TurretController : MonoBehaviour
 
     private float gunRotVal;
     private float currentTime = 0;
+    private bool NotPlayerControlled = false;
 
 
     private void Awake()
@@ -27,6 +28,7 @@ public class TurretController : MonoBehaviour
         if(AI)
         {
             target = AI.target;
+            NotPlayerControlled = true;
             return;
         }
 
@@ -89,15 +91,30 @@ public class TurretController : MonoBehaviour
         // - BulletSpawn.forward * (0.5f + BulletDiameter) offesets backwards to start the ray into the turret collider
         foreach (Transform BulletSpawn in BulletSpawns)
         {
-            if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitL, 1000) &&
-                hitL.collider.CompareTag("Untagged")) ||
-                (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitR, 1000) &&
-                hitR.collider.CompareTag("Untagged")) ||
-                (Physics.Raycast(BulletSpawn.position - BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitU, 1000) &&
-                hitU.collider.CompareTag("Untagged")) ||
-                (Physics.Raycast(BulletSpawn.position + BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitD, 1000) &&
-                hitD.collider.CompareTag("Untagged")))
-                return;
+            if (NotPlayerControlled)
+            {
+                if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitL, 1000) &&
+                    hitL.collider.CompareTag("Enemy")) ||
+                    (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitR, 1000) &&
+                    hitR.collider.CompareTag("Enemy")) ||
+                    (Physics.Raycast(BulletSpawn.position - BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitU, 1000) &&
+                    hitU.collider.CompareTag("Enemy")) ||
+                    (Physics.Raycast(BulletSpawn.position + BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitD, 1000) &&
+                    hitD.collider.CompareTag("Enemy")))
+                    return;
+            }
+            else
+            {
+                if ((Physics.Raycast(BulletSpawn.position - BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitL, 1000) &&
+                    hitL.collider.CompareTag("Untagged")) ||
+                    (Physics.Raycast(BulletSpawn.position + BulletSpawn.right * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitR, 1000) &&
+                    hitR.collider.CompareTag("Untagged")) ||
+                    (Physics.Raycast(BulletSpawn.position - BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitU, 1000) &&
+                    hitU.collider.CompareTag("Untagged")) ||
+                    (Physics.Raycast(BulletSpawn.position + BulletSpawn.up * BulletDiameter - BulletSpawn.forward * (0.5f + BulletDiameter), BulletSpawn.forward, out RaycastHit hitD, 1000) &&
+                    hitD.collider.CompareTag("Untagged")))
+                    return;
+            }
         }
 
         currentTime = reloadingTime;

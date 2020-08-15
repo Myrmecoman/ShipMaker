@@ -628,7 +628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 990477362}
-  PlayerShip: {fileID: 877976162}
+  PlayerShip: {fileID: 639222401399833662}
   target: {fileID: 1036001432}
   layermask:
     serializedVersion: 2

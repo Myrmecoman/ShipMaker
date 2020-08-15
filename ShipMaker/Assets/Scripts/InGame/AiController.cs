@@ -10,6 +10,9 @@ public class AiController : MonoBehaviour
     public Transform target;
     public LayerMask layermask;
 
+    private float timeBetweenShots = 5;
+    private float timeGap = 4;
+    private float currentTime = 0;
     private string PrefixStr;
     private float maxiY = 0;
     private float miniY = 0;
@@ -107,6 +110,7 @@ public class AiController : MonoBehaviour
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
                     transform) as GameObject;
+                instantiated.tag = "Enemy";
                 MeshRenderer[] renderers = instantiated.GetComponentsInChildren<MeshRenderer>();
                 foreach (MeshRenderer re in renderers)
                 {
@@ -212,6 +216,16 @@ public class AiController : MonoBehaviour
         Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54*/;
 
         // manage target position
+        target.position = PlayerShip.position;
+
+        // firing
+        currentTime -= Time.deltaTime;
+        if (currentTime <= 0)
+        {
+            currentTime = timeBetweenShots + Random.Range(-timeGap / 2, timeGap / 2);
+            foreach (TurretController t in turrets)
+                t.Shoot();
+        }
     }
 
 
@@ -237,14 +251,5 @@ public class AiController : MonoBehaviour
                 rud.dir = 0 /* change this */;
             }
         }
-
-        // firing
-        /*
-        if (false)
-        {
-            foreach (TurretController t in turrets)
-                t.Shoot();
-        }
-        */
     }
 }

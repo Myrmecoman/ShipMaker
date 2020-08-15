@@ -25,7 +25,7 @@ public class MenuButtons : MonoBehaviour
         if (shipName.text.Length > 0)
         {
             GameObject obj = Instantiate(dontdestroyNewCraftName);
-            obj.GetComponent<DontDestroyLoadName>().Name = shipName.text;
+            obj.GetComponent<DontDestroyLoadName>().NameShip = shipName.text;
             SceneManager.LoadScene("Craft");
         }
     }
@@ -68,7 +68,7 @@ public class MenuButtons : MonoBehaviour
         foreach (Transform child in parentAIs.transform)
             Destroy(child.gameObject);
         
-        TextAsset[] AllAIs = (TextAsset[])Resources.LoadAll("AIs", typeof(TextAsset[]));
+        Object[] AllAIs = Resources.LoadAll("AIs", typeof(TextAsset));
 
         if (AllAIs == null || AllAIs.Length == 0)
         {
@@ -76,10 +76,11 @@ public class MenuButtons : MonoBehaviour
             return;
         }
 
-        foreach (TextAsset ahi in AllAIs)
+        foreach (Object ahi in AllAIs)
         {
+            TextAsset txtAsset = (TextAsset)ahi;
             GameObject obj = Instantiate(AiButton, parentAIs.transform);
-            obj.GetComponentInChildren<Text>().text = ahi.text;
+            obj.GetComponentInChildren<Text>().text = txtAsset.name;
         }
     }
 }

@@ -122,7 +122,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6321505153382978638}
-        m_MethodName: LoadSelected
+        m_MethodName: LoadNameForAIs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda3ed50140a74743afb8aff64668eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontdestroy: {fileID: 1986899307543213033, guid: de01a43608c76604397b020729ff4b88,
+  dontdestroy: {fileID: 1542161933322536117, guid: a3dbcdd83f76ae34680a806620acf438,
     type: 3}
 --- !u!1 &2477607751356709037
 GameObject:

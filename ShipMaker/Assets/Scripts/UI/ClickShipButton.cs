@@ -16,4 +16,13 @@ public class ClickShipButton : MonoBehaviour
         obj.GetComponent<DontDestroyLoad>().fileValue = saveNload.LoadAs(s);
         SceneManager.LoadScene("Craft");
     }
+
+
+    public void LoadNameForAIs()
+    {
+        GameObject obj = Instantiate(dontdestroy);
+        string s = GetComponentInChildren<Text>().text;
+        SaveLoad saveNload = new SaveLoad();
+        obj.GetComponent<DontDestroyLoadName>().NameShip = saveNload.LoadAs(s);
+    }
 }

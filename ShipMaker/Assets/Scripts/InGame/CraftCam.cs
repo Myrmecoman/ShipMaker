@@ -357,7 +357,7 @@ public class CraftCam : MonoBehaviour
             DontDestroyLoadName newship = FindObjectOfType<DontDestroyLoadName>();
             if (newship)
             {
-                ShipName.text = newship.Name;
+                ShipName.text = newship.NameShip;
                 Destroy(newship.gameObject);
             }
             Instantiate(Resources.Load("Craft/Cubes/0", typeof(GameObject)), Vector3.zero, Quaternion.identity);

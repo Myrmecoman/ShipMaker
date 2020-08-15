@@ -18,7 +18,7 @@ public class FPSdisplay : MonoBehaviour
 			DontDestroyOnLoad(gameObject);
 		}
 		else
-			Destroy(this);
+			Destroy(gameObject);
 	}
 
 

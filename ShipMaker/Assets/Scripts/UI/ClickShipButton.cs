@@ -24,5 +24,17 @@ public class ClickShipButton : MonoBehaviour
         string s = GetComponentInChildren<Text>().text;
         SaveLoad saveNload = new SaveLoad();
         obj.GetComponent<DontDestroyLoadName>().NameShip = saveNload.LoadAs(s);
+        transform.parent.parent.parent.parent.GetChild(1).gameObject.SetActive(true);
+        transform.parent.parent.parent.gameObject.SetActive(false);
+    }
+
+
+    public void LoadShipSolo()
+    {
+        GameObject obj = Instantiate(dontdestroy);
+        string s = GetComponentInChildren<Text>().text;
+        SaveLoad saveNload = new SaveLoad();
+        obj.GetComponent<DontDestroyLoad>().fileValue = saveNload.LoadAs(s);
+        SceneManager.LoadScene("AIsScene");
     }
 }

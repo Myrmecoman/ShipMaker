@@ -35,7 +35,7 @@ public class AiController : MonoBehaviour
             string str = obj.NameShip;
             Destroy(obj.gameObject);
             StringReader reader = new StringReader(str);
-            FindObjectOfType<TestUI>().load = reader.ReadLine();
+            reader.ReadLine();
             while (true)
             {
                 string line = reader.ReadLine();

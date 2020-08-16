@@ -75,10 +75,7 @@ public class MenuButtons : MonoBehaviour
         Object[] AllAIs = Resources.LoadAll("AIs", typeof(TextAsset));
 
         if (AllAIs == null || AllAIs.Length == 0)
-        {
-            Debug.Log("chanclu");
             return;
-        }
 
         foreach (Object ahi in AllAIs)
         {

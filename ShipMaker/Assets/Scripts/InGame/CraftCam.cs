@@ -182,7 +182,7 @@ public class CraftCam : MonoBehaviour
     }
 
 
-    public bool SaveAs()
+    public bool SaveS()
     {
         if (ShipName.text == "")
             return false;
@@ -233,9 +233,15 @@ public class CraftCam : MonoBehaviour
     }
 
 
+    public void Save()
+    {
+        SaveS();
+    }
+
+
     public void SaveNquit()
     {
-        if (SaveAs())
+        if (SaveS())
             ExitToMenu();
     }
 
@@ -248,7 +254,7 @@ public class CraftCam : MonoBehaviour
 
     public void Test()
     {
-        if (ShipName.text == "" || !SaveAs())
+        if (ShipName.text == "" || !SaveS())
             return;
         GameObject value = Instantiate(DontDestroyToTest);
         value.GetComponent<DontDestroyLoad>().fileValue = saveNload.LoadAs(ShipName.text);

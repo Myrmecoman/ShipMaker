@@ -27,4 +27,16 @@ public class SaveLoad
         stream.Close();
         return s;
     }
+
+
+    public string LoadAsset(string name)
+    {
+        string path = Application.streamingAssetsPath + "/" + name + ".txt";
+        string s = "";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Open);
+        s = formatter.Deserialize(stream) as string;
+        stream.Close();
+        return s;
+    }
 }

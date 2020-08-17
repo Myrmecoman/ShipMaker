@@ -22,9 +22,8 @@ public class ClickShipButton : MonoBehaviour
     {
         GameObject obj = Instantiate(dontdestroy);
         string name = GetComponentInChildren<Text>().text;
-        Object AI = Resources.Load("AIs/" + name, typeof(TextAsset));
-        TextAsset txtAsset = (TextAsset)AI;
-        obj.GetComponent<DontDestroyLoadName>().NameShip = txtAsset.text;
+        SaveLoad SaveNLoad = new SaveLoad();
+        obj.GetComponent<DontDestroyLoadName>().NameShip = SaveNLoad.LoadAsset(name);
         transform.parent.parent.parent.parent.GetChild(1).gameObject.SetActive(true);
         transform.parent.parent.parent.gameObject.SetActive(false);
     }

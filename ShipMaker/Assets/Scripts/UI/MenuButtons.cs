@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -71,17 +72,15 @@ public class MenuButtons : MonoBehaviour
     {
         foreach (Transform child in parentAIsSolo.transform)
             Destroy(child.gameObject);
-        
-        Object[] AllAIs = Resources.LoadAll("AIs", typeof(TextAsset));
 
-        if (AllAIs == null || AllAIs.Length == 0)
-            return;
-
-        foreach (Object ahi in AllAIs)
+        string[] fileArray = Directory.GetFiles(Application.streamingAssetsPath, "*.txt");
+        foreach (string aya in fileArray)
         {
-            TextAsset txtAsset = (TextAsset)ahi;
             GameObject obj = Instantiate(AiButton, parentAIsSolo.transform);
-            obj.GetComponentInChildren<Text>().text = txtAsset.name;
+            string s = aya.Replace(Application.streamingAssetsPath + "\\", "");
+            s = s.Remove(s.Length - 4);
+            Debug.Log(s);
+            obj.GetComponentInChildren<Text>().text = s;
         }
     }
 }

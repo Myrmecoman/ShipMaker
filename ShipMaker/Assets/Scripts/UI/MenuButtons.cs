@@ -73,13 +73,12 @@ public class MenuButtons : MonoBehaviour
         foreach (Transform child in parentAIsSolo.transform)
             Destroy(child.gameObject);
 
-        string[] fileArray = Directory.GetFiles(Application.streamingAssetsPath, "*.txt");
+        string[] fileArray = Directory.GetFiles(Application.streamingAssetsPath, "*.chancla");
         foreach (string aya in fileArray)
         {
             GameObject obj = Instantiate(AiButton, parentAIsSolo.transform);
             string s = aya.Replace(Application.streamingAssetsPath + "\\", "");
-            s = s.Remove(s.Length - 4);
-            Debug.Log(s);
+            s = s.Remove(s.Length - 8);
             obj.GetComponentInChildren<Text>().text = s;
         }
     }

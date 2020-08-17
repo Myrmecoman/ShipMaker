@@ -31,7 +31,7 @@ public class SaveLoad
 
     public string LoadAsset(string name)
     {
-        string path = Application.streamingAssetsPath + "/" + name + ".txt";
+        string path = Application.streamingAssetsPath + "/" + name + ".chancla";
         string s = "";
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Open);

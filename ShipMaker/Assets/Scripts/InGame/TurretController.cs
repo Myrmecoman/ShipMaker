@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class TurretController : MonoBehaviour
 {
@@ -24,23 +24,30 @@ public class TurretController : MonoBehaviour
 
     private void Awake()
     {
-        AiController AI = transform.parent.GetComponent<AiController>();
-        if(AI)
+        if (SceneManager.GetActiveScene().name == "Craft")
         {
-            target = AI.target;
-            NotPlayerControlled = true;
+            Activated = false;
             return;
         }
 
-        ShipController ship = FindObjectOfType<ShipController>();
-        if(ship)
-            target = ship.target;
+        AiController AI = transform.parent.GetComponent<AiController>();
+        if (AI)
+        {
+            target = AI.target;
+            NotPlayerControlled = true;
+        }
+        else
+        {
+            ShipController ship = FindObjectOfType<ShipController>();
+            if (ship)
+                target = ship.target;
+        }
     }
 
 
     void Update()
     {
-        if(!Activated)
+        if(!Activated || BulletSpawns[0].position.y < 0)
             return;
 
         if (currentTime > 0)

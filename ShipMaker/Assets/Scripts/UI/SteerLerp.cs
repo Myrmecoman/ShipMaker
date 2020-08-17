@@ -5,9 +5,7 @@ public class SteerLerp : MonoBehaviour
 {
     public RectTransform ThrottleIndicator;
     public RectTransform FullL;
-    public RectTransform HalfL;
     public RectTransform Zero;
-    public RectTransform HalfR;
     public RectTransform FullR;
     [HideInInspector]public float value = 0;
     [HideInInspector]public float input = 0;
@@ -28,8 +26,7 @@ public class SteerLerp : MonoBehaviour
 
     void Update()
     {
-        if (input != 0)
-            ResolveNewPos(input);
+        ResolveNewPos(input);
         value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 3f);
         own.anchoredPosition = new Vector2(-Width * value, own.anchoredPosition.y);
         ThrottleIndicator.anchoredPosition = new Vector2(-Width * TargetValue, ThrottleIndicator.anchoredPosition.y);
@@ -43,49 +40,35 @@ public class SteerLerp : MonoBehaviour
         {
             if (current == FullL)
             {
-                current = HalfL;
-                TargetValue = 0.5f;
-            }
-            else if (current == HalfL)
-            {
                 current = Zero;
                 TargetValue = 0;
             }
             else if (current == Zero)
-            {
-                current = HalfR;
-                TargetValue = -0.5f;
-            }
-            else if (current == HalfR)
             {
                 current = FullR;
                 TargetValue = -1;
             }
+            return;
         }
+
         // left
-        else
+        if(input < 0)
         {
-            if (current == HalfL)
+            if (current == Zero)
             {
                 current = FullL;
                 TargetValue = 1;
             }
-            else if (current == Zero)
-            {
-                current = HalfL;
-                TargetValue = 0.5f;
-            }
-            else if (current == HalfR)
+            else if (current == FullR)
             {
                 current = Zero;
                 TargetValue = 0;
             }
-            else if (current == FullR)
-            {
-                current = HalfR;
-                TargetValue = -0.5f;
-            }
+            return;
         }
-        input = 0;
+
+        // No input
+        current = Zero;
+        TargetValue = 0;
     }
 }

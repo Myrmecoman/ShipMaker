@@ -65,7 +65,6 @@ public class ShipController : MonoBehaviour
     public void MoveInput(Vector2 move)
     {
         throttleUI.input = move.y;
-        steerUI.input = move.x;
     }
 
     #endregion
@@ -283,6 +282,8 @@ public class ShipController : MonoBehaviour
 
         if (LockMove)
             return;
+
+        steerUI.input = WantMove.x;
 
         // adapt sensivity to fov
         ChangedSensivity = Sensivity * cam.GetComponent<Camera>().fieldOfView / 60;

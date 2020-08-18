@@ -75,11 +75,11 @@ public class Settings : MonoBehaviour
     public void SetQuality()
     {
         if (QualityDropdown.value == 0)
-            Debug.Log("0");
+            QualitySettings.SetQualityLevel(0);
         if (QualityDropdown.value == 1)
-            Debug.Log("1");
+            QualitySettings.SetQualityLevel(1);
         if (QualityDropdown.value == 2)
-            Debug.Log("2");
+            QualitySettings.SetQualityLevel(2);
         PlayerPrefs.SetInt("gameQuality", QualityDropdown.value);
     }
 

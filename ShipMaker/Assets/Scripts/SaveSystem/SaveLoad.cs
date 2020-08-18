@@ -2,6 +2,8 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using System.Security.Cryptography;
+using System;
+using System.Text;
 
 
 public class SaveLoad
@@ -9,30 +11,22 @@ public class SaveLoad
     public void SaveAs(string name, string content)
     {
         string path = Application.persistentDataPath + "/" + name + ".chancla";
-
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
-
-        formatter.Serialize(stream, content);
+        string s = EncryptString(content, "65FVg93fdh879fggv87fgVuyi878qiaBfFTYU");
+        formatter.Serialize(stream, s);
         stream.Close();
-
-        EncryptFile(path, path + "i");
     }
 
 
     public string LoadAs(string name)
     {
         string path = Application.persistentDataPath + "/" + name + ".chancla";
-
-        DecryptFile(path, path);
-
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Open);
-        string s = formatter.Deserialize(stream) as string;
+        string str = formatter.Deserialize(stream) as string;
+        string s = DecryptString(str, "65FVg93fdh879fggv87fgVuyi878qiaBfFTYU");
         stream.Close();
-
-        EncryptFile(path, path);
-
         return s;
     }
 
@@ -40,75 +34,60 @@ public class SaveLoad
     public string LoadAsset(string name)
     {
         string path = Application.streamingAssetsPath + "/" + name + ".chancla";
-
-        DecryptFile(path, path);
-
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Open);
-        string s = formatter.Deserialize(stream) as string;
+        string str = formatter.Deserialize(stream) as string;
+        string s = DecryptString(str, "65FVg93fdh879fggv87fgVuyi878qiaBfFTYU");
         stream.Close();
-
-        EncryptFile(path, path);
-
         return s;
     }
 
 
-    private void EncryptFile(string inputFile, string outputFile)
+    private static string EncryptString(string plainText, string passPhrase)
     {
-        //try
-        //{
-            byte[] key = new byte[] { 103, 9, 84, 234, 104, 93, 29, 2, 192, 140, 28, 182, 249, 189, 48, 59, 84, 234, 104, 93, 29, 2, 192, 140 };
-            byte[] IV = new byte[] { 103, 9, 84, 234, 104, 93, 29, 2, 192, 140, 28, 93, 29, 2, 192, 140 };
+        // This size of the IV (in bytes) must = (keysize / 8).  Default keysize is 256, so the IV must be
+        // 32 bytes long.  Using a 16 character string here gives us 32 bytes when converted to a byte array.
+        string initVector = "heaIl9gRupgF6lr8";
+        int keysize = 256;
 
-            string cryptFile = outputFile;
-            FileStream fsCrypt = new FileStream(cryptFile, FileMode.Create);
-
-            RijndaelManaged RMCrypto = new RijndaelManaged();
-
-            CryptoStream cs = new CryptoStream(fsCrypt,
-                RMCrypto.CreateEncryptor(key, IV),
-                CryptoStreamMode.Write);
-            
-            FileStream fsIn = new FileStream(inputFile, FileMode.Open);
-
-            int data;
-            while ((data = fsIn.ReadByte()) != -1)
-                cs.WriteByte((byte)data);
-
-
-            fsIn.Close();
-            cs.Close();
-            fsCrypt.Close();
-        //}
-        //catch
-        //{
-        //    throw new ArgumentNullException("error");
-        //}
+        byte[] initVectorBytes = Encoding.UTF8.GetBytes(initVector);
+        byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+        PasswordDeriveBytes password = new PasswordDeriveBytes(passPhrase, null);
+        byte[] keyBytes = password.GetBytes(keysize / 8);
+        RijndaelManaged symmetricKey = new RijndaelManaged();
+        symmetricKey.Mode = CipherMode.CBC;
+        ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
+        MemoryStream memoryStream = new MemoryStream();
+        CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+        cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+        cryptoStream.FlushFinalBlock();
+        byte[] cipherTextBytes = memoryStream.ToArray();
+        memoryStream.Close();
+        cryptoStream.Close();
+        return Convert.ToBase64String(cipherTextBytes);
     }
 
 
-    private void DecryptFile(string inputFile, string outputFile)
+    private static string DecryptString(string cipherText, string passPhrase)
     {
-        byte[] key = new byte[] { 103, 9, 84, 234, 104, 93, 29, 2, 192, 140, 28, 182, 249, 189, 48, 59, 84, 234, 104, 93, 29, 2, 192, 140 };
-        byte[] IV = new byte[] { 103, 9, 84, 234, 104, 93, 29, 2, 192, 140, 28, 93, 29, 2, 192, 140 };
+        // This size of the IV (in bytes) must = (keysize / 8).  Default keysize is 256, so the IV must be
+        // 32 bytes long.  Using a 16 character string here gives us 32 bytes when converted to a byte array.
+        string initVector = "heaIl9gRupgF6lr8";
+        int keysize = 256;
 
-        FileStream fsCrypt = new FileStream(inputFile, FileMode.Open);
-
-        RijndaelManaged RMCrypto = new RijndaelManaged();
-
-        CryptoStream cs = new CryptoStream(fsCrypt,
-            RMCrypto.CreateDecryptor(key, IV),
-            CryptoStreamMode.Read);
-
-        FileStream fsOut = new FileStream(outputFile, FileMode.Create);
-
-        int data;
-        while ((data = cs.ReadByte()) != -1)
-            fsOut.WriteByte((byte)data);
-
-        fsOut.Close();
-        cs.Close();
-        fsCrypt.Close();
+        byte[] initVectorBytes = Encoding.UTF8.GetBytes(initVector);
+        byte[] cipherTextBytes = Convert.FromBase64String(cipherText);
+        PasswordDeriveBytes password = new PasswordDeriveBytes(passPhrase, null);
+        byte[] keyBytes = password.GetBytes(keysize / 8);
+        RijndaelManaged symmetricKey = new RijndaelManaged();
+        symmetricKey.Mode = CipherMode.CBC;
+        ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
+        MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
+        CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+        byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+        int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+        memoryStream.Close();
+        cryptoStream.Close();
+        return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
     }
 }

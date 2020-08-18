@@ -27,7 +27,7 @@ public class SteerLerp : MonoBehaviour
     void Update()
     {
         ResolveNewPos(input);
-        value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 3f);
+        value = Mathf.MoveTowards(value, TargetValue, Time.deltaTime / 2f);
         own.anchoredPosition = new Vector2(-Width * value, own.anchoredPosition.y);
         ThrottleIndicator.anchoredPosition = new Vector2(-Width * TargetValue, ThrottleIndicator.anchoredPosition.y);
     }

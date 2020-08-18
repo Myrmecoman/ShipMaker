@@ -114,7 +114,7 @@ Material:
     - _Foam3DLighting: 1
     - _FoamBubbleParallax: 0.1
     - _FoamScale: 10
-    - _FresnelPower: 5
+    - _FresnelPower: 4
     - _Invert: 1
     - _MipBias: 0
     - _Moving: 0.17
@@ -135,7 +135,7 @@ Material:
     - _Shadows: 1
     - _ShorelineFoamMinDepth: 0.27
     - _SkyDirectionality: 0.875
-    - _Specular: 1
+    - _Specular: 0.464
     - _StartLevel: 0.157
     - _StencilFunction: 0
     - _SubSurfaceBase: 1
@@ -169,7 +169,7 @@ Material:
     m_Colors:
     - _DepthFogDensity: {r: 0.3, g: 0.22, b: 0.3, a: 1}
     - _Diffuse: {r: 0.07271271, g: 0.07899365, b: 0.3584906, a: 1}
-    - _DiffuseGrazing: {r: 0.060653254, g: 0.20248733, b: 0.2735849, a: 1}
+    - _DiffuseGrazing: {r: 0.07271271, g: 0.26496324, b: 0.3584906, a: 1}
     - _DiffuseShadow: {r: 0.21067381, g: 0.26255617, b: 0.294, a: 1}
     - _FoamBubbleColor: {r: 0.6383055, g: 0.8301887, b: 0.8243741, a: 1}
     - _FoamWhiteColor: {r: 1, g: 0.99634784, b: 0.97199994, a: 0.6862745}
@@ -178,6 +178,6 @@ Material:
     - _SkyTowardsSun: {r: 0.92572814, g: 2.4204576, b: 2.6390157, a: 1}
     - _SubSurface: {r: 0, g: 0.48, b: 0.36, a: 1}
     - _SubSurfaceColour: {r: 0.10196078, g: 0.41102678, b: 0.57254905, a: 1}
-    - _SubSurfaceShallowCol: {r: 0.2971698, g: 1, b: 1, a: 1}
+    - _SubSurfaceShallowCol: {r: 0.2980392, g: 0.65296096, b: 1, a: 1}
     - _SubSurfaceShallowColShadow: {r: 0.14417942, g: 0.2264151, b: 0.21173015, a: 1}
     - _SubSurfaceShallowColour: {r: 0.41999996, g: 0.75, b: 0.69, a: 1}

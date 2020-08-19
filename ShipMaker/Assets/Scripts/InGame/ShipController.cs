@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -275,6 +276,12 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
+        /*if (transform.position.y < 30)
+        {
+            Debug.Log("lose");
+            SceneManager.LoadScene("Menus");
+        }*/
+
         camRot.position = camPosUpdate.position;
 
         Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54*/;

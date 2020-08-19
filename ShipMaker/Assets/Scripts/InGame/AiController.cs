@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class AiController : MonoBehaviour
@@ -107,7 +108,7 @@ public class AiController : MonoBehaviour
                 UpdatePrefix(id);
                 GameObject instantiated = Instantiate(
                     Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
-                    new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
+                    new Vector3(float.Parse(posx) + transform.position.x, float.Parse(posy) + transform.position.y, float.Parse(posz) + transform.position.z),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz)),
                     transform) as GameObject;
                 instantiated.tag = "Enemy";
@@ -118,7 +119,8 @@ public class AiController : MonoBehaviour
                         m.color = new Color(float.Parse(r), float.Parse(g), float.Parse(b));
                 }
             }
-            transform.position = new Vector3(0, -miniY, 0);
+            transform.position = new Vector3(0, -miniY, -transform.position.z);
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else
         {
@@ -206,6 +208,12 @@ public class AiController : MonoBehaviour
 
     void Update()
     {
+        /*if (transform.position.y < 30)
+        {
+            Debug.Log("won");
+            SceneManager.LoadScene("Menus");
+        }*/
+
         Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54 (knots)*/;
 
         // manage target position
@@ -227,21 +235,31 @@ public class AiController : MonoBehaviour
         UpdateChimneys();
 
         // propellers
-        foreach (Propeller prop in propellers)
+        if (Vector3.Distance(transform.position, PlayerShip.position) > 100)
         {
-            if (Speed > 50 && prop.transform.position.y <= 0 && prop.Activated)
-                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power * (50 / Speed) / propellers.Count) * 0 /* change this */, prop.transform.position, ForceMode.Force);
-            else if (prop.transform.position.y <= 0 && prop.Activated)
-                rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * 0 /* change this */, prop.transform.position, ForceMode.Force);
+            foreach (Propeller prop in propellers)
+            {
+                if (Speed > 50 && prop.transform.position.y <= 0 && prop.Activated)
+                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power * (50 / Speed) / propellers.Count) * 1 /* change this */, prop.transform.position, ForceMode.Force);
+                else if (prop.transform.position.y <= 0 && prop.Activated)
+                    rb.AddForceAtPosition(prop.transform.forward * prop.PowerMultiplier * (Power / propellers.Count) * 1 /* change this */, prop.transform.position, ForceMode.Force);
+            }
         }
+
+        float angle = Vector3.SignedAngle(PlayerShip.position - transform.position, transform.forward, Vector3.up);
+        float RudDir;
+        if (angle > 0)
+            RudDir = 1;
+        else
+            RudDir = -1;
 
         // rudders
         foreach (Rudder rud in rudders)
         {
             if (rud.transform.position.y <= 0 && rud.Activated)
             {
-                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 100 * rb.velocity.magnitude * 0 /* change this */, rud.transform.position, ForceMode.Force);
-                rud.dir = 0 /* change this */;
+                rb.AddForceAtPosition(rud.transform.right * rud.Strength * 100 * rb.velocity.magnitude * RudDir, rud.transform.position, ForceMode.Force);
+                rud.dir = RudDir;
             }
         }
     }

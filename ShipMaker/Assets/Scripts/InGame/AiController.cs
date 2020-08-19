@@ -162,7 +162,6 @@ public class AiController : MonoBehaviour
         }
 
         UpdateChimneys();
-        transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
     #endregion
@@ -205,16 +204,9 @@ public class AiController : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-
     void Update()
     {
-        Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54*/;
+        Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54 (knots)*/;
 
         // manage target position
         target.position = PlayerShip.position;

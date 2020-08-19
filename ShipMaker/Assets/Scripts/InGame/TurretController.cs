@@ -57,6 +57,7 @@ public class TurretController : MonoBehaviour
         if (currentTime > 0)
             currentTime -= Time.deltaTime;
 
+        /*
         foreach (Transform BulletSpawn in BulletSpawns)
         {
             Debug.DrawRay(BulletSpawn.position - BulletSpawn.right * BulletDiameter/2 - BulletSpawn.forward * xzSizeby2, BulletSpawn.forward, Color.red, 0.1f);
@@ -64,6 +65,7 @@ public class TurretController : MonoBehaviour
             Debug.DrawRay(BulletSpawn.position - BulletSpawn.up * BulletDiameter/2 - BulletSpawn.forward * xzSizeby2, BulletSpawn.forward, Color.red, 0.1f);
             Debug.DrawRay(BulletSpawn.position + BulletSpawn.up * BulletDiameter/2 - BulletSpawn.forward * xzSizeby2, BulletSpawn.forward, Color.red, 0.1f);
         }
+        */
 
         RotateTurret(rotationSpeed);
         RotateGun(elevationSpeed);

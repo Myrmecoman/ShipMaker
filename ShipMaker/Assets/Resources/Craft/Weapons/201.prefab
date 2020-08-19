@@ -368,7 +368,7 @@ MonoBehaviour:
   Id: 201
   hp: 12
   Weight: 3
-  Volume: 4
+  Price: 6
   CanBuild:
   - {fileID: 2211440762132782301}
   - {fileID: 2531243703030717856}
@@ -395,6 +395,7 @@ MonoBehaviour:
   MaxElevation: 70
   reloadingTime: 3
   BulletDiameter: 0.5
+  BulletForceMultiplier: 2
   Damage: 4
   target: {fileID: 0}
   turret: {fileID: 1242858856672536652}

@@ -185,7 +185,7 @@ MonoBehaviour:
   Id: 400
   hp: 10
   Weight: 2
-  Volume: 2
+  Price: 3
   CanBuild:
   - {fileID: 2519951875010969944}
   - {fileID: 2263340243081134117}

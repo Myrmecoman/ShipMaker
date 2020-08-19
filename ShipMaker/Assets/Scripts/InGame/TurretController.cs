@@ -10,6 +10,7 @@ public class TurretController : MonoBehaviour
     public float MaxElevation = 70;
     public float reloadingTime = 1;
     public float BulletDiameter = 0.2f;
+    public float BulletForceMultiplier = 1;
     public float Damage = 1;
     public Transform target;
     public Transform turret;
@@ -130,7 +131,7 @@ public class TurretController : MonoBehaviour
             GameObject obj = Instantiate(Bullet, BulletSpawn.position, Quaternion.identity);
             obj.GetComponent<Transform>().localScale = new Vector3(BulletDiameter, BulletDiameter, BulletDiameter);
             obj.GetComponent<Bullet>().damage = Damage;
-            obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200, ForceMode.VelocityChange);
+            obj.GetComponent<Rigidbody>().AddForce(BulletSpawn.forward * 200 * BulletForceMultiplier, ForceMode.VelocityChange);
         }
     }
 }

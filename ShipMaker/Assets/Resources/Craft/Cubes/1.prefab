@@ -49,9 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 1
-  hp: 10
+  hp: 15
   Weight: 2
-  Volume: 1
+  Price: 2
   CanBuild:
   - {fileID: 625046389767689212}
   - {fileID: 3836162489873535617}

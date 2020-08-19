@@ -6589,7 +6589,7 @@ GameObject:
   - component: {fileID: 1981593359}
   - component: {fileID: 1981593358}
   m_Layer: 5
-  m_Name: VolumeText
+  m_Name: PriceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6646,7 +6646,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Total volume : 0'
+  m_Text: 'Total price : 0'
 --- !u!222 &1981593359
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7953,7 +7953,7 @@ MonoBehaviour:
   Sensivity: 0.2
   ShipName: {fileID: 672772642}
   ErrorText: {fileID: 373805553}
-  VolumeText: {fileID: 1981593358}
+  PriceText: {fileID: 1981593358}
   colorPicker: {fileID: 784833827}
   DontDestroyToTest: {fileID: 1986899307543213033, guid: de01a43608c76604397b020729ff4b88,
     type: 3}
@@ -7967,7 +7967,7 @@ MonoBehaviour:
   ColliderDisplay: {fileID: 6093083167039477050, guid: bd17050950036094e8da0e62054aabeb,
     type: 3}
   SelectedID: 1
-  TotalVolume: 0
+  TotalPrice: 0
   TotalParts: 0
   WantMove: {x: 0, y: 0}
   WantMouse: {x: 0, y: 0}

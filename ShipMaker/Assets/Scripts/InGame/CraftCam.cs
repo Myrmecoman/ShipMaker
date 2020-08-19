@@ -10,7 +10,7 @@ public class CraftCam : MonoBehaviour
     public float Sensivity;
     public Text ShipName;
     public Text ErrorText;
-    public Text VolumeText;
+    public Text PriceText;
     public ColorPicker colorPicker;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
@@ -30,7 +30,7 @@ public class CraftCam : MonoBehaviour
     private string fileValueStored;
     private string PrefixStr;
     [HideInInspector] public string SelectedID = "0";
-    [HideInInspector] public uint TotalVolume = 0;
+    [HideInInspector] public uint TotalPrice = 0;
     [HideInInspector] public uint TotalParts = 0;
 
     // Inputs
@@ -82,8 +82,8 @@ public class CraftCam : MonoBehaviour
                 {
                     GameObject destroyed = hit.collider.gameObject;
                     Destroy(destroyed);
-                    TotalVolume -= destroyed.GetComponent<ID>().Volume;
-                    VolumeText.text = "Total volume : " + TotalVolume;
+                    TotalPrice -= destroyed.GetComponent<ID>().Price;
+                    PriceText.text = "Total price : " + TotalPrice;
                     TotalParts--;
                 }
                 // add
@@ -111,8 +111,8 @@ public class CraftCam : MonoBehaviour
                         Quaternion rot = Quaternion.identity;
                         rot.eulerAngles = gizmoScript.rotation;
                         GameObject instantiated = Instantiate(Resources.Load("Craft/" + PrefixStr + SelectedID, typeof(GameObject)), hit.collider.transform.position + hit.normal, rot) as GameObject;
-                        TotalVolume += instantiated.GetComponent<ID>().Volume;
-                        VolumeText.text = "Total volume : " + TotalVolume;
+                        TotalPrice += instantiated.GetComponent<ID>().Price;
+                        PriceText.text = "Total price : " + TotalPrice;
                         TotalParts++;
                     }
                 }
@@ -348,7 +348,7 @@ public class CraftCam : MonoBehaviour
                     Resources.Load("Craft/" + PrefixStr + id, typeof(GameObject)),
                     new Vector3(float.Parse(posx), float.Parse(posy), float.Parse(posz)),
                     Quaternion.Euler(float.Parse(rotx), float.Parse(roty), float.Parse(rotz))) as GameObject;
-                TotalVolume += instantiated.GetComponent<ID>().Volume;
+                TotalPrice += instantiated.GetComponent<ID>().Price;
                 TotalParts++;
                 MeshRenderer[] renderers = instantiated.GetComponentsInChildren<MeshRenderer>();
                 foreach (MeshRenderer re in renderers)
@@ -370,7 +370,7 @@ public class CraftCam : MonoBehaviour
             TotalParts = 1;
         }
 
-        VolumeText.text = "Total volume : " + TotalVolume;
+        PriceText.text = "Total price : " + TotalPrice;
         SelectedID = "0";
         PrefixStr = "Cubes/";
     }

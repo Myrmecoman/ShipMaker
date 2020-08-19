@@ -162,6 +162,7 @@ public class AiController : MonoBehaviour
         }
 
         UpdateChimneys();
+        transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
     #endregion

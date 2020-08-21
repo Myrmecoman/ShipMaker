@@ -218,7 +218,9 @@ public class AiController : MonoBehaviour
         if (transform.position.y < -30)
         {
             Debug.Log("won");
-            infos.ChangeAIdefeated(1);
+            infos.ChangeAIdefeated();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("Menus");
             return;
         }

@@ -292,6 +292,8 @@ public class ShipController : MonoBehaviour
         if (transform.position.y < -30)
         {
             Debug.Log("lose");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("Menus");
             return;
         }

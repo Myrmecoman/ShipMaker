@@ -5,6 +5,7 @@ public class PlayerInfos : MonoBehaviour
 {
 	public int maxAIdefeated = 0;
 	public int maxPriceAllowed = 60;
+	public int lastAiID = 0;
 
 	private static PlayerInfos _instance;
 	private SaveLoad SnL;
@@ -55,16 +56,16 @@ public class PlayerInfos : MonoBehaviour
 	}
 
 
-	public void ChangeAIdefeated(int nb)
+	public void ChangeAIdefeated()
     {
 		string NewPrice = "60";
-		if (nb == 1)
+		if (lastAiID == 1)
 			NewPrice = "70";
-		if (nb == 2)
+		if (lastAiID == 2)
 			NewPrice = "90";
 
-		maxAIdefeated = nb;
+		maxAIdefeated = lastAiID;
 		maxPriceAllowed = int.Parse(NewPrice);
-		SnL.SavePlayer(nb.ToString() + ":" + NewPrice);
+		SnL.SavePlayer(lastAiID.ToString() + ":" + NewPrice);
     }
 }

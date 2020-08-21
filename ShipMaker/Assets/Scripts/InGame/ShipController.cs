@@ -275,7 +275,7 @@ public class ShipController : MonoBehaviour
         infos = FindObjectOfType<PlayerInfos>();
         if (TotalPrice > infos.maxPriceAllowed)
         {
-            Debug.Log(TotalPrice);
+            Debug.Log(TotalPrice + " while " + infos.maxPriceAllowed + " is allowed");
             string s = Application.persistentDataPath + "\\" + FindObjectOfType<TestUI>().load + ".chancla";
             File.Delete(s);
             SceneManager.LoadScene("Menus");

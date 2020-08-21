@@ -11,6 +11,7 @@ public class CraftCam : MonoBehaviour
     public Text ShipName;
     public Text ErrorText;
     public Text PriceText;
+    public Text MaxPriceText;
     public ColorPicker colorPicker;
     public GameObject DontDestroyToTest;
     public LayerMask layermask;
@@ -389,9 +390,10 @@ public class CraftCam : MonoBehaviour
     void Start()
     {
         infos = FindObjectOfType<PlayerInfos>();
+        MaxPriceText.text = "Price allowed : " + infos.maxPriceAllowed;
         if (TotalPrice > infos.maxPriceAllowed)
         {
-            Debug.Log(TotalPrice);
+            Debug.Log(TotalPrice + " while " + infos.maxPriceAllowed + " is allowed");
             DeleteThis();
             return;
         }

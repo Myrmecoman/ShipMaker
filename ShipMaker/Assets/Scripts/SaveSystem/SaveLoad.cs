@@ -45,7 +45,7 @@ public class SaveLoad
 
     public void SavePlayer(string content)
     {
-        string path = Application.streamingAssetsPath + "/player.p";
+        string path = Application.persistentDataPath + "/player.p";
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         string s = EncryptString(content, "65FTiafggv8793VYU78qgf987uyi8FfdhBfgV");
@@ -56,7 +56,7 @@ public class SaveLoad
 
     public string LoadPlayer()
     {
-        string path = Application.streamingAssetsPath + "/player.p";
+        string path = Application.persistentDataPath + "/player.p";
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Open);
         string str = formatter.Deserialize(stream) as string;

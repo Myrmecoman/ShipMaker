@@ -114,7 +114,7 @@ Material:
     - _Foam3DLighting: 1
     - _FoamBubbleParallax: 0.1
     - _FoamScale: 10
-    - _FresnelPower: 4.5
+    - _FresnelPower: 5.8
     - _Invert: 1
     - _MipBias: 0
     - _Moving: 0.17
@@ -135,7 +135,7 @@ Material:
     - _Shadows: 1
     - _ShorelineFoamMinDepth: 0.27
     - _SkyDirectionality: 0.875
-    - _Specular: 0.162
+    - _Specular: 0.313
     - _StartLevel: 0.157
     - _StencilFunction: 0
     - _SubSurfaceBase: 1

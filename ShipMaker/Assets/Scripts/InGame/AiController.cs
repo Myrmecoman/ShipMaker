@@ -19,6 +19,7 @@ public class AiController : MonoBehaviour
     private float miniY = 0;
     private float Speed;
     private uint Power = 0;
+    private PlayerInfos infos;
     private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
     private List<Rudder> rudders = new List<Rudder>();
@@ -169,6 +170,12 @@ public class AiController : MonoBehaviour
     #endregion
 
 
+    void Start()
+    {
+        infos = FindObjectOfType<PlayerInfos>();
+    }
+
+
     private void UpdatePrefix(string id)
     {
         int parsed = int.Parse(id);
@@ -208,11 +215,13 @@ public class AiController : MonoBehaviour
 
     void Update()
     {
-        /*if (transform.position.y < 30)
+        if (transform.position.y < -30)
         {
             Debug.Log("won");
+            infos.ChangeAIdefeated(1);
             SceneManager.LoadScene("Menus");
-        }*/
+            return;
+        }
 
         Speed = rb.velocity.magnitude * 1.944f /*means 3.6 * 0.54 (knots)*/;
 

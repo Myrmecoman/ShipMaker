@@ -289,11 +289,12 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
-        /*if (transform.position.y < 30)
+        if (transform.position.y < -30)
         {
             Debug.Log("lose");
             SceneManager.LoadScene("Menus");
-        }*/
+            return;
+        }
 
         camRot.position = camPosUpdate.position;
 

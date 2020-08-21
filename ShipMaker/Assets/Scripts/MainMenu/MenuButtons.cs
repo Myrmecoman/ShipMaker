@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +14,16 @@ public class MenuButtons : MonoBehaviour
     public GameObject AiButton;
     public GameObject dontdestroyNewCraftName;
     public InputField shipName;
+
+    private PlayerInfos infos;
+
+
+    void Start()
+    {
+        infos = FindObjectOfType<PlayerInfos>();
+        UpdateListShips();
+        UpdateListAIs();
+    }
 
 
     public void Quit()
@@ -43,13 +52,6 @@ public class MenuButtons : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        UpdateListShips();
-        UpdateListAIs();
-    }
-
-
     private void UpdateListShips()
     {
         foreach (Transform child in parentShips.transform)
@@ -63,9 +65,9 @@ public class MenuButtons : MonoBehaviour
             string s2 = s.Replace(Application.persistentDataPath + "\\", "");
             s2 = s2.Remove(s2.Length - 8);
             obj.GetComponentInChildren<Text>().text = s2;
-            obj.GetComponent<ClickShipButton>().name = s2;
+            obj.GetComponent<ClickShipButton>().n = s2;
             obj2.GetComponentInChildren<Text>().text = s2;
-            obj2.GetComponent<ClickShipButton>().name = s2;
+            obj2.GetComponent<ClickShipButton>().n = s2;
         }
     }
 
@@ -75,13 +77,18 @@ public class MenuButtons : MonoBehaviour
         foreach (Transform child in parentAIsSolo.transform)
             Destroy(child.gameObject);
 
+        int maxAI = 0;
         string[] fileArray = Directory.GetFiles(Application.streamingAssetsPath, "*.chancla");
         foreach (string aya in fileArray)
         {
+            if (maxAI > infos.maxAIdefeated)
+                return;
+            maxAI++;
+
             GameObject obj = Instantiate(AiButton, parentAIsSolo.transform);
             string s = aya.Replace(Application.streamingAssetsPath + "\\", "");
             s = s.Remove(s.Length - 8);
-            obj.GetComponent<ClickShipButton>().name = s;
+            obj.GetComponent<ClickShipButton>().n = s;
             obj.GetComponentInChildren<Text>().text = s.Substring(3);
         }
     }

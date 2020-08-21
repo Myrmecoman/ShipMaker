@@ -43,6 +43,29 @@ public class SaveLoad
     }
 
 
+    public void SavePlayer(string content)
+    {
+        string path = Application.streamingAssetsPath + "/player.p";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+        string s = EncryptString(content, "65FTiafggv8793VYU78qgf987uyi8FfdhBfgV");
+        formatter.Serialize(stream, s);
+        stream.Close();
+    }
+
+
+    public string LoadPlayer()
+    {
+        string path = Application.streamingAssetsPath + "/player.p";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Open);
+        string str = formatter.Deserialize(stream) as string;
+        string s = DecryptString(str, "65FTiafggv8793VYU78qgf987uyi8FfdhBfgV");
+        stream.Close();
+        return s;
+    }
+
+
     private static string EncryptString(string plainText, string passPhrase)
     {
         // This size of the IV (in bytes) must = (keysize / 8).  Default keysize is 256, so the IV must be

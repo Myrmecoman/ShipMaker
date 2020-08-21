@@ -29,6 +29,7 @@ public class CraftCam : MonoBehaviour
     private SaveLoad saveNload;
     private string fileValueStored;
     private string PrefixStr;
+    private PlayerInfos infos;
     [HideInInspector] public string SelectedID = "0";
     [HideInInspector] public uint TotalPrice = 0;
     [HideInInspector] public uint TotalParts = 0;
@@ -187,6 +188,14 @@ public class CraftCam : MonoBehaviour
         if (ShipName.text == "")
             return false;
 
+        if (TotalPrice > infos.maxPriceAllowed)
+        {
+            ErrorText.text = "Price is limited to " + infos.maxPriceAllowed + " !";
+            ErrorText.color = new Color(ErrorText.color.r, ErrorText.color.g, ErrorText.color.b, 1);
+            ErrorTime = 3;
+            return false;
+        }
+
         ID[] allPieces = FindObjectsOfType<ID>();
 
         // ---------- check that the craft is correct ----------
@@ -199,6 +208,7 @@ public class CraftCam : MonoBehaviour
                 ahi.Dead = false;
             if (!DFS(allPieces, allPieces[i]))
             {
+                ErrorText.text = "Some parts are not correctly connected !";
                 ErrorText.color = new Color(ErrorText.color.r, ErrorText.color.g, ErrorText.color.b, 1);
                 ErrorTime = 3;
                 //GameObject obj = Instantiate(ColliderDisplay, allPieces[i].transform.position + allPieces[i].GetComponent<BoxCollider>().center, allPieces[i].transform.rotation, allPieces[i].transform);
@@ -376,6 +386,22 @@ public class CraftCam : MonoBehaviour
     }
 
 
+    void Start()
+    {
+        infos = FindObjectOfType<PlayerInfos>();
+        if (TotalPrice > infos.maxPriceAllowed)
+        {
+            Debug.Log(TotalPrice);
+            DeleteThis();
+            return;
+        }
+
+        saveNload = new SaveLoad();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+
     private void UpdatePrefix()
     {
         if (int.Parse(SelectedID) < 200)
@@ -398,14 +424,6 @@ public class CraftCam : MonoBehaviour
             PrefixStr = "Cosmetics/";
             return;
         }
-    }
-
-
-    void Start()
-    {
-        saveNload = new SaveLoad();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
 

@@ -28,9 +28,11 @@ public class ShipController : MonoBehaviour
     private float miniY = 0;
     private float maxiZ = 0;
     private float miniZ = 0;
+    private uint TotalPrice = 0;
     private float CamRotVal;
     private float Speed;
     private uint Power = 0;
+    private PlayerInfos infos;
     private List<ChimneyStat> chimneys = new List<ChimneyStat>();
     private List<Propeller> propellers = new List<Propeller>();
     private List<Rudder> rudders = new List<Rudder>();
@@ -205,6 +207,7 @@ public class ShipController : MonoBehaviour
             if (children[i].GetComponent<ID>())
             {
                 rb.mass += children[i].GetComponent<ID>().Weight;
+                TotalPrice += children[i].GetComponent<ID>().Price;
                 foreach (Transform t in children[i].GetComponent<ID>().CanBuild)
                     Destroy(t.gameObject);
             }
@@ -269,6 +272,16 @@ public class ShipController : MonoBehaviour
 
     void Start()
     {
+        infos = FindObjectOfType<PlayerInfos>();
+        if (TotalPrice > infos.maxPriceAllowed)
+        {
+            Debug.Log(TotalPrice);
+            string s = Application.persistentDataPath + "\\" + FindObjectOfType<TestUI>().load + ".chancla";
+            File.Delete(s);
+            SceneManager.LoadScene("Menus");
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

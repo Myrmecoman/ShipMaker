@@ -35,6 +35,7 @@ public class ID : MonoBehaviour
                 foreach (Material m in re.materials)
                     m.SetTexture("_MainTex", Resources.Load("Textures/burnt3") as Texture);
             }
+            Destroy(GetComponent<BoxCollider>());
         }
         else if (hp / InitialHp <= 0.34f)
         {

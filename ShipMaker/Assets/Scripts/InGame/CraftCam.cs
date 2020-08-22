@@ -107,7 +107,7 @@ public class CraftCam : MonoBehaviour
                         }
                     }
 
-                    if (hitColliders.Length == 0 && simp[miniDistanceIndex].name != "no")
+                    if (hitColliders.Length == 0 && simp[miniDistanceIndex].name != "no" && TotalPrice < infos.maxPriceAllowed)
                     {
                         UpdatePrefix();
                         Quaternion rot = Quaternion.identity;

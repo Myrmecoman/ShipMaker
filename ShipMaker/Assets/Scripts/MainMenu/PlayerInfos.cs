@@ -46,26 +46,44 @@ public class PlayerInfos : MonoBehaviour
 					Price += s[i];
             }
 
+			lastAiID = int.Parse(AIs);
 			maxAIdefeated = int.Parse(AIs);
 			maxPriceAllowed = int.Parse(Price);
 		}
 		catch
 		{
+			Debug.Log("First time connecting, or failed, creating new player.p");
 			SnL.SavePlayer("0:60");
+			maxAIdefeated = 0;
+			maxPriceAllowed = 60;
+			lastAiID = 0;
 		}
 	}
 
 
 	public void ChangeAIdefeated()
     {
-		string NewPrice = "60";
+		if (lastAiID <= maxAIdefeated)
+			return;
+
+		int NewPrice = 60;
 		if (lastAiID == 1)
-			NewPrice = "70";
+			NewPrice = 70;
 		if (lastAiID == 2)
-			NewPrice = "90";
+			NewPrice = 85;
+		if (lastAiID == 3)
+			NewPrice = 100;
+		if (lastAiID == 4)
+			NewPrice = 120;
+		if (lastAiID == 5)
+			NewPrice = 150;
+		if (lastAiID == 6)
+			NewPrice = 180;
+		if (lastAiID == 7)
+			NewPrice = 200;
 
 		maxAIdefeated = lastAiID;
-		maxPriceAllowed = int.Parse(NewPrice);
-		SnL.SavePlayer(lastAiID.ToString() + ":" + NewPrice);
+		maxPriceAllowed = NewPrice;
+		SnL.SavePlayer(lastAiID + ":" + NewPrice);
     }
 }

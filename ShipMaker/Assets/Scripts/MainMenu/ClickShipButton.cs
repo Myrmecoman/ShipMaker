@@ -23,7 +23,6 @@ public class ClickShipButton : MonoBehaviour
         SaveLoad SaveNLoad = new SaveLoad();
         obj.GetComponent<DontDestroyLoadName>().NameShip = SaveNLoad.LoadAsset(n);
         string idAI = n.Substring(0, 3);
-        Debug.Log(idAI);
         FindObjectOfType<PlayerInfos>().lastAiID = int.Parse(idAI);
         transform.parent.parent.parent.parent.GetChild(1).gameObject.SetActive(true);
         transform.parent.parent.parent.gameObject.SetActive(false);
